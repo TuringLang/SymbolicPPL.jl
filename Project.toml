@@ -3,6 +3,7 @@ uuid = "ba9fb4c0-828e-4473-b6a1-cd2560fee5bf"
 version = "0.6.2"
 
 [deps]
+ADTypes = "47edcb42-4c32-4615-8424-f2b9edc5f35b"
 AbstractMCMC = "80f14c24-f653-4e6a-9b94-39d6b0f70001"
 AbstractPPL = "7a57a42e-76ec-4ea3-a279-07e840d6d9cf"
 Accessors = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
@@ -41,7 +42,7 @@ JuliaBUGSAdvancedMHExt = ["AdvancedMH", "MCMCChains"]
 JuliaBUGSDynamicPPLExt = ["DynamicPPL"]
 JuliaBUGSGraphMakieExt = ["GraphMakie", "GLMakie"]
 JuliaBUGSGraphPlotExt = ["GraphPlot"]
-JuliaBUGSMCMCChainsExt = ["DynamicPPL", "MCMCChains"]
+JuliaBUGSMCMCChainsExt = ["MCMCChains"]
 
 [compat]
 ADTypes = "1.6"

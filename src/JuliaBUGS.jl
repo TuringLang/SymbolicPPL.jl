@@ -3,6 +3,7 @@ module JuliaBUGS
 using AbstractMCMC
 using AbstractPPL
 using Accessors
+using ADTypes
 using BangBang
 using Bijectors: Bijectors
 using Distributions
