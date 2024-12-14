@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Distributions · JuliaBUGS.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body>
+<!-- NAVBAR START -->
+<style>
+    html {
+        scroll-padding-top: calc(55px + 1rem);
+    }
+
+    /* Documenter css tweaks */
+    .docs-sidebar {
+        margin-top: 3.75rem;
+    }
+
+    #documenter {
+        margin-top: 3.75rem;
+    }
+
+    .docs-version-selector {
+        margin-bottom: 60px !important;
+    }
+
+    @media screen and (max-width: 1056px) {
+        .docs-version-selector {
+            margin-bottom: 60px !important;
+        }
+
+        .docs-sidebar {
+            margin-top: 0 !important;
+        }
+    }
+    /* Documenter css tweaks ends here */
+
+    :root {
+        --heading-color: white;
+        --item-color: rgb(165, 165, 165);
+        --primary-bg: #073c44;
+        --hover-color: #8faad2;
+    }
+
+    .ext-navigation {
+        position: fixed;
+        height: 3.75rem;
+        top: 0;
+        width: 100%;
+        background-color: var(--primary-bg);
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        padding: 0 1.0625rem;
+        transition: transform 0.3s;
+    }
+
+    .ext-navbar-logo {
+        margin-left: 0.625rem;
+    }
+
+    .ext-nav-links {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        flex-grow: 1;
+    }
+
+    .ext-nav-links li {
+        margin-left: 1rem !important;
+    }
+
+    .ext-nav-link {
+        color: white !important;
+        text-decoration: none;
+        font-size: 1.0625rem !important;
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .ext-nav-link:hover,
+    .ext-navbar-item-single a:hover {
+        color: var(--hover-color) !important;
+    }
+
+    .ext-navbar-item-single a {
+        color: #fff !important;
+    }
+
+    .ext-menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    .ext-dropdown {
+        display: none;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 1.875rem;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        background-color: #083c44;
+        line-height: 1.875rem;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        transform: translateY(-0.625rem);
+    }
+
+    #library-handler::after {
+        content: "▼";
+        font-size: 0.6875rem;
+        margin-left: 0.3125rem;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #library-handler.open::after {
+        content: "▲";
+    }
+
+    .ext-dropdown.show {
+        display: grid;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .ext-dropdown ul {
+        height: auto;
+        width: 12.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .ext-dropdown ul li {
+        text-align: left;
+    }
+
+    .navbar-sub-item {
+        list-style: none;
+    }
+
+    .ext-dropdown ul a li {
+        color: var(--item-color);
+        width: 15.625rem;
+        border-radius: 3px;
+        padding: 0.125rem 0.625rem;
+        transition: background-color 0.2s ease;
+    }
+
+    .ext-dropdown ul a li:hover {
+        background-color: rgba(107, 107, 107, 0.5);
+    }
+
+    .ext-dropdown-item-heading {
+        color: var(--heading-color);
+        text-align: center;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 966px) {
+        .ext-dropdown {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .ext-nav-links {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background-color: var(--primary-bg);
+            position: absolute;
+            top: 3.75rem;
+            left: 0;
+            padding: 0.625rem 0;
+            height: auto;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgb(141, 141, 141) grey;
+        }
+
+        .ext-nav-links.show {
+            display: flex;
+        }
+
+        .ext-nav-links li {
+            margin: 0.625rem 0;
+            text-align: center;
+        }
+
+        .ext-menu-toggle {
+            display: block;
+            margin-left: auto;
+        }
+
+        .ext-navigation.hide {
+            transform: translateY(-3.75rem);
+        }
+
+        .ext-dropdown {
+            place-content: center;
+            text-align: center;
+            grid-template-columns: 1fr;
+            line-height: 1.25rem;
+            padding: 0.625rem;
+        }
+
+        .ext-dropdown ul {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0.3125rem;
+        }
+
+        .ext-dropdown ul li {
+            text-align: center;
+        }
+
+        .ext-dropdown ul a li {
+            width: 100%;
+        }
+
+        .ext-dropdown ul a li:hover {
+            background-color: var(--primary-bg);
+            color: #fff;
+        }
+
+        /* Modified scroll bar */
+        .ext-nav-links::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb {
+            background: rgb(141, 141, 141);
+            border-radius: 3px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb:hover {
+            background: #9b9b9b;
+        }
+    }
+</style>
+<nav class="ext-navigation">
+    <a href="https://turinglang.org/">
+        <img src="https://turinglang.org/assets/images/turing-logo.svg" alt="Turing Logo" class="ext-navbar-logo" height="24px" width="40px">
+    </a>
+    <a style="color: white !important; font-size: 21.25px !important; margin-left: 10px;" href="https://turinglang.org/">Turing.jl</a>
+    <ul class="ext-nav-links">
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/docs-00-getting-started/">Get Started</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/00-introduction/">Tutorials</a>
+        </li>
+        <li>
+            <p class="ext-nav-link" id="library-handler">Libraries</p>
+            <div class="ext-dropdown" id="ext-dropdown-items">
+                <ul>
+                    <li class="ext-dropdown-item-heading">Modelling Languages</li>
+                    <a href="https://turinglang.org/DynamicPPL.jl/">
+                        <li>DynamicPPL</li>
+                    </a>
+                    <a href="https://turinglang.org/JuliaBUGS.jl/">
+                        <li>JuliaBUGS</li>
+                    </a>
+                    <a href="https://turinglang.org/TuringGLM.jl/">
+                        <li>TuringGLM</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">MCMC</li>
+                    <a href="https://turinglang.org/AdvancedHMC.jl/">
+                        <li>AdvancedHMC</li>
+                    </a>
+                    <a href="https://turinglang.org/AbstractMCMC.jl/">
+                        <li>AbstractMCMC</li>
+                    </a>
+                    <a href="https://github.com/theogf/ThermodynamicIntegration.jl">
+                        <li>ThermodynamicIntegration</li>
+                    </a>
+                    <a href="https://turinglang.org/AdvancedPS.jl/">
+                        <li>AdvancedPS</li>
+                    </a>
+                    <a href="https://turinglang.org/SliceSampling.jl/">
+                        <li>SliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/EllipticalSliceSampling.jl/">
+                        <li>EllipticalSliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/NestedSamplers.jl/">
+                        <li>NestedSamplers</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Diagnostics</li>
+                    <a href="https://turinglang.org/MCMCChains.jl/">
+                        <li>MCMCChains</li>
+                    </a>
+                    <a href="https://turinglang.org/MCMCDiagnosticTools.jl/">
+                        <li>MCMCDiagnosticTools</li>
+                    </a>
+                    <a href="https://turinglang.org/ParetoSmooth.jl/">
+                        <li>ParetoSmooth</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Gaussion Processes</li>
+                    <a href="https://juliagaussianprocesses.github.io/AbstractGPs.jl/">
+                        <li>AbstractGPs</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/KernelFunctions.jl/">
+                        <li>KernelFunctions</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/ApproximateGPs.jl/">
+                        <li>ApproximateGPs</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/Bijectors.jl/">Bijectors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringCallbacks.jl/">TuringCallbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringBenchmarking.jl/">TuringBenchmarking</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/news/">News</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/team/">Team</a>
+        </li>
+    </ul>
+    <a href="https://x.com/TuringLang" style="margin-left: 15px; padding-top: 2px">
+        <svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="-209.92 -209.92 931.84 931.84" xml:space="preserve" stroke="#ffffff">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <g id="7935ec95c421cee6d86eb22ecd12f847">
+                    <path style="display: inline"
+                        d="M459.186,151.787c0.203,4.501,0.305,9.023,0.305,13.565 c0,138.542-105.461,298.285-298.274,298.285c-59.209,0-114.322-17.357-160.716-47.104c8.212,0.973,16.546,1.47,25.012,1.47 c49.121,0,94.318-16.759,130.209-44.884c-45.887-0.841-84.596-31.154-97.938-72.804c6.408,1.227,12.968,1.886,19.73,1.886 c9.55,0,18.816-1.287,27.617-3.68c-47.955-9.633-84.1-52.001-84.1-102.795c0-0.446,0-0.882,0.011-1.318 c14.133,7.847,30.294,12.562,47.488,13.109c-28.134-18.796-46.637-50.885-46.637-87.262c0-19.212,5.16-37.218,14.193-52.7 c51.707,63.426,128.941,105.156,216.072,109.536c-1.784-7.675-2.718-15.674-2.718-23.896c0-57.891,46.941-104.832,104.832-104.832 c30.173,0,57.404,12.734,76.525,33.102c23.887-4.694,46.313-13.423,66.569-25.438c-7.827,24.485-24.434,45.025-46.089,58.002 c21.209-2.535,41.426-8.171,60.222-16.505C497.448,118.542,479.666,137.004,459.186,151.787z">
+                    </path>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <a href="https://github.com/TuringLang/Turing.jl">
+        <svg width="32px" height="32px" viewBox="-8.2 -8.2 36.40 36.40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <title>github [#142]</title>
+                <desc>Created with Sketch.</desc>
+                <defs></defs>
+                <g id="Page-1" stroke-width="0.0002" fill="none" fill-rule="evenodd">
+                    <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -7559.000000)" fill="#ffffff">
+                        <g id="icons" transform="translate(56.000000, 160.000000)">
+                            <path
+                                d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"
+                                id="github-[#142]">
+                            </path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <span class="ext-menu-toggle">&#9776;</span>
+</nav>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.querySelector(".ext-menu-toggle");
+        const navLinks = document.querySelector(".ext-nav-links");
+        const nav = document.querySelector(".ext-navigation");
+        const navigationHandler = document.getElementById("library-handler");
+        const navigationItemsContainer =
+            document.getElementById("ext-dropdown-items");
+        let lastScrollY = window.scrollY;
+
+        function setAppropriateHeight() {
+            if (window.innerWidth <= 768) {
+                const viewportHeight = window.innerHeight;
+                const navHeight = nav.offsetHeight;
+                navLinks.style.maxHeight = `${viewportHeight - navHeight}px`;
+                navLinks.style.overflowY = "auto";
+            } else {
+                navLinks.style.maxHeight = "";
+                navLinks.style.overflowY = "";
+            }
+        }
+
+        // Toggle main menu for mobile
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("show");
+            if (navLinks.classList.contains("show")) {
+                setAppropriateHeight();
+                // Ensure the dropdown is hidden when menu is first opened
+                navigationItemsContainer.style.display = "none";
+                navigationItemsContainer.classList.remove("show");
+            }
+        });
+
+        // Close menus if clicked outside
+        document.addEventListener("click", (event) => {
+            if (
+                !navLinks.contains(event.target) &&
+                !menuToggle.contains(event.target)
+            ) {
+                navLinks.classList.remove("show");
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+            }
+        });
+
+        // Hide navigation bar on scroll down in mobile view
+        window.addEventListener("scroll", () => {
+            if (window.innerWidth <= 768) {
+                nav.classList.toggle("hide", window.scrollY > lastScrollY);
+                lastScrollY = window.scrollY;
+            }
+        });
+
+        // Library API script
+        navigationHandler.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default action of the link
+            if (navigationItemsContainer.classList.contains("show")) {
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+                setTimeout(() => {
+                    navigationItemsContainer.style.display = "none";
+                }, 500); // Match the timeout to the CSS transition duration
+            } else {
+                navigationItemsContainer.style.display = "grid";
+                navigationHandler.classList.add("open");
+                setTimeout(() => {
+                    navigationItemsContainer.classList.add("show");
+                }, 10); // Delay to ensure the display change takes effect before adding class
+            }
+            setAppropriateHeight(); // Recalculate height when dropdown changes
+        });
+
+        // Handle window resize
+        window.addEventListener("resize", setAppropriateHeight);
+
+        // Initial setup
+        setAppropriateHeight();
+    });
+</script>
+<!-- NAVBAR END -->
+
+<div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">JuliaBUGS.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../example/">Example</a></li><li><span class="tocitem">API</span><ul><li><a class="tocitem" href="../api/">General</a></li><li><a class="tocitem" href="../functions/">Functions</a></li><li class="is-active"><a class="tocitem" href>Distributions</a></li><li><a class="tocitem" href="../user_defined_functions/">User-Defined Functions and Distributions</a></li></ul></li><li><a class="tocitem" href="../../differences/">Differences from Other BUGS Implementations</a></li><li><a class="tocitem" href="../../pitfalls/">Pitfalls</a></li><li><a class="tocitem" href="../../graph_plotting/">Plotting</a></li><li><a class="tocitem" href="../../R_interface/">R Interface</a></li><li><span class="tocitem">For Developers</span><ul><li><a class="tocitem" href="../../parser/">Parser</a></li><li><a class="tocitem" href="../../BUGS_notes/">Notes on BUGS Implementations</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">API</a></li><li class="is-active"><a href>Distributions</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Distributions</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/master/docs/src/api/distributions.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dnorm" href="#JuliaBUGS.BUGSPrimitives.dnorm"><code>JuliaBUGS.BUGSPrimitives.dnorm</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dnorm(μ, τ)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Normal">Normal</a>  with mean <span>$μ$</span> and standard deviation <span>$\frac{1}{√τ}$</span>. </p><p class="math-container">\[p(x|μ,τ) = \sqrt{\frac{τ}{2π}} e^{-τ \frac{(x-μ)^2}{2}}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L1-L10">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dlogis" href="#JuliaBUGS.BUGSPrimitives.dlogis"><code>JuliaBUGS.BUGSPrimitives.dlogis</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dlogis(μ, τ)</code></pre><p>Return an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Logistic">Logistic</a>  with location parameter <span>$μ$</span> and scale parameter <span>$\frac{1}{√τ}$</span>.</p><p class="math-container">\[p(x|μ,τ) = \frac{\sqrt{τ} e^{-\sqrt{τ}(x-μ)}}{(1+e^{-\sqrt{τ}(x-μ)})^2}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L20-L29">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dt" href="#JuliaBUGS.BUGSPrimitives.dt"><code>JuliaBUGS.BUGSPrimitives.dt</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dt(μ, τ, ν)</code></pre><p>If <span>$μ = 0$</span> and <span>$σ = 1$</span>, the function returns an instance of <a href="https://juliastats.org/Distributions.jl/stable/univariate/#Distributions.TDist">TDist</a>  with <span>$ν$</span> degrees of freedom, location <span>$μ$</span>, and scale <span>$σ = \frac{1}{\sqrt{τ}}$</span>. Otherwise, it returns an instance of <a href="#JuliaBUGS.BUGSPrimitives.TDistShiftedScaled"><code>TDistShiftedScaled</code></a>.</p><p class="math-container">\[p(x|ν,μ,σ) = \frac{Γ((ν+1)/2)}{Γ(ν/2) \sqrt{νπσ}}
+\left(1+\frac{1}{ν}\left(\frac{x-μ}{σ}\right)^2\right)^{-\frac{ν+1}{2}}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L62-L72">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.TDistShiftedScaled" href="#JuliaBUGS.BUGSPrimitives.TDistShiftedScaled"><code>JuliaBUGS.BUGSPrimitives.TDistShiftedScaled</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">TDistShiftedScaled(ν, μ, σ)</code></pre><p>Student&#39;s t-distribution with <span>$ν$</span> degrees of freedom, location <span>$μ$</span>, and scale <span>$σ$</span>. </p><p>This struct allows for a shift (determined by <span>$μ$</span>) and a scale (determined by <span>$σ$</span>) of the standard  Student&#39;s t-distribution provided by the <a href="https://github.com/JuliaStats/Distributions.jl">Distributions.jl</a>  package. </p><p>Only <code>pdf</code> and <code>logpdf</code> are implemented for this distribution.</p><p><strong>See Also</strong></p><p><a href="https://juliastats.org/Distributions.jl/stable/univariate/#Distributions.TDist">TDist</a></p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L35-L48">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.ddexp" href="#JuliaBUGS.BUGSPrimitives.ddexp"><code>JuliaBUGS.BUGSPrimitives.ddexp</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">ddexp(μ, τ)</code></pre><p>Return an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Laplace">Laplace (Double Exponential)</a>  with location <span>$μ$</span> and scale <span>$\frac{1}{\sqrt{τ}}$</span>.</p><p class="math-container">\[p(x|μ,τ) = \frac{\sqrt{τ}}{2} e^{-\sqrt{τ} |x-μ|}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L82-L91">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dflat" href="#JuliaBUGS.BUGSPrimitives.dflat"><code>JuliaBUGS.BUGSPrimitives.dflat</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dflat()</code></pre><p>Returns an instance of <a href="#JuliaBUGS.BUGSPrimitives.Flat"><code>Flat</code></a> or <a href="#JuliaBUGS.BUGSPrimitives.TruncatedFlat"><code>TruncatedFlat</code></a> if truncated.</p><p><code>Flat</code> represents a flat (uniform) prior over the real line, which is an improper distribution. And  <code>TruncatedFlat</code> represents a truncated version of the <code>Flat</code> distribution.</p><p>Only <code>pdf</code>, <code>logpdf</code>, <code>minimum</code>, and <code>maximum</code> are implemented for these Distributions.</p><p>When use in a model, the parameters always need to be initialized.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L97-L108">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.Flat" href="#JuliaBUGS.BUGSPrimitives.Flat"><code>JuliaBUGS.BUGSPrimitives.Flat</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">Flat</code></pre><p>The flat distribution mimicking the behavior of the <code>dflat</code> distribution in the BUGS family of softwares.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L111-L115">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.TruncatedFlat" href="#JuliaBUGS.BUGSPrimitives.TruncatedFlat"><code>JuliaBUGS.BUGSPrimitives.TruncatedFlat</code></a> — <span class="docstring-category">Type</span></header><section><div><pre><code class="language-julia hljs">TruncatedFlat</code></pre><p>Truncated version of the <a href="#JuliaBUGS.BUGSPrimitives.Flat"><code>Flat</code></a> distribution.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L144-L148">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dexp" href="#JuliaBUGS.BUGSPrimitives.dexp"><code>JuliaBUGS.BUGSPrimitives.dexp</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dexp(λ)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Exponential">Exponential</a>  with rate <span>$\frac{1}{λ}$</span>.</p><p class="math-container">\[p(x|λ) = λ e^{-λ x}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L176-L185">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dchisqr" href="#JuliaBUGS.BUGSPrimitives.dchisqr"><code>JuliaBUGS.BUGSPrimitives.dchisqr</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dchisqr(k)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Chisq">Chi-squared</a>  with <span>$k$</span> degrees of freedom.</p><p class="math-container">\[p(x|k) = \frac{1}{2^{k/2} Γ(k/2)} x^{k/2 - 1} e^{-x/2}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L205-L214">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dweib" href="#JuliaBUGS.BUGSPrimitives.dweib"><code>JuliaBUGS.BUGSPrimitives.dweib</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dweib(a, b)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Weibull">Weibull</a>  distribution object with shape parameter <span>$a$</span> and scale parameter <span>$\frac{1}{b}$</span>.</p><p>The Weibull distribution is a common model for event times. The hazard or instantaneous risk of the event  is <span>$abx^{a-1}$</span>. For <span>$a &lt; 1$</span> the hazard decreases with <span>$x$</span>; for <span>$a &gt; 1$</span> it increases.  <span>$a = 1$</span> results in the exponential distribution with constant hazard.</p><p class="math-container">\[p(x|a,b) = abx^{a-1}e^{-b x^a}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L219-L232">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dlnorm" href="#JuliaBUGS.BUGSPrimitives.dlnorm"><code>JuliaBUGS.BUGSPrimitives.dlnorm</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dlnorm(μ, τ)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.LogNormal">LogNormal</a>  with location <span>$μ$</span> and scale <span>$\frac{1}{\sqrt{τ}}$</span>.</p><p class="math-container">\[p(x|μ,τ) = \frac{\sqrt{τ}}{x\sqrt{2π}} e^{-τ/2 (\log(x) - μ)^2}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L237-L246">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dgamma" href="#JuliaBUGS.BUGSPrimitives.dgamma"><code>JuliaBUGS.BUGSPrimitives.dgamma</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dgamma(a, b)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Gamma">Gamma</a>  with shape <span>$a$</span> and scale <span>$\frac{1}{b}$</span>.</p><p class="math-container">\[p(x|a,b) = \frac{b^a}{Γ(a)} x^{a-1} e^{-bx}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L190-L199">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dpar" href="#JuliaBUGS.BUGSPrimitives.dpar"><code>JuliaBUGS.BUGSPrimitives.dpar</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dpar(a, b)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Pareto">Pareto</a>  with scale parameter <span>$b$</span> and shape parameter <span>$a$</span>.</p><p class="math-container">\[p(x|a,b) = \frac{a b^a}{x^{a+1}}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L251-L260">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dgev" href="#JuliaBUGS.BUGSPrimitives.dgev"><code>JuliaBUGS.BUGSPrimitives.dgev</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dgev(μ, σ, η)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.GeneralizedExtremeValue">GeneralizedExtremeValue</a>  with location <span>$μ$</span>, scale <span>$σ$</span>, and shape <span>$η$</span>.</p><p class="math-container">\[p(x|μ,σ,η) = \frac{1}{σ} \left(1 + η \frac{x - μ}{σ}\right)^{-\frac{1}{η} - 1} e^{-\left(1 + η \frac{x - μ}{σ}\right)^{-\frac{1}{η}}}\]</p><p>where <span>$\frac{η(x - μ)}{σ} &gt; -1$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L265-L276">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dgpar" href="#JuliaBUGS.BUGSPrimitives.dgpar"><code>JuliaBUGS.BUGSPrimitives.dgpar</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dgpar(μ, σ, η)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.GeneralizedPareto">GeneralizedPareto</a>  with location <span>$μ$</span>, scale <span>$σ$</span>, and shape <span>$η$</span>.</p><p class="math-container">\[p(x|μ,σ,η) = \frac{1}{σ} (1 + η ((x - μ)/σ))^{-1/η - 1}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L289-L298">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.df" href="#JuliaBUGS.BUGSPrimitives.df"><code>JuliaBUGS.BUGSPrimitives.df</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">df(n, m, μ=0, τ=1)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.FDist">F-distribution</a>  object with <span>$n$</span> and <span>$m$</span> degrees of freedom, location <span>$μ$</span>, and scale <span>$τ$</span>. This function is only valid when <span>$μ = 0$</span> and <span>$τ = 1$</span>,</p><p class="math-container">\[p(x|n, m, μ, τ) = \frac{\Gamma\left(\frac{n+m}{2}\right)}{\Gamma\left(\frac{n}{2}\right) \Gamma\left(\frac{m}{2}\right)} \left(\frac{n}{m}\right)^{\frac{n}{2}} \sqrt{τ} \left(\sqrt{τ}(x - μ)\right)^{\frac{n}{2}-1} \left(1 + \frac{n \sqrt{τ}(x-μ)}{m}\right)^{-\frac{n+m}{2}}\]</p><p>where <span>$\frac{n \sqrt{τ} (x - μ)}{m} &gt; -1$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L303-L314">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dunif" href="#JuliaBUGS.BUGSPrimitives.dunif"><code>JuliaBUGS.BUGSPrimitives.dunif</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dunif(a, b)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Uniform">Uniform</a>  with lower bound <span>$a$</span> and upper bound <span>$b$</span>.</p><p class="math-container">\[p(x|a,b) = \frac{1}{b - a}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L333-L342">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dbeta" href="#JuliaBUGS.BUGSPrimitives.dbeta"><code>JuliaBUGS.BUGSPrimitives.dbeta</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dbeta(a, b)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Beta">Beta</a>  with shape parameters <span>$a$</span> and <span>$b$</span>.</p><p class="math-container">\[p(x|a,b) = \frac{\Gamma(a + b)}{\Gamma(a)\Gamma(b)} x^{a-1} (1 - x)^{b-1}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L347-L356">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dmnorm" href="#JuliaBUGS.BUGSPrimitives.dmnorm"><code>JuliaBUGS.BUGSPrimitives.dmnorm</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dmnorm(μ::AbstractVector, T::AbstractMatrix)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/multivariate/#Distributions.MvNormal">Multivariate Normal</a>  with mean vector <code>μ</code> and covariance matrix <span>$T^{-1}$</span>.</p><p class="math-container">\[p(x|μ,T) = (2π)^{-k/2} |T|^{1/2} e^{-1/2 (x-μ)&#39; T (x-μ)}\]</p><p>where <span>$k$</span> is the dimension of <code>x</code>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L361-L371">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dmt" href="#JuliaBUGS.BUGSPrimitives.dmt"><code>JuliaBUGS.BUGSPrimitives.dmt</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dmt(μ::AbstractVector, T::AbstractMatrix, k)</code></pre><p>Returns an instance of <a href="https://github.com/JuliaStats/Distributions.jl/blob/master/src/multivariate/mvtdist.jl">Multivariate T</a>  with mean vector <span>$μ$</span>, scale matrix <span>$T^{-1}$</span>, and <span>$k$</span> degrees of freedom.</p><p class="math-container">\[p(x|k,μ,Σ) = \frac{\Gamma((k+d)/2)}{\Gamma(k/2) (k\pi)^{p/2} |Σ|^{1/2}} \left(1 + \frac{1}{k} (x-μ)^T Σ^{-1} (x-μ)\right)^{-\frac{k+p}{2}}\]</p><p>where <span>$p$</span> is the dimension of <span>$x$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L376-L386">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dwish" href="#JuliaBUGS.BUGSPrimitives.dwish"><code>JuliaBUGS.BUGSPrimitives.dwish</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dwish(R::AbstractMatrix, k)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/matrix/#Distributions.Wishart">Wishart</a>  with <span>$k$</span> degrees of freedom and the scale matrix <span>$T^{-1}$</span>.</p><p class="math-container">\[p(X|R,k) = |R|^{k/2} |X|^{(k-p-1)/2} e^{-(1/2) tr(RX)} / (2^{kp/2} Γ_p(k/2))\]</p><p>where <span>$p$</span> is the dimension of <span>$X$</span>, and it should be less than or equal to <span>$k$</span>. </p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L391-L401">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.ddirich" href="#JuliaBUGS.BUGSPrimitives.ddirich"><code>JuliaBUGS.BUGSPrimitives.ddirich</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">ddirich(θ::AbstractVector)</code></pre><p>Return an instance of <a href="https://juliastats.org/Distributions.jl/latest/multivariate/#Distributions.Dirichlet">Dirichlet</a>  with parameters <span>$θ_i$</span>.</p><p class="math-container">\[p(x|θ) = \frac{Γ(\sum θ)}{∏ Γ(θ)} ∏ x_i^{θ_i - 1}\]</p><p>where <span>$\theta_i &gt; 0, x_i \in [0, 1], \sum_i x_i = 1$</span></p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L413-L423">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dbern" href="#JuliaBUGS.BUGSPrimitives.dbern"><code>JuliaBUGS.BUGSPrimitives.dbern</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dbern(p)</code></pre><p>Return an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Bernoulli">Bernoulli</a>  with success probability <code>p</code>.</p><p class="math-container">\[p(x|p) = p^x (1 - p)^{1-x}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L428-L437">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dbin" href="#JuliaBUGS.BUGSPrimitives.dbin"><code>JuliaBUGS.BUGSPrimitives.dbin</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dbin(p, n)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Binomial">Binomial</a>  with number of trials <code>n</code> and success probability <code>p</code>.</p><p class="math-container">\[p(x|n,p) = \binom{n}{x} p^x (1 - p)^{n-x}\]</p><p>end</p><p>where <span>$\theta \in [0, 1], n \in \mathbb{Z}^+,$</span> and <span>$x = 0, \ldots, n$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L442-L453">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dcat" href="#JuliaBUGS.BUGSPrimitives.dcat"><code>JuliaBUGS.BUGSPrimitives.dcat</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dcat(p)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/multivariate/#Distributions.Categorical">Categorical</a>  with probabilities <code>p</code>.</p><p class="math-container">\[p(x|p) = p[x]\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L458-L467">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dpois" href="#JuliaBUGS.BUGSPrimitives.dpois"><code>JuliaBUGS.BUGSPrimitives.dpois</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dpois(θ)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Poisson">Poisson</a>  with mean (and variance) <code>θ</code>.</p><p class="math-container">\[p(x|θ) = e^{-θ} θ^x / x!\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L472-L481">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dgeom" href="#JuliaBUGS.BUGSPrimitives.dgeom"><code>JuliaBUGS.BUGSPrimitives.dgeom</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dgeom(θ)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Geometric">Geometric</a>  with success probability <code>θ</code>.</p><p class="math-container">\[p(x|θ) = (1 - θ)^{x-1} θ\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L486-L495">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dnegbin" href="#JuliaBUGS.BUGSPrimitives.dnegbin"><code>JuliaBUGS.BUGSPrimitives.dnegbin</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dnegbin(p, r)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.NegativeBinomial">Negative Binomial</a>  with number of failures <code>r</code> and success probability <code>p</code>.</p><p class="math-container">\[P(x|r,p) = \binom{x + r - 1}{x} (1 - p)^x p^r\]</p><p>where <span>$x \in \mathbb{Z}^+$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L500-L511">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dbetabin" href="#JuliaBUGS.BUGSPrimitives.dbetabin"><code>JuliaBUGS.BUGSPrimitives.dbetabin</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dbetabin(a, b, n)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.BetaBinomial">Beta Binomial</a>  with number of trials <code>n</code> and shape parameters <code>a</code> and <code>b</code>.</p><p class="math-container">\[P(x|a, b, n) = \frac{\binom{n}{x} \binom{a + b - 1}{a + x - 1}}{\binom{a + b + n - 1}{n}}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L516-L525">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dhyper" href="#JuliaBUGS.BUGSPrimitives.dhyper"><code>JuliaBUGS.BUGSPrimitives.dhyper</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dhyper(n₁, n₂, m₁, ψ=1)</code></pre><p>Returns an instance of <a href="https://juliastats.org/Distributions.jl/latest/univariate/#Distributions.Hypergeometric">Hypergeometric</a>.  This distribution is used when sampling without replacement from a population consisting of  <span>$n₁$</span> successes and <span>$n₂$</span> failures, with <span>$m₁$</span> being the number of trials or the sample size.  The function currently only allows for <span>$ψ = 1$</span>.</p><p class="math-container">\[p(x | n₁, n₂, m₁, \psi) = \frac{\binom{n₁}{x} \binom{n₂}{m₁ - x} \psi^x}{\sum_{i=u_0}^{u_1} \binom{n1}{i} \binom{n2}{m₁ - i} \psi^i}\]</p><p>where <span>$u_0 = \max(0, m₁-n₂), u_1 = \min(n₁,m₁),$</span> and <span>$u_0 \leq x \leq u_1$</span></p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L530-L542">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.dmulti" href="#JuliaBUGS.BUGSPrimitives.dmulti"><code>JuliaBUGS.BUGSPrimitives.dmulti</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">dmulti(θ::AbstractVector, n)</code></pre><p>Returns an instance <a href="https://juliastats.org/Distributions.jl/latest/multivariate/#Distributions.Multinomial">Multinomial</a>  with number of trials <code>n</code> and success probabilities <code>θ</code>.</p><p class="math-container">\[P(x|n,θ) = \frac{n!}{∏_{r} x_{r}!} ∏_{r} θ_{r}^{x_{r}}\]</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/67dd3165f1b3ab83d021bfd5cee952be3eb23662/src/BUGSPrimitives/distributions.jl#L550-L559">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../functions/">« Functions</a><a class="docs-footer-nextpage" href="../user_defined_functions/">User-Defined Functions and Distributions »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 29 November 2024 00:09">Friday 29 November 2024</span>. Using Julia version 1.11.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+

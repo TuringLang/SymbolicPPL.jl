@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Functions · JuliaBUGS.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body>
+<!-- NAVBAR START -->
+<style>
+    html {
+        scroll-padding-top: calc(55px + 1rem);
+    }
+
+    /* Documenter css tweaks */
+    .docs-sidebar {
+        margin-top: 3.75rem;
+    }
+
+    #documenter {
+        margin-top: 3.75rem;
+    }
+
+    .docs-version-selector {
+        margin-bottom: 60px !important;
+    }
+
+    @media screen and (max-width: 1056px) {
+        .docs-version-selector {
+            margin-bottom: 60px !important;
+        }
+
+        .docs-sidebar {
+            margin-top: 0 !important;
+        }
+    }
+    /* Documenter css tweaks ends here */
+
+    :root {
+        --heading-color: white;
+        --item-color: rgb(165, 165, 165);
+        --primary-bg: #073c44;
+        --hover-color: #8faad2;
+    }
+
+    .ext-navigation {
+        position: fixed;
+        height: 3.75rem;
+        top: 0;
+        width: 100%;
+        background-color: var(--primary-bg);
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        padding: 0 1.0625rem;
+        transition: transform 0.3s;
+    }
+
+    .ext-navbar-logo {
+        margin-left: 0.625rem;
+    }
+
+    .ext-nav-links {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        flex-grow: 1;
+    }
+
+    .ext-nav-links li {
+        margin-left: 1rem !important;
+    }
+
+    .ext-nav-link {
+        color: white !important;
+        text-decoration: none;
+        font-size: 1.0625rem !important;
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .ext-nav-link:hover,
+    .ext-navbar-item-single a:hover {
+        color: var(--hover-color) !important;
+    }
+
+    .ext-navbar-item-single a {
+        color: #fff !important;
+    }
+
+    .ext-menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    .ext-dropdown {
+        display: none;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 1.875rem;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        background-color: #083c44;
+        line-height: 1.875rem;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        transform: translateY(-0.625rem);
+    }
+
+    #library-handler::after {
+        content: "▼";
+        font-size: 0.6875rem;
+        margin-left: 0.3125rem;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #library-handler.open::after {
+        content: "▲";
+    }
+
+    .ext-dropdown.show {
+        display: grid;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .ext-dropdown ul {
+        height: auto;
+        width: 12.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .ext-dropdown ul li {
+        text-align: left;
+    }
+
+    .navbar-sub-item {
+        list-style: none;
+    }
+
+    .ext-dropdown ul a li {
+        color: var(--item-color);
+        width: 15.625rem;
+        border-radius: 3px;
+        padding: 0.125rem 0.625rem;
+        transition: background-color 0.2s ease;
+    }
+
+    .ext-dropdown ul a li:hover {
+        background-color: rgba(107, 107, 107, 0.5);
+    }
+
+    .ext-dropdown-item-heading {
+        color: var(--heading-color);
+        text-align: center;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 966px) {
+        .ext-dropdown {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .ext-nav-links {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background-color: var(--primary-bg);
+            position: absolute;
+            top: 3.75rem;
+            left: 0;
+            padding: 0.625rem 0;
+            height: auto;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgb(141, 141, 141) grey;
+        }
+
+        .ext-nav-links.show {
+            display: flex;
+        }
+
+        .ext-nav-links li {
+            margin: 0.625rem 0;
+            text-align: center;
+        }
+
+        .ext-menu-toggle {
+            display: block;
+            margin-left: auto;
+        }
+
+        .ext-navigation.hide {
+            transform: translateY(-3.75rem);
+        }
+
+        .ext-dropdown {
+            place-content: center;
+            text-align: center;
+            grid-template-columns: 1fr;
+            line-height: 1.25rem;
+            padding: 0.625rem;
+        }
+
+        .ext-dropdown ul {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0.3125rem;
+        }
+
+        .ext-dropdown ul li {
+            text-align: center;
+        }
+
+        .ext-dropdown ul a li {
+            width: 100%;
+        }
+
+        .ext-dropdown ul a li:hover {
+            background-color: var(--primary-bg);
+            color: #fff;
+        }
+
+        /* Modified scroll bar */
+        .ext-nav-links::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb {
+            background: rgb(141, 141, 141);
+            border-radius: 3px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb:hover {
+            background: #9b9b9b;
+        }
+    }
+</style>
+<nav class="ext-navigation">
+    <a href="https://turinglang.org/">
+        <img src="https://turinglang.org/assets/images/turing-logo.svg" alt="Turing Logo" class="ext-navbar-logo" height="24px" width="40px">
+    </a>
+    <a style="color: white !important; font-size: 21.25px !important; margin-left: 10px;" href="https://turinglang.org/">Turing.jl</a>
+    <ul class="ext-nav-links">
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/docs-00-getting-started/">Get Started</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/00-introduction/">Tutorials</a>
+        </li>
+        <li>
+            <p class="ext-nav-link" id="library-handler">Libraries</p>
+            <div class="ext-dropdown" id="ext-dropdown-items">
+                <ul>
+                    <li class="ext-dropdown-item-heading">Modelling Languages</li>
+                    <a href="https://turinglang.org/DynamicPPL.jl/">
+                        <li>DynamicPPL</li>
+                    </a>
+                    <a href="https://turinglang.org/JuliaBUGS.jl/">
+                        <li>JuliaBUGS</li>
+                    </a>
+                    <a href="https://turinglang.org/TuringGLM.jl/">
+                        <li>TuringGLM</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">MCMC</li>
+                    <a href="https://turinglang.org/AdvancedHMC.jl/">
+                        <li>AdvancedHMC</li>
+                    </a>
+                    <a href="https://turinglang.org/AbstractMCMC.jl/">
+                        <li>AbstractMCMC</li>
+                    </a>
+                    <a href="https://github.com/theogf/ThermodynamicIntegration.jl">
+                        <li>ThermodynamicIntegration</li>
+                    </a>
+                    <a href="https://turinglang.org/AdvancedPS.jl/">
+                        <li>AdvancedPS</li>
+                    </a>
+                    <a href="https://turinglang.org/SliceSampling.jl/">
+                        <li>SliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/EllipticalSliceSampling.jl/">
+                        <li>EllipticalSliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/NestedSamplers.jl/">
+                        <li>NestedSamplers</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Diagnostics</li>
+                    <a href="https://turinglang.org/MCMCChains.jl/">
+                        <li>MCMCChains</li>
+                    </a>
+                    <a href="https://turinglang.org/MCMCDiagnosticTools.jl/">
+                        <li>MCMCDiagnosticTools</li>
+                    </a>
+                    <a href="https://turinglang.org/ParetoSmooth.jl/">
+                        <li>ParetoSmooth</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Gaussion Processes</li>
+                    <a href="https://juliagaussianprocesses.github.io/AbstractGPs.jl/">
+                        <li>AbstractGPs</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/KernelFunctions.jl/">
+                        <li>KernelFunctions</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/ApproximateGPs.jl/">
+                        <li>ApproximateGPs</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/Bijectors.jl/">Bijectors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringCallbacks.jl/">TuringCallbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringBenchmarking.jl/">TuringBenchmarking</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/news/">News</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/team/">Team</a>
+        </li>
+    </ul>
+    <a href="https://x.com/TuringLang" style="margin-left: 15px; padding-top: 2px">
+        <svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="-209.92 -209.92 931.84 931.84" xml:space="preserve" stroke="#ffffff">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <g id="7935ec95c421cee6d86eb22ecd12f847">
+                    <path style="display: inline"
+                        d="M459.186,151.787c0.203,4.501,0.305,9.023,0.305,13.565 c0,138.542-105.461,298.285-298.274,298.285c-59.209,0-114.322-17.357-160.716-47.104c8.212,0.973,16.546,1.47,25.012,1.47 c49.121,0,94.318-16.759,130.209-44.884c-45.887-0.841-84.596-31.154-97.938-72.804c6.408,1.227,12.968,1.886,19.73,1.886 c9.55,0,18.816-1.287,27.617-3.68c-47.955-9.633-84.1-52.001-84.1-102.795c0-0.446,0-0.882,0.011-1.318 c14.133,7.847,30.294,12.562,47.488,13.109c-28.134-18.796-46.637-50.885-46.637-87.262c0-19.212,5.16-37.218,14.193-52.7 c51.707,63.426,128.941,105.156,216.072,109.536c-1.784-7.675-2.718-15.674-2.718-23.896c0-57.891,46.941-104.832,104.832-104.832 c30.173,0,57.404,12.734,76.525,33.102c23.887-4.694,46.313-13.423,66.569-25.438c-7.827,24.485-24.434,45.025-46.089,58.002 c21.209-2.535,41.426-8.171,60.222-16.505C497.448,118.542,479.666,137.004,459.186,151.787z">
+                    </path>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <a href="https://github.com/TuringLang/Turing.jl">
+        <svg width="32px" height="32px" viewBox="-8.2 -8.2 36.40 36.40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <title>github [#142]</title>
+                <desc>Created with Sketch.</desc>
+                <defs></defs>
+                <g id="Page-1" stroke-width="0.0002" fill="none" fill-rule="evenodd">
+                    <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -7559.000000)" fill="#ffffff">
+                        <g id="icons" transform="translate(56.000000, 160.000000)">
+                            <path
+                                d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"
+                                id="github-[#142]">
+                            </path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <span class="ext-menu-toggle">&#9776;</span>
+</nav>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.querySelector(".ext-menu-toggle");
+        const navLinks = document.querySelector(".ext-nav-links");
+        const nav = document.querySelector(".ext-navigation");
+        const navigationHandler = document.getElementById("library-handler");
+        const navigationItemsContainer =
+            document.getElementById("ext-dropdown-items");
+        let lastScrollY = window.scrollY;
+
+        function setAppropriateHeight() {
+            if (window.innerWidth <= 768) {
+                const viewportHeight = window.innerHeight;
+                const navHeight = nav.offsetHeight;
+                navLinks.style.maxHeight = `${viewportHeight - navHeight}px`;
+                navLinks.style.overflowY = "auto";
+            } else {
+                navLinks.style.maxHeight = "";
+                navLinks.style.overflowY = "";
+            }
+        }
+
+        // Toggle main menu for mobile
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("show");
+            if (navLinks.classList.contains("show")) {
+                setAppropriateHeight();
+                // Ensure the dropdown is hidden when menu is first opened
+                navigationItemsContainer.style.display = "none";
+                navigationItemsContainer.classList.remove("show");
+            }
+        });
+
+        // Close menus if clicked outside
+        document.addEventListener("click", (event) => {
+            if (
+                !navLinks.contains(event.target) &&
+                !menuToggle.contains(event.target)
+            ) {
+                navLinks.classList.remove("show");
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+            }
+        });
+
+        // Hide navigation bar on scroll down in mobile view
+        window.addEventListener("scroll", () => {
+            if (window.innerWidth <= 768) {
+                nav.classList.toggle("hide", window.scrollY > lastScrollY);
+                lastScrollY = window.scrollY;
+            }
+        });
+
+        // Library API script
+        navigationHandler.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default action of the link
+            if (navigationItemsContainer.classList.contains("show")) {
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+                setTimeout(() => {
+                    navigationItemsContainer.style.display = "none";
+                }, 500); // Match the timeout to the CSS transition duration
+            } else {
+                navigationItemsContainer.style.display = "grid";
+                navigationHandler.classList.add("open");
+                setTimeout(() => {
+                    navigationItemsContainer.classList.add("show");
+                }, 10); // Delay to ensure the display change takes effect before adding class
+            }
+            setAppropriateHeight(); // Recalculate height when dropdown changes
+        });
+
+        // Handle window resize
+        window.addEventListener("resize", setAppropriateHeight);
+
+        // Initial setup
+        setAppropriateHeight();
+    });
+</script>
+<!-- NAVBAR END -->
+
+<div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">JuliaBUGS.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Introduction</a></li><li><a class="tocitem" href="../example/">Example</a></li><li><span class="tocitem">API</span><ul><li><a class="tocitem" href="../api/">General</a></li><li class="is-active"><a class="tocitem" href>Functions</a><ul class="internal"><li><a class="tocitem" href="#Function-defined-in-Julia-Standard-Library"><span>Function defined in Julia Standard Library</span></a></li><li><a class="tocitem" href="#Function-defined-in-[LogExpFunctions](https://github.com/JuliaStats/LogExpFunctions.jl)"><span>Function defined in <code>LogExpFunctions</code></span></a></li><li><a class="tocitem" href="#Function-defined-in-JuliaBUGS.BUGSPrimitives"><span>Function defined in <code>JuliaBUGS.BUGSPrimitives</code></span></a></li></ul></li><li><a class="tocitem" href="../distributions/">Distributions</a></li><li><a class="tocitem" href="../user_defined_functions/">User-defined Functions and Distributions</a></li></ul></li><li><a class="tocitem" href="../graph_plotting/">Plotting</a></li><li><a class="tocitem" href="../R_interface/">R Interface</a></li><li><a class="tocitem" href="../pitfalls/">Pitfalls</a></li><li><span class="tocitem">For Developers</span><ul><li><a class="tocitem" href="../parser/">Parser</a></li><li><a class="tocitem" href="../BUGS_notes/">Notes on BUGS Implementations</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">API</a></li><li class="is-active"><a href>Functions</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Functions</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/master/docs/src/functions.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><p>Most of the <a href="https://www.multibugs.org/documentation/latest/Functions.html">functions</a> from BUGS have been implemented. </p><p><code>JuliaBUGS</code> directly utilizes functions from the Julia Standard Library when they share the same names and functionalities. For functions not available in the Julia Standard Library and other popular libraries, we have developed equivalents within <code>JuliaBUGS.BUGSPrimitives</code>.</p><h2 id="Function-defined-in-Julia-Standard-Library"><a class="docs-heading-anchor" href="#Function-defined-in-Julia-Standard-Library">Function defined in Julia Standard Library</a><a id="Function-defined-in-Julia-Standard-Library-1"></a><a class="docs-heading-anchor-permalink" href="#Function-defined-in-Julia-Standard-Library" title="Permalink"></a></h2><div class="admonition is-warning"><header class="admonition-header">No keyword arguments syntax in BUGS</header><div class="admonition-body"><p>Please note that some functions listed may accept additional arguments (e.g. <code>trunc</code>) and/or keyword arguments (e.g. <code>sum</code>, <code>sort</code>, <code>mean</code>). However, at the moment <code>JuliaBUGS</code> only supports function arguments of type <code>Real</code> or <code>AbstractArray{Real}</code>. Furthermore, <code>JuliaBUGS</code> does not accommodate the use of keyword argument syntax. Thus, the default values for any optional or keyword arguments will be automatically applied.</p></div></div><article class="docstring"><header><a class="docstring-binding" id="Base.abs" href="#Base.abs"><code>Base.abs</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">abs(x)</code></pre><p>The absolute value of <code>x</code>.</p><p>When <code>abs</code> is applied to signed integers, overflow may occur, resulting in the return of a negative value. This overflow occurs only when <code>abs</code> is applied to the minimum representable value of a signed integer. That is, when <code>x == typemin(typeof(x))</code>, <code>abs(x) == x &lt; 0</code>, not <code>-x</code> as might be expected.</p><p>See also: <a href="@ref"><code>abs2</code></a>, <a href="@ref"><code>unsigned</code></a>, <a href="@ref"><code>sign</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; abs(-3)
+3
+
+julia&gt; abs(1 + im)
+1.4142135623730951
+
+julia&gt; abs.(Int8[-128 -127 -126 0 126 127])  # overflow at typemin(Int8)
+1×6 Matrix{Int8}:
+ -128  127  126  0  126  127
+
+julia&gt; maximum(abs, [1, -2, 3, -4])
+4</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/int.jl#L156-L184">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.exp-Tuple{Real}" href="#Base.exp-Tuple{Real}"><code>Base.exp</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">exp(x)</code></pre><p>Compute the natural base exponential of <code>x</code>, in other words <span>$ℯ^x$</span>.</p><p>See also <a href="@ref"><code>exp2</code></a>, <a href="@ref"><code>exp10</code></a> and <a href="@ref"><code>cis</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; exp(1.0)
+2.718281828459045
+
+julia&gt; exp(im * pi) ≈ cis(pi)
+true</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/special/exp.jl#L332-L347">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.log-Tuple{Number}" href="#Base.log-Tuple{Number}"><code>Base.log</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">log(x)</code></pre><p>Compute the natural logarithm of <code>x</code>. Throws <a href="@ref"><code>DomainError</code></a> for negative <a href="@ref"><code>Real</code></a> arguments. Use complex negative arguments to obtain complex results.</p><p>See also <a href="@ref"><code>ℯ</code></a>, <a href="@ref"><code>log1p</code></a>, <a href="@ref"><code>log2</code></a>, <a href="@ref"><code>log10</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; log(2)
+0.6931471805599453
+
+julia&gt; log(-3)
+ERROR: DomainError with -3.0:
+log was called with a negative real argument but will only return a complex result if called with a complex argument. Try log(Complex(x)).
+Stacktrace:
+ [1] throw_complex_domainerror(::Symbol, ::Float64) at ./math.jl:31
+[...]
+
+julia&gt; log.(exp.(-1:1))
+3-element Vector{Float64}:
+ -1.0
+  0.0
+  1.0</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L576-L602">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.sqrt-Tuple{Real}" href="#Base.sqrt-Tuple{Real}"><code>Base.sqrt</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">sqrt(x)</code></pre><p>Return <span>$\sqrt{x}$</span>. Throws <a href="@ref"><code>DomainError</code></a> for negative <a href="@ref"><code>Real</code></a> arguments. Use complex negative arguments instead. The prefix operator <code>√</code> is equivalent to <code>sqrt</code>.</p><p>See also: <a href="@ref"><code>hypot</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; sqrt(big(81))
+9.0
+
+julia&gt; sqrt(big(-81))
+ERROR: DomainError with -81.0:
+NaN result for non-NaN input.
+Stacktrace:
+ [1] sqrt(::BigFloat) at ./mpfr.jl:501
+[...]
+
+julia&gt; sqrt(big(complex(-81)))
+0.0 + 9.0im
+
+julia&gt; .√(1:4)
+4-element Vector{Float64}:
+ 1.0
+ 1.4142135623730951
+ 1.7320508075688772
+ 2.0</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L690-L720">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.trunc" href="#Base.trunc"><code>Base.trunc</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">trunc([T,] x)
+trunc(x; digits::Integer= [, base = 10])
+trunc(x; sigdigits::Integer= [, base = 10])</code></pre><p><code>trunc(x)</code> returns the nearest integral value of the same type as <code>x</code> whose absolute value is less than or equal to the absolute value of <code>x</code>.</p><p><code>trunc(T, x)</code> converts the result to type <code>T</code>, throwing an <code>InexactError</code> if the value is not representable.</p><p>Keywords <code>digits</code>, <code>sigdigits</code> and <code>base</code> work as for <a href="@ref"><code>round</code></a>.</p><p>See also: <a href="@ref rem"><code>%</code></a>, <a href="@ref"><code>floor</code></a>, <a href="@ref"><code>unsigned</code></a>, <a href="@ref"><code>unsafe_trunc</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; trunc(2.22)
+2.0
+
+julia&gt; trunc(-2.22, digits=1)
+-2.2
+
+julia&gt; trunc(Int, -2.22)
+-2</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/int.jl#L632-L658">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.min-Tuple{Real, Real}" href="#Base.min-Tuple{Real, Real}"><code>Base.min</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">min(x, y, ...)</code></pre><p>Return the minimum of the arguments (with respect to <a href="@ref"><code>isless</code></a>). See also the <a href="@ref"><code>minimum</code></a> function to take the minimum element from a collection.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; min(2, 5, 1)
+1</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/operators.jl#L478-L489">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.max-Tuple{Real, Real}" href="#Base.max-Tuple{Real, Real}"><code>Base.max</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">max(x, y, ...)</code></pre><p>Return the maximum of the arguments (with respect to <a href="@ref"><code>isless</code></a>). See also the <a href="@ref"><code>maximum</code></a> function to take the maximum element from a collection.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; max(2, 5, 1)
+5</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/operators.jl#L464-L475">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.sum-Tuple{AbstractArray}" href="#Base.sum-Tuple{AbstractArray}"><code>Base.sum</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">sum(A::AbstractArray; dims)</code></pre><p>Sum elements of an array over the given dimensions.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; A = [1 2; 3 4]
+2×2 Matrix{Int64}:
+ 1  2
+ 3  4
+
+julia&gt; sum(A, dims=1)
+1×2 Matrix{Int64}:
+ 4  6
+
+julia&gt; sum(A, dims=2)
+2×1 Matrix{Int64}:
+ 3
+ 7</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/reducedim.jl#L477-L498">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.sort-Tuple{AbstractArray}" href="#Base.sort-Tuple{AbstractArray}"><code>Base.sort</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">sort(A; dims::Integer, alg::Algorithm=defalg(A), lt=isless, by=identity, rev::Bool=false, order::Ordering=Forward)</code></pre><p>Sort a multidimensional array <code>A</code> along the given dimension. See <a href="@ref"><code>sort!</code></a> for a description of possible keyword arguments.</p><p>To sort slices of an array, refer to <a href="@ref"><code>sortslices</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; A = [4 3; 1 2]
+2×2 Matrix{Int64}:
+ 4  3
+ 1  2
+
+julia&gt; sort(A, dims = 1)
+2×2 Matrix{Int64}:
+ 1  2
+ 4  3
+
+julia&gt; sort(A, dims = 2)
+2×2 Matrix{Int64}:
+ 3  4
+ 1  2</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/sort.jl#L1756-L1782">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.sin-Tuple{Real}" href="#Base.sin-Tuple{Real}"><code>Base.sin</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">sin(x)</code></pre><p>Compute sine of <code>x</code>, where <code>x</code> is in radians.</p><p>See also <a href="@ref"><code>sind</code></a>, <a href="@ref"><code>sinpi</code></a>, <a href="@ref"><code>sincos</code></a>, <a href="@ref"><code>cis</code></a>, <a href="#Base.asin-Tuple{Real}"><code>asin</code></a>.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; round.(sin.(range(0, 2pi, length=9)&#39;), digits=3)
+1×9 Matrix{Float64}:
+ 0.0  0.707  1.0  0.707  0.0  -0.707  -1.0  -0.707  -0.0
+
+julia&gt; sind(45)
+0.7071067811865476
+
+julia&gt; sinpi(1/4)
+0.7071067811865475
+
+julia&gt; round.(sincos(pi/6), digits=3)
+(0.5, 0.866)
+
+julia&gt; round(cis(pi/6), digits=3)
+0.866 + 0.5im
+
+julia&gt; round(exp(im*pi/6), digits=3)
+0.866 + 0.5im</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L490-L518">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.cos-Tuple{Real}" href="#Base.cos-Tuple{Real}"><code>Base.cos</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">cos(x)</code></pre><p>Compute cosine of <code>x</code>, where <code>x</code> is in radians.</p><p>See also <a href="@ref"><code>cosd</code></a>, <a href="@ref"><code>cospi</code></a>, <a href="@ref"><code>sincos</code></a>, <a href="@ref"><code>cis</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L521-L527">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.tan-Tuple{Real}" href="#Base.tan-Tuple{Real}"><code>Base.tan</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">tan(x)</code></pre><p>Compute tangent of <code>x</code>, where <code>x</code> is in radians.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L530-L534">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.asin-Tuple{Real}" href="#Base.asin-Tuple{Real}"><code>Base.asin</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">asin(x)</code></pre><p>Compute the inverse sine of <code>x</code>, where the output is in radians.</p><p>See also <a href="@ref"><code>asind</code></a> for output in degrees.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; asin.((0, 1/2, 1))
+(0.0, 0.5235987755982989, 1.5707963267948966)
+
+julia&gt; asind.((0, 1/2, 1))
+(0.0, 30.000000000000004, 90.0)</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L537-L552">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.acos-Tuple{Real}" href="#Base.acos-Tuple{Real}"><code>Base.acos</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">acos(x)</code></pre><p>Compute the inverse cosine of <code>x</code>, where the output is in radians</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L555-L559">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.atan-Tuple{Real}" href="#Base.atan-Tuple{Real}"><code>Base.atan</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">atan(y)
+atan(y, x)</code></pre><p>Compute the inverse tangent of <code>y</code> or <code>y/x</code>, respectively.</p><p>For one argument, this is the angle in radians between the positive <em>x</em>-axis and the point (1, <em>y</em>), returning a value in the interval <span>$[-\pi/2, \pi/2]$</span>.</p><p>For two arguments, this is the angle in radians between the positive <em>x</em>-axis and the point (<em>x</em>, <em>y</em>), returning a value in the interval <span>$[-\pi, \pi]$</span>. This corresponds to a standard <a href="https://en.wikipedia.org/wiki/Atan2"><code>atan2</code></a> function. Note that by convention <code>atan(0.0,x)</code> is defined as <span>$\pi$</span> and <code>atan(-0.0,x)</code> is defined as <span>$-\pi$</span> when <code>x &lt; 0</code>.</p><p>See also <a href="@ref"><code>atand</code></a> for degrees.</p><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; rad2deg(atan(-1/√3))
+-30.000000000000004
+
+julia&gt; rad2deg(atan(-1, √3))
+-30.000000000000004
+
+julia&gt; rad2deg(atan(1, -√3))
+150.0</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L445-L473">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.asinh-Tuple{Real}" href="#Base.asinh-Tuple{Real}"><code>Base.asinh</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">asinh(x)</code></pre><p>Compute the inverse hyperbolic sine of <code>x</code>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L476-L480">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.acosh-Tuple{Real}" href="#Base.acosh-Tuple{Real}"><code>Base.acosh</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">acosh(x)</code></pre><p>Compute the inverse hyperbolic cosine of <code>x</code>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L562-L566">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Base.atanh-Tuple{Real}" href="#Base.atanh-Tuple{Real}"><code>Base.atanh</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">atanh(x)</code></pre><p>Compute the inverse hyperbolic tangent of <code>x</code>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/JuliaLang/julia/blob/bd47eca2c8aacd145b6c5c02e47e2b9ec27ab456/base/math.jl#L569-L573">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="Statistics.mean-Tuple{AbstractArray}" href="#Statistics.mean-Tuple{AbstractArray}"><code>Statistics.mean</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">mean(A::AbstractArray; dims)</code></pre><p>Compute the mean of an array over the given dimensions.</p><div class="admonition is-compat"><header class="admonition-header">Julia 1.1</header><div class="admonition-body"><p><code>mean</code> for empty arrays requires at least Julia 1.1.</p></div></div><p><strong>Examples</strong></p><pre><code class="language-julia-repl hljs">julia&gt; using Statistics
+
+julia&gt; A = [1 2; 3 4]
+2×2 Matrix{Int64}:
+ 1  2
+ 3  4
+
+julia&gt; mean(A, dims=1)
+1×2 Matrix{Float64}:
+ 2.0  3.0
+
+julia&gt; mean(A, dims=2)
+2×1 Matrix{Float64}:
+ 1.5
+ 3.5</code></pre></div></section></article><h2 id="Function-defined-in-[LogExpFunctions](https://github.com/JuliaStats/LogExpFunctions.jl)"><a class="docs-heading-anchor" href="#Function-defined-in-[LogExpFunctions](https://github.com/JuliaStats/LogExpFunctions.jl)">Function defined in <a href="https://github.com/JuliaStats/LogExpFunctions.jl"><code>LogExpFunctions</code></a></a><a id="Function-defined-in-[LogExpFunctions](https://github.com/JuliaStats/LogExpFunctions.jl)-1"></a><a class="docs-heading-anchor-permalink" href="#Function-defined-in-[LogExpFunctions](https://github.com/JuliaStats/LogExpFunctions.jl)" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="LogExpFunctions.cloglog" href="#LogExpFunctions.cloglog"><code>LogExpFunctions.cloglog</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">cloglog(x)
+</code></pre><p>Compute the complementary log-log, <code>log(-log(1 - x))</code>.</p></div></section></article><article class="docstring"><header><a class="docstring-binding" id="LogExpFunctions.cexpexp" href="#LogExpFunctions.cexpexp"><code>LogExpFunctions.cexpexp</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">cexpexp(x)
+</code></pre><p>Compute the complementary double exponential, <code>1 - exp(-exp(x))</code>.</p></div></section></article><article class="docstring"><header><a class="docstring-binding" id="LogExpFunctions.logit" href="#LogExpFunctions.logit"><code>LogExpFunctions.logit</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">logit(x)
+</code></pre><p>The <a href="https://en.wikipedia.org/wiki/Logit">logit</a> or log-odds transformation, defined as</p><p class="math-container">\[\operatorname{logit}(x) = \log\left(\frac{x}{1-x}\right)\]</p><p>for <span>$0 &lt; x &lt; 1$</span>.</p><p>Its inverse is the <a href="#LogExpFunctions.logistic"><code>logistic</code></a> function.</p></div></section></article><article class="docstring"><header><a class="docstring-binding" id="LogExpFunctions.logistic" href="#LogExpFunctions.logistic"><code>LogExpFunctions.logistic</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">logistic(x)
+</code></pre><p>The <a href="https://en.wikipedia.org/wiki/Logistic_function">logistic</a> sigmoid function mapping a real number to a value in the interval <span>$[0,1]$</span>,</p><p class="math-container">\[\sigma(x) = \frac{1}{e^{-x} + 1} = \frac{e^x}{1+e^x}.\]</p><p>Its inverse is the <a href="#LogExpFunctions.logit"><code>logit</code></a> function.</p></div></section></article><h2 id="Function-defined-in-JuliaBUGS.BUGSPrimitives"><a class="docs-heading-anchor" href="#Function-defined-in-JuliaBUGS.BUGSPrimitives">Function defined in <code>JuliaBUGS.BUGSPrimitives</code></a><a id="Function-defined-in-JuliaBUGS.BUGSPrimitives-1"></a><a class="docs-heading-anchor-permalink" href="#Function-defined-in-JuliaBUGS.BUGSPrimitives" title="Permalink"></a></h2><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.equals" href="#JuliaBUGS.BUGSPrimitives.equals"><code>JuliaBUGS.BUGSPrimitives.equals</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">equals(x, y)</code></pre><p>Returns 1 if <span>$x$</span> is equal to <span>$y$</span>, 0 otherwise.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L1-L5">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.inprod" href="#JuliaBUGS.BUGSPrimitives.inprod"><code>JuliaBUGS.BUGSPrimitives.inprod</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">inprod(a, b)</code></pre><p>Inner product of <span>$a$</span> and <span>$b$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L28-L32">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.inverse" href="#JuliaBUGS.BUGSPrimitives.inverse"><code>JuliaBUGS.BUGSPrimitives.inverse</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">inverse(m::AbstractMatrix)</code></pre><p>Inverse of matrix <span>$\mathbf{m}$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L37-L41">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.logdet" href="#JuliaBUGS.BUGSPrimitives.logdet"><code>JuliaBUGS.BUGSPrimitives.logdet</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">logdet(::AbstractMatrix)</code></pre><p>Logarithm of the determinant of matrix <span>$\mathbf{v}$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L46-L50">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.logfact" href="#JuliaBUGS.BUGSPrimitives.logfact"><code>JuliaBUGS.BUGSPrimitives.logfact</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">logfact(x)</code></pre><p>Logarithm of the factorial of <span>$x$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L55-L59">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.loggam" href="#JuliaBUGS.BUGSPrimitives.loggam"><code>JuliaBUGS.BUGSPrimitives.loggam</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">loggam(x)</code></pre><p>Logarithm of the gamma function of <span>$x$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L64-L68">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.icloglog" href="#JuliaBUGS.BUGSPrimitives.icloglog"><code>JuliaBUGS.BUGSPrimitives.icloglog</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">icloglog(x)</code></pre><p>Inverse complementary log-log function of <span>$x$</span>. Alias for <a href="#LogExpFunctions.cexpexp"><code>cexpexp(x)</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L10-L14">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.mexp" href="#JuliaBUGS.BUGSPrimitives.mexp"><code>JuliaBUGS.BUGSPrimitives.mexp</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">mexp(x::AbstractMatrix)</code></pre><p>Matrix exponential of <span>$\mathbf{x}$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L73-L77">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.phi" href="#JuliaBUGS.BUGSPrimitives.phi"><code>JuliaBUGS.BUGSPrimitives.phi</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">phi(x)</code></pre><p>Cumulative distribution function (CDF) of the standard normal distribution evaluated at <span>$x$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L82-L86">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.pow" href="#JuliaBUGS.BUGSPrimitives.pow"><code>JuliaBUGS.BUGSPrimitives.pow</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">pow(a, b)</code></pre><p>Return <span>$a$</span> raised to the power of <span>$b$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L100-L104">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.rank" href="#JuliaBUGS.BUGSPrimitives.rank"><code>JuliaBUGS.BUGSPrimitives.rank</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">rank(v::AbstractVector, i::Integer)</code></pre><p>Return the rank of the <span>$i$</span>-th element of <span>$\mathbf{v}$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L109-L113">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.ranked" href="#JuliaBUGS.BUGSPrimitives.ranked"><code>JuliaBUGS.BUGSPrimitives.ranked</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">ranked(v::AbstractVector, i::Integer)</code></pre><p>Return the <span>$i$</span>-th element of <span>$\mathbf{v}$</span> sorted in ascending order.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L118-L122">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.sd" href="#JuliaBUGS.BUGSPrimitives.sd"><code>JuliaBUGS.BUGSPrimitives.sd</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">sd(v::AbstractVector)</code></pre><p>Return the standard deviation of the input vector <span>$\mathbf{v}$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L127-L131">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.softplus" href="#JuliaBUGS.BUGSPrimitives.softplus"><code>JuliaBUGS.BUGSPrimitives.softplus</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">softplus(x)</code></pre><p>Return the softplus function of <code>x</code>, defined as <span>$\log(1 + \exp(x))$</span>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L136-L140">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives._step" href="#JuliaBUGS.BUGSPrimitives._step"><code>JuliaBUGS.BUGSPrimitives._step</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">_step(x)</code></pre><p>Return 1 if <span>$x$</span> is greater than 0, and 0 otherwise.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L145-L149">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.arcsin" href="#JuliaBUGS.BUGSPrimitives.arcsin"><code>JuliaBUGS.BUGSPrimitives.arcsin</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">arcsin(x)</code></pre><p>See <a href="#Base.asin-Tuple{Real}"><code>asin</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L154-L158">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.arcsinh" href="#JuliaBUGS.BUGSPrimitives.arcsinh"><code>JuliaBUGS.BUGSPrimitives.arcsinh</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">arcsinh(x)</code></pre><p>See <a href="#Base.asinh-Tuple{Real}"><code>asinh</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L163-L167">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.arccos" href="#JuliaBUGS.BUGSPrimitives.arccos"><code>JuliaBUGS.BUGSPrimitives.arccos</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">arccos(x)</code></pre><p>See <a href="#Base.acos-Tuple{Real}"><code>acos</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L172-L176">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.arccosh" href="#JuliaBUGS.BUGSPrimitives.arccosh"><code>JuliaBUGS.BUGSPrimitives.arccosh</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">arccosh(x)</code></pre><p>See <a href="#Base.acosh-Tuple{Real}"><code>acosh</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L181-L185">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.arctan" href="#JuliaBUGS.BUGSPrimitives.arctan"><code>JuliaBUGS.BUGSPrimitives.arctan</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">arctan(x)</code></pre><p>See <a href="#Base.atan-Tuple{Real}"><code>atan</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L190-L194">source</a></section></article><article class="docstring"><header><a class="docstring-binding" id="JuliaBUGS.BUGSPrimitives.arctanh" href="#JuliaBUGS.BUGSPrimitives.arctanh"><code>JuliaBUGS.BUGSPrimitives.arctanh</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">arctanh(x)</code></pre><p>See <a href="#Base.atanh-Tuple{Real}"><code>atanh</code></a>.</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/42484fefafe4e4905eb60c6eb0592f107e705ae5/src/BUGSPrimitives/functions.jl#L199-L203">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../api/">« General</a><a class="docs-footer-nextpage" href="../distributions/">Distributions »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 15 March 2024 12:53">Friday 15 March 2024</span>. Using Julia version 1.10.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+

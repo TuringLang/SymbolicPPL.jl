@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Notes on BUGS Implementations · JuliaBUGS.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body>
+<!-- NAVBAR START -->
+<style>
+    html {
+        scroll-padding-top: calc(55px + 1rem);
+    }
+
+    /* Documenter css tweaks */
+    .docs-sidebar {
+        margin-top: 3.75rem;
+    }
+
+    #documenter {
+        margin-top: 3.75rem;
+    }
+
+    .docs-version-selector {
+        margin-bottom: 60px !important;
+    }
+
+    @media screen and (max-width: 1056px) {
+        .docs-version-selector {
+            margin-bottom: 60px !important;
+        }
+
+        .docs-sidebar {
+            margin-top: 0 !important;
+        }
+    }
+    /* Documenter css tweaks ends here */
+
+    :root {
+        --heading-color: white;
+        --item-color: rgb(165, 165, 165);
+        --primary-bg: #073c44;
+        --hover-color: #8faad2;
+    }
+
+    .ext-navigation {
+        position: fixed;
+        height: 3.75rem;
+        top: 0;
+        width: 100%;
+        background-color: var(--primary-bg);
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        padding: 0 1.0625rem;
+        transition: transform 0.3s;
+    }
+
+    .ext-navbar-logo {
+        margin-left: 0.625rem;
+    }
+
+    .ext-nav-links {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        flex-grow: 1;
+    }
+
+    .ext-nav-links li {
+        margin-left: 1rem !important;
+    }
+
+    .ext-nav-link {
+        color: white !important;
+        text-decoration: none;
+        font-size: 1.0625rem !important;
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .ext-nav-link:hover,
+    .ext-navbar-item-single a:hover {
+        color: var(--hover-color) !important;
+    }
+
+    .ext-navbar-item-single a {
+        color: #fff !important;
+    }
+
+    .ext-menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    .ext-dropdown {
+        display: none;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 1.875rem;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        background-color: #083c44;
+        line-height: 1.875rem;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        transform: translateY(-0.625rem);
+    }
+
+    #library-handler::after {
+        content: "▼";
+        font-size: 0.6875rem;
+        margin-left: 0.3125rem;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #library-handler.open::after {
+        content: "▲";
+    }
+
+    .ext-dropdown.show {
+        display: grid;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .ext-dropdown ul {
+        height: auto;
+        width: 12.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .ext-dropdown ul li {
+        text-align: left;
+    }
+
+    .navbar-sub-item {
+        list-style: none;
+    }
+
+    .ext-dropdown ul a li {
+        color: var(--item-color);
+        width: 15.625rem;
+        border-radius: 3px;
+        padding: 0.125rem 0.625rem;
+        transition: background-color 0.2s ease;
+    }
+
+    .ext-dropdown ul a li:hover {
+        background-color: rgba(107, 107, 107, 0.5);
+    }
+
+    .ext-dropdown-item-heading {
+        color: var(--heading-color);
+        text-align: center;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 966px) {
+        .ext-dropdown {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .ext-nav-links {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background-color: var(--primary-bg);
+            position: absolute;
+            top: 3.75rem;
+            left: 0;
+            padding: 0.625rem 0;
+            height: auto;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgb(141, 141, 141) grey;
+        }
+
+        .ext-nav-links.show {
+            display: flex;
+        }
+
+        .ext-nav-links li {
+            margin: 0.625rem 0;
+            text-align: center;
+        }
+
+        .ext-menu-toggle {
+            display: block;
+            margin-left: auto;
+        }
+
+        .ext-navigation.hide {
+            transform: translateY(-3.75rem);
+        }
+
+        .ext-dropdown {
+            place-content: center;
+            text-align: center;
+            grid-template-columns: 1fr;
+            line-height: 1.25rem;
+            padding: 0.625rem;
+        }
+
+        .ext-dropdown ul {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0.3125rem;
+        }
+
+        .ext-dropdown ul li {
+            text-align: center;
+        }
+
+        .ext-dropdown ul a li {
+            width: 100%;
+        }
+
+        .ext-dropdown ul a li:hover {
+            background-color: var(--primary-bg);
+            color: #fff;
+        }
+
+        /* Modified scroll bar */
+        .ext-nav-links::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb {
+            background: rgb(141, 141, 141);
+            border-radius: 3px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb:hover {
+            background: #9b9b9b;
+        }
+    }
+</style>
+<nav class="ext-navigation">
+    <a href="https://turinglang.org/">
+        <img src="https://turinglang.org/assets/images/turing-logo.svg" alt="Turing Logo" class="ext-navbar-logo" height="24px" width="40px">
+    </a>
+    <a style="color: white !important; font-size: 21.25px !important; margin-left: 10px;" href="https://turinglang.org/">Turing.jl</a>
+    <ul class="ext-nav-links">
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/docs-00-getting-started/">Get Started</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/00-introduction/">Tutorials</a>
+        </li>
+        <li>
+            <p class="ext-nav-link" id="library-handler">Libraries</p>
+            <div class="ext-dropdown" id="ext-dropdown-items">
+                <ul>
+                    <li class="ext-dropdown-item-heading">Modelling Languages</li>
+                    <a href="https://turinglang.org/DynamicPPL.jl/">
+                        <li>DynamicPPL</li>
+                    </a>
+                    <a href="https://turinglang.org/JuliaBUGS.jl/">
+                        <li>JuliaBUGS</li>
+                    </a>
+                    <a href="https://turinglang.org/TuringGLM.jl/">
+                        <li>TuringGLM</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">MCMC</li>
+                    <a href="https://turinglang.org/AdvancedHMC.jl/">
+                        <li>AdvancedHMC</li>
+                    </a>
+                    <a href="https://turinglang.org/AbstractMCMC.jl/">
+                        <li>AbstractMCMC</li>
+                    </a>
+                    <a href="https://github.com/theogf/ThermodynamicIntegration.jl">
+                        <li>ThermodynamicIntegration</li>
+                    </a>
+                    <a href="https://turinglang.org/AdvancedPS.jl/">
+                        <li>AdvancedPS</li>
+                    </a>
+                    <a href="https://turinglang.org/SliceSampling.jl/">
+                        <li>SliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/EllipticalSliceSampling.jl/">
+                        <li>EllipticalSliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/NestedSamplers.jl/">
+                        <li>NestedSamplers</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Diagnostics</li>
+                    <a href="https://turinglang.org/MCMCChains.jl/">
+                        <li>MCMCChains</li>
+                    </a>
+                    <a href="https://turinglang.org/MCMCDiagnosticTools.jl/">
+                        <li>MCMCDiagnosticTools</li>
+                    </a>
+                    <a href="https://turinglang.org/ParetoSmooth.jl/">
+                        <li>ParetoSmooth</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Gaussion Processes</li>
+                    <a href="https://juliagaussianprocesses.github.io/AbstractGPs.jl/">
+                        <li>AbstractGPs</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/KernelFunctions.jl/">
+                        <li>KernelFunctions</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/ApproximateGPs.jl/">
+                        <li>ApproximateGPs</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/Bijectors.jl/">Bijectors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringCallbacks.jl/">TuringCallbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringBenchmarking.jl/">TuringBenchmarking</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/news/">News</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/team/">Team</a>
+        </li>
+    </ul>
+    <a href="https://x.com/TuringLang" style="margin-left: 15px; padding-top: 2px">
+        <svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="-209.92 -209.92 931.84 931.84" xml:space="preserve" stroke="#ffffff">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <g id="7935ec95c421cee6d86eb22ecd12f847">
+                    <path style="display: inline"
+                        d="M459.186,151.787c0.203,4.501,0.305,9.023,0.305,13.565 c0,138.542-105.461,298.285-298.274,298.285c-59.209,0-114.322-17.357-160.716-47.104c8.212,0.973,16.546,1.47,25.012,1.47 c49.121,0,94.318-16.759,130.209-44.884c-45.887-0.841-84.596-31.154-97.938-72.804c6.408,1.227,12.968,1.886,19.73,1.886 c9.55,0,18.816-1.287,27.617-3.68c-47.955-9.633-84.1-52.001-84.1-102.795c0-0.446,0-0.882,0.011-1.318 c14.133,7.847,30.294,12.562,47.488,13.109c-28.134-18.796-46.637-50.885-46.637-87.262c0-19.212,5.16-37.218,14.193-52.7 c51.707,63.426,128.941,105.156,216.072,109.536c-1.784-7.675-2.718-15.674-2.718-23.896c0-57.891,46.941-104.832,104.832-104.832 c30.173,0,57.404,12.734,76.525,33.102c23.887-4.694,46.313-13.423,66.569-25.438c-7.827,24.485-24.434,45.025-46.089,58.002 c21.209-2.535,41.426-8.171,60.222-16.505C497.448,118.542,479.666,137.004,459.186,151.787z">
+                    </path>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <a href="https://github.com/TuringLang/Turing.jl">
+        <svg width="32px" height="32px" viewBox="-8.2 -8.2 36.40 36.40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <title>github [#142]</title>
+                <desc>Created with Sketch.</desc>
+                <defs></defs>
+                <g id="Page-1" stroke-width="0.0002" fill="none" fill-rule="evenodd">
+                    <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -7559.000000)" fill="#ffffff">
+                        <g id="icons" transform="translate(56.000000, 160.000000)">
+                            <path
+                                d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"
+                                id="github-[#142]">
+                            </path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <span class="ext-menu-toggle">&#9776;</span>
+</nav>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.querySelector(".ext-menu-toggle");
+        const navLinks = document.querySelector(".ext-nav-links");
+        const nav = document.querySelector(".ext-navigation");
+        const navigationHandler = document.getElementById("library-handler");
+        const navigationItemsContainer =
+            document.getElementById("ext-dropdown-items");
+        let lastScrollY = window.scrollY;
+
+        function setAppropriateHeight() {
+            if (window.innerWidth <= 768) {
+                const viewportHeight = window.innerHeight;
+                const navHeight = nav.offsetHeight;
+                navLinks.style.maxHeight = `${viewportHeight - navHeight}px`;
+                navLinks.style.overflowY = "auto";
+            } else {
+                navLinks.style.maxHeight = "";
+                navLinks.style.overflowY = "";
+            }
+        }
+
+        // Toggle main menu for mobile
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("show");
+            if (navLinks.classList.contains("show")) {
+                setAppropriateHeight();
+                // Ensure the dropdown is hidden when menu is first opened
+                navigationItemsContainer.style.display = "none";
+                navigationItemsContainer.classList.remove("show");
+            }
+        });
+
+        // Close menus if clicked outside
+        document.addEventListener("click", (event) => {
+            if (
+                !navLinks.contains(event.target) &&
+                !menuToggle.contains(event.target)
+            ) {
+                navLinks.classList.remove("show");
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+            }
+        });
+
+        // Hide navigation bar on scroll down in mobile view
+        window.addEventListener("scroll", () => {
+            if (window.innerWidth <= 768) {
+                nav.classList.toggle("hide", window.scrollY > lastScrollY);
+                lastScrollY = window.scrollY;
+            }
+        });
+
+        // Library API script
+        navigationHandler.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default action of the link
+            if (navigationItemsContainer.classList.contains("show")) {
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+                setTimeout(() => {
+                    navigationItemsContainer.style.display = "none";
+                }, 500); // Match the timeout to the CSS transition duration
+            } else {
+                navigationItemsContainer.style.display = "grid";
+                navigationHandler.classList.add("open");
+                setTimeout(() => {
+                    navigationItemsContainer.classList.add("show");
+                }, 10); // Delay to ensure the display change takes effect before adding class
+            }
+            setAppropriateHeight(); // Recalculate height when dropdown changes
+        });
+
+        // Handle window resize
+        window.addEventListener("resize", setAppropriateHeight);
+
+        // Initial setup
+        setAppropriateHeight();
+    });
+</script>
+<!-- NAVBAR END -->
+
+<div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">JuliaBUGS.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../example/">Example</a></li><li><span class="tocitem">API</span><ul><li><a class="tocitem" href="../api/api/">General</a></li><li><a class="tocitem" href="../api/functions/">Functions</a></li><li><a class="tocitem" href="../api/distributions/">Distributions</a></li><li><a class="tocitem" href="../api/user_defined_functions/">User-Defined Functions and Distributions</a></li></ul></li><li><a class="tocitem" href="../differences/">Differences from Other BUGS Implementations</a></li><li><a class="tocitem" href="../pitfalls/">Pitfalls</a></li><li><a class="tocitem" href="../graph_plotting/">Plotting</a></li><li><a class="tocitem" href="../R_interface/">R Interface</a></li><li><span class="tocitem">For Developers</span><ul><li><a class="tocitem" href="../parser/">Parser</a></li><li class="is-active"><a class="tocitem" href>Notes on BUGS Implementations</a><ul class="internal"><li><a class="tocitem" href="#Lexing"><span>Lexing</span></a></li><li><a class="tocitem" href="#Table-of-Names"><span>Table of Names</span></a></li><li><a class="tocitem" href="#Data-Transformations"><span>Data Transformations</span></a></li><li><a class="tocitem" href="#Generated-Quantities"><span>Generated Quantities</span></a></li><li><a class="tocitem" href="#Computation"><span>Computation</span></a></li><li><a class="tocitem" href="#Types"><span>Types</span></a></li><li><a class="tocitem" href="#Work-flow"><span>Work flow</span></a></li><li class="toplevel"><a class="tocitem" href="#Logical-relations-in-the-BUGS-Language"><span>Logical relations in the BUGS Language</span></a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">For Developers</a></li><li class="is-active"><a href>Notes on BUGS Implementations</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Notes on BUGS Implementations</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/master/docs/src/BUGS_notes.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Miscellaneous-Notes-on-BUGS"><a class="docs-heading-anchor" href="#Miscellaneous-Notes-on-BUGS">Miscellaneous Notes on BUGS</a><a id="Miscellaneous-Notes-on-BUGS-1"></a><a class="docs-heading-anchor-permalink" href="#Miscellaneous-Notes-on-BUGS" title="Permalink"></a></h1><p>Here are some exert from <a href="https://github.com/BUGSLang/BUGS/blob/master/DevMan.pdf">BUGS Developer Manual</a> and notes on the original BUGS implementations. </p><h2 id="Lexing"><a class="docs-heading-anchor" href="#Lexing">Lexing</a><a id="Lexing-1"></a><a class="docs-heading-anchor-permalink" href="#Lexing" title="Permalink"></a></h2><ul><li>The BUGS language has the convention that if a name is followed immediately by a round bracket, that is by a &quot;(&quot;, then the names is a reserved name in the BUGS language and does not represent a variable in the model.</li><li>By scanning the stream of tokens that constitute a BUGS language model the names of all the variables in the model can be found.</li></ul><h2 id="Table-of-Names"><a class="docs-heading-anchor" href="#Table-of-Names">Table of Names</a><a id="Table-of-Names-1"></a><a class="docs-heading-anchor-permalink" href="#Table-of-Names" title="Permalink"></a></h2><ul><li>The BUGS language compiler expands all the for loops in the model and records the value of the indices of each use of a tensor on the left hand side of each relation.</li><li>The range of each index, for a tensor, is set at the maximum value observed value of the index and added to the name table. There is one exception to this procedure for finding index bounds: names that are data, that is in the data source, have the ranges of their indices fixed in the data source.</li><li>Each scalar and each component of a tensor used on the right hand side of a relation must occur either on the left hand side of a relation and or in a data source.</li></ul><h2 id="Data-Transformations"><a class="docs-heading-anchor" href="#Data-Transformations">Data Transformations</a><a id="Data-Transformations-1"></a><a class="docs-heading-anchor-permalink" href="#Data-Transformations" title="Permalink"></a></h2><p>If the compiler can prove that a logical assignment can be evaluated to a constant then the assignment is called a data transformation. This occurs if an assignment&#39;s right hand side does not depend on any variable quantities. The BUGS language has a general rule that there must only be one assignment statement for each scalar or component of a tensor.  This rule is slightly relaxed for data transformations. The language allows a logical assignment and a stochastic assignment to the same scalar or tensor component if and only if the logical assignment is a data transformation. </p><h2 id="Generated-Quantities"><a class="docs-heading-anchor" href="#Generated-Quantities">Generated Quantities</a><a id="Generated-Quantities-1"></a><a class="docs-heading-anchor-permalink" href="#Generated-Quantities" title="Permalink"></a></h2><p>Only need to be evaluated after the inference algorithm has finished its task. </p><ul><li>Generally, these are leaf nodes that logical variables</li><li>In the case of stochastic variables that are leaf nodes, do “forward sampling”, also part of the generated Quantities</li></ul><h2 id="Computation"><a class="docs-heading-anchor" href="#Computation">Computation</a><a id="Computation-1"></a><a class="docs-heading-anchor-permalink" href="#Computation" title="Permalink"></a></h2><ul><li>All the nodes in the graphical model representing logical relations are placed into an</li></ul><p>array and sorted by their nesting level with the first array entries only depending on quantities defined by stochastic relations. Traversing this array and evaluating nodes gives up to date values to all logical relations.</p><h2 id="Types"><a class="docs-heading-anchor" href="#Types">Types</a><a id="Types-1"></a><a class="docs-heading-anchor-permalink" href="#Types" title="Permalink"></a></h2><blockquote><p>The BUGS compiler uses the properties of the distribution on the right-hand side of a stochastic assignment statement to make deductions about the variable on the left-hand side. For example, r ~ dbin(p, n) implies that r is integer-valued, while x ~ dnorm(mu, tau) implies that x is real-valued.</p><p>Some distributions are real-valued but have support on a restricted range of the reals. For example, p ~ dbeta(a, b) implies that p is real-valued with support on the unit interval, while x ~ dgamma(r, lambda) implies that x is real-valued but with support on the positive real line.</p><p>There are two multivariate distributions in the BUGS language, the Dirichlet and the Wishart, that have support on a complex subspace of the reals. The Dirichlet has support on the unit simplex, while the Wishart has support on symmetric positive definite matrices.</p><p>The BUGS compiler tries to infer if logical relations return an integer value by looking at whether their parents are integer-valued and the operators that combine the values of their parents into the return value. For example, in the cure model example above, the logical relation state1[i] &lt;- state[i] + 1 is integer-valued because state[i] is a Bernoulli variable and therefore integer, the literal 1 is integer, and the sum of two integers is an integer.</p><p>When the BUGS system reads in data from a data source, it can tag whether the number read is an integer or a real and propagate this information to logical relations. Again, using the cure model as an example, the statement t[i] &lt;- x[i] + y[i] is integer-valued because both x and y are data and are given as integers in the data source.</p><p>One special type of data is constants: that is just numbers with no associated distribution. Constants have many uses in BUGS language models, but one of the most important is as covariates. A model can contain a large number of constants that are used as covariates. Because of the possible large numbers of these covariate-type constants, they are given special treatment by the BUGS compiler. If a name read in from a data source is only used on the right-hand side of logical relations, no nodes in the graphical model are created to hold its values; they are directly incorporated in the objects that represent the right-hand sides of the logical relations.</p><p>For example, the large Methadone model contains the regression:</p><p><code>mu.indexed[i] &lt;- beta[1] * x1[i] + beta[2] * x2[i] + beta[3] * x3[i] + beta[4] * x4[i] + region.effect[region.indexed[i]] + source.effect[region.indexed[i]] * source.indexed[i] + person.effect[person.indexed[i]]</code></p><p>where i ranges from 1 to 240776. Not having to create a node in the graphical model to represent x1, x2, x3, x4, region.indexed, source.index, and person.indexed saves a large amount of space.</p><p>In the BUGS language, the type information is fine-grained: each component of a tensor can have different type information. This is quite distinct from the situation in STAN and can make it much easier to specify a statistical model. One common case is where some components of a tensor have been observed while other components need to be estimated. The STAN documentation suggests workarounds for these situations, but these are somewhat complex.</p></blockquote><ul><li>The type propagation is interesting and maybe useful. But we don’t necessarily need to implement a type system. A dirty way to get type information is simply do a dry run with some tricks.</li></ul><h2 id="Work-flow"><a class="docs-heading-anchor" href="#Work-flow">Work flow</a><a id="Work-flow-1"></a><a class="docs-heading-anchor-permalink" href="#Work-flow" title="Permalink"></a></h2><p>The statistical model and data are presented to the BUGS system in a series of stages. In the first stage the model text is parsed into a tree and the name table constructed. The data is then loaded and checked against the model. The data can be split over a number of source. Once all the data has been loaded the model is compiled. Compiling builds the graphical model and does a large number of checks on the consistency of the model. Finally initial values can be given or generated for the model.</p><p>The compiler creates a node in the graphical model for each scalar name and each component of a tensor name in the BUGS language model. The compiler checks that only one node is created for each scalar name or component of a tensor name.</p><p>Reading in a data source causes the compiler to create special nodes called constant nodes to hold the values of the data.</p><p>The compiler processes logical relations before stochastic relations. Any logical relations that only have constant nodes on their right hand side become new constant nodes with the appropriate fixed value. Even if a logical relation can not be reduced to a constant some parts of the relation might be reduced to constants.</p><p>Any constant nodes that have an associated stochastic relation become data nodes in the graphical model.</p><h1 id="Logical-relations-in-the-BUGS-Language"><a class="docs-heading-anchor" href="#Logical-relations-in-the-BUGS-Language">Logical relations in the BUGS Language</a><a id="Logical-relations-in-the-BUGS-Language-1"></a><a class="docs-heading-anchor-permalink" href="#Logical-relations-in-the-BUGS-Language" title="Permalink"></a></h1><blockquote><p>The OpenBUGS software compiles a description of a statistical model in the BUGS language into a graph of objects. Each relation in the statistical model gives rise to a node in the graph of objects. Each distinct type of relation in the statistical model is represented by a node of a distinct class. For stochastic relations there is a fixed set of distributions that can be used in the modelling. For logical relations the situation is more complex. The software can use arbitrary logical expressions build out of a fixed set of basic operators and functions. For each distinct logical expression a new software source code module is written to implement a class to represent that logical expression in the graph of objects. The software module is then compiled using the Components Pascal compiler and the executable code merged into the running OpenBUGS software using the run time loading linker.</p><p>The BUGS language description of a statistical model is parsed into a list of trees. The sub-trees that represent logical relations in the statistical model are first converted into a stack based representation and then into Component Pascal source code. The source code is generated in module BugsCPWrite and the source code is then compiled in module BugsCPCompiler. Usually the generated source code is not displayed. Checking the Verbose option in the Info menu will cause each each source code module generated by the OpenBUGS software to be displayed in a separate window.</p><p>One advantage of a stack based representation of an expression is that it is straight forward to use it to derive source code that calculates the derivative of the expression with respect to its arguments. This part of the source code generation is carried out in module BugsCPWrite in procedure WriteEvaluateDiffMethod. Each operator in the stack representation of the logical expression causes a snippet of Component Pascal code to be written. These code snippets are generally very simple with those of binary operators slightly more complex than those of unitary operators. Each binary operators can emit three different code snippets: the general case and two special snippets depending on whether the left or right operands are numerical constants. The only complex code snippet is when an operand that is a logical relation in the statistical model is pushed onto the stack – the &gt; case of nested logical relations. In this case the nested logical relation will have its own code to calculate derivatives and these values can be passed up the nesting level.</p><p>The OpenBUGS software now uses a backward mode scheme to calculate the value of logical nodes in the statistical model. All the logical nodes in the statistical model are held in a global array and sorted according to their nesting level with unnested nodes at the start of the array. To evaluate all the logical nodes in the statistical model this array is then traversed and each logical node evaluated and the value stored in the node. The same scheme is used to calculate derivatives.</p><p>The graphs derived from the BUGS language representation of statistical models are generally sparse. The OpenBUGS software uses conditional independence arguments to exploit sparsity in the stochastic parts of the model. There is also a sparsity structure in logical relations.Each logical relation will often depend on just a few stochastic parents and derivatives with respect to other stochastic nodes in the model will be structurally zero. Each logical node has an associated array of stochastic parents for which the derivatives are non zero. Moving up the level of nesting the number of parents can grow. Dealing with this issue leads to the complexity in the code snippet for the operator that pushes a logical node onto the stack. These issues can be seen in the non-linear random effects model called Orange trees in volume II of the OpenBUGS examples. In this model eta[i,] is a function of phi[i,1], phi[i,2] and phi[i,3] where the phi are also logical functions of the stochastic theta[i,].</p><p>One refinement of the backward mode scheme used to calculate the value of logical nodes is to consider separately any logical nodes in the statistical model which are only used for prediction and do not affect the calculation of the joint probability distribution. These nodes need only be evaluated once per iteration of the inference algorithm. Examples of such nodes are sigma[k] and sigma.C in the Orange trees example. There is no need to evaluate the derivatives of these prediction nodes.</p><p>The workings of the backward mode scheme are easy to visualize when the inference algorithm updates all the stochastic nodes in the statistical model in one block. Local versions of the backward mode scheme can be used when the inference algorithm works on single nodes or when a small blocks of nodes are updated. Each stochastic node is given its own vector of logical nodes that depend on it either directly or via other logical nodes and this vector is sorted by nesting level. Each updater that works on small blocks of nodes contains a vector of logical nodes which is the union of the vectors of dependent logical nodes for each of its components.</p><p>The idea of the backward mode scheme for evaluating logical nodes can be used with caching in Metropolis Hastings sampling. First the vector of logical nodes depending on the relevant stochastic node(s) is evaluated and their values cached. The log of the conditional distribution is then calculated. Next a new value of the stochastic node is proposed. The vector of logical nodes is re-evaluated and the log of the &gt; conditional distribution calculated. If the proposed value is rejected then the cache is used to set the vector of logical nodes back to its old values.</p><p>The OpenBUGS software also calculates what class of function each logical node is in terms of its stochastic parents. If the software can prove for example that a logical node is a linear function of its parents more efficient sampling algorithms can be used. If a linear relation can be proved then the calculation of derivatives can also be optimized in some cases because they will be constant and so only need to be calculated once. Generalized linear models are implemented in a way that allows fast calculation of derivatives. The structure of the algorithm to classify the functional form of logical nodes is very similar to that for derivatives and uses a backward mode scheme</p></blockquote><p>BUGS separates management of logical and stochastic variables, essentially two graphs. Logical variables are stored in an array and values are updated with values in earlier positions of the array.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../parser/">« Parser</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 29 November 2024 09:50">Friday 29 November 2024</span>. Using Julia version 1.11.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+

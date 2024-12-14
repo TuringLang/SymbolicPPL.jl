@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Example · JuliaBUGS.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body>
+<!-- NAVBAR START -->
+<style>
+    html {
+        scroll-padding-top: calc(55px + 1rem);
+    }
+
+    /* Documenter css tweaks */
+    .docs-sidebar {
+        margin-top: 3.75rem;
+    }
+
+    #documenter {
+        margin-top: 3.75rem;
+    }
+
+    .docs-version-selector {
+        margin-bottom: 60px !important;
+    }
+
+    @media screen and (max-width: 1056px) {
+        .docs-version-selector {
+            margin-bottom: 60px !important;
+        }
+
+        .docs-sidebar {
+            margin-top: 0 !important;
+        }
+    }
+    /* Documenter css tweaks ends here */
+
+    :root {
+        --heading-color: white;
+        --item-color: rgb(165, 165, 165);
+        --primary-bg: #073c44;
+        --hover-color: #8faad2;
+    }
+
+    .ext-navigation {
+        position: fixed;
+        height: 3.75rem;
+        top: 0;
+        width: 100%;
+        background-color: var(--primary-bg);
+        z-index: 1000;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        padding: 0 1.0625rem;
+        transition: transform 0.3s;
+    }
+
+    .ext-navbar-logo {
+        margin-left: 0.625rem;
+    }
+
+    .ext-nav-links {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        flex-grow: 1;
+    }
+
+    .ext-nav-links li {
+        margin-left: 1rem !important;
+    }
+
+    .ext-nav-link {
+        color: white !important;
+        text-decoration: none;
+        font-size: 1.0625rem !important;
+        transition: color 0.2s ease;
+        cursor: pointer;
+    }
+
+    .ext-nav-link:hover,
+    .ext-navbar-item-single a:hover {
+        color: var(--hover-color) !important;
+    }
+
+    .ext-navbar-item-single a {
+        color: #fff !important;
+    }
+
+    .ext-menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+    }
+
+    .ext-dropdown {
+        display: none;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 1.875rem;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        background-color: #083c44;
+        line-height: 1.875rem;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        transform: translateY(-0.625rem);
+    }
+
+    #library-handler::after {
+        content: "▼";
+        font-size: 0.6875rem;
+        margin-left: 0.3125rem;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    #library-handler.open::after {
+        content: "▲";
+    }
+
+    .ext-dropdown.show {
+        display: grid;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .ext-dropdown ul {
+        height: auto;
+        width: 12.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .ext-dropdown ul li {
+        text-align: left;
+    }
+
+    .navbar-sub-item {
+        list-style: none;
+    }
+
+    .ext-dropdown ul a li {
+        color: var(--item-color);
+        width: 15.625rem;
+        border-radius: 3px;
+        padding: 0.125rem 0.625rem;
+        transition: background-color 0.2s ease;
+    }
+
+    .ext-dropdown ul a li:hover {
+        background-color: rgba(107, 107, 107, 0.5);
+    }
+
+    .ext-dropdown-item-heading {
+        color: var(--heading-color);
+        text-align: center;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 966px) {
+        .ext-dropdown {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .ext-nav-links {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background-color: var(--primary-bg);
+            position: absolute;
+            top: 3.75rem;
+            left: 0;
+            padding: 0.625rem 0;
+            height: auto;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgb(141, 141, 141) grey;
+        }
+
+        .ext-nav-links.show {
+            display: flex;
+        }
+
+        .ext-nav-links li {
+            margin: 0.625rem 0;
+            text-align: center;
+        }
+
+        .ext-menu-toggle {
+            display: block;
+            margin-left: auto;
+        }
+
+        .ext-navigation.hide {
+            transform: translateY(-3.75rem);
+        }
+
+        .ext-dropdown {
+            place-content: center;
+            text-align: center;
+            grid-template-columns: 1fr;
+            line-height: 1.25rem;
+            padding: 0.625rem;
+        }
+
+        .ext-dropdown ul {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 0.3125rem;
+        }
+
+        .ext-dropdown ul li {
+            text-align: center;
+        }
+
+        .ext-dropdown ul a li {
+            width: 100%;
+        }
+
+        .ext-dropdown ul a li:hover {
+            background-color: var(--primary-bg);
+            color: #fff;
+        }
+
+        /* Modified scroll bar */
+        .ext-nav-links::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb {
+            background: rgb(141, 141, 141);
+            border-radius: 3px;
+        }
+
+        .ext-nav-links::-webkit-scrollbar-thumb:hover {
+            background: #9b9b9b;
+        }
+    }
+</style>
+<nav class="ext-navigation">
+    <a href="https://turinglang.org/">
+        <img src="https://turinglang.org/assets/images/turing-logo.svg" alt="Turing Logo" class="ext-navbar-logo" height="24px" width="40px">
+    </a>
+    <a style="color: white !important; font-size: 21.25px !important; margin-left: 10px;" href="https://turinglang.org/">Turing.jl</a>
+    <ul class="ext-nav-links">
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/docs-00-getting-started/">Get Started</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/docs/tutorials/00-introduction/">Tutorials</a>
+        </li>
+        <li>
+            <p class="ext-nav-link" id="library-handler">Libraries</p>
+            <div class="ext-dropdown" id="ext-dropdown-items">
+                <ul>
+                    <li class="ext-dropdown-item-heading">Modelling Languages</li>
+                    <a href="https://turinglang.org/DynamicPPL.jl/">
+                        <li>DynamicPPL</li>
+                    </a>
+                    <a href="https://turinglang.org/JuliaBUGS.jl/">
+                        <li>JuliaBUGS</li>
+                    </a>
+                    <a href="https://turinglang.org/TuringGLM.jl/">
+                        <li>TuringGLM</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">MCMC</li>
+                    <a href="https://turinglang.org/AdvancedHMC.jl/">
+                        <li>AdvancedHMC</li>
+                    </a>
+                    <a href="https://turinglang.org/AbstractMCMC.jl/">
+                        <li>AbstractMCMC</li>
+                    </a>
+                    <a href="https://github.com/theogf/ThermodynamicIntegration.jl">
+                        <li>ThermodynamicIntegration</li>
+                    </a>
+                    <a href="https://turinglang.org/AdvancedPS.jl/">
+                        <li>AdvancedPS</li>
+                    </a>
+                    <a href="https://turinglang.org/SliceSampling.jl/">
+                        <li>SliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/EllipticalSliceSampling.jl/">
+                        <li>EllipticalSliceSampling</li>
+                    </a>
+                    <a href="https://turinglang.org/NestedSamplers.jl/">
+                        <li>NestedSamplers</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Diagnostics</li>
+                    <a href="https://turinglang.org/MCMCChains.jl/">
+                        <li>MCMCChains</li>
+                    </a>
+                    <a href="https://turinglang.org/MCMCDiagnosticTools.jl/">
+                        <li>MCMCDiagnosticTools</li>
+                    </a>
+                    <a href="https://turinglang.org/ParetoSmooth.jl/">
+                        <li>ParetoSmooth</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading">Gaussion Processes</li>
+                    <a href="https://juliagaussianprocesses.github.io/AbstractGPs.jl/">
+                        <li>AbstractGPs</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/KernelFunctions.jl/">
+                        <li>KernelFunctions</li>
+                    </a>
+                    <a href="https://juliagaussianprocesses.github.io/ApproximateGPs.jl/">
+                        <li>ApproximateGPs</li>
+                    </a>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/Bijectors.jl/">Bijectors</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringCallbacks.jl/">TuringCallbacks</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="ext-dropdown-item-heading ext-navbar-item-single">
+                        <a href="https://turinglang.org/TuringBenchmarking.jl/">TuringBenchmarking</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/news/">News</a>
+        </li>
+        <li>
+            <a class="ext-nav-link" href="https://turinglang.org/team/">Team</a>
+        </li>
+    </ul>
+    <a href="https://x.com/TuringLang" style="margin-left: 15px; padding-top: 2px">
+        <svg fill="#ffffff" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" viewBox="-209.92 -209.92 931.84 931.84" xml:space="preserve" stroke="#ffffff">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <g id="7935ec95c421cee6d86eb22ecd12f847">
+                    <path style="display: inline"
+                        d="M459.186,151.787c0.203,4.501,0.305,9.023,0.305,13.565 c0,138.542-105.461,298.285-298.274,298.285c-59.209,0-114.322-17.357-160.716-47.104c8.212,0.973,16.546,1.47,25.012,1.47 c49.121,0,94.318-16.759,130.209-44.884c-45.887-0.841-84.596-31.154-97.938-72.804c6.408,1.227,12.968,1.886,19.73,1.886 c9.55,0,18.816-1.287,27.617-3.68c-47.955-9.633-84.1-52.001-84.1-102.795c0-0.446,0-0.882,0.011-1.318 c14.133,7.847,30.294,12.562,47.488,13.109c-28.134-18.796-46.637-50.885-46.637-87.262c0-19.212,5.16-37.218,14.193-52.7 c51.707,63.426,128.941,105.156,216.072,109.536c-1.784-7.675-2.718-15.674-2.718-23.896c0-57.891,46.941-104.832,104.832-104.832 c30.173,0,57.404,12.734,76.525,33.102c23.887-4.694,46.313-13.423,66.569-25.438c-7.827,24.485-24.434,45.025-46.089,58.002 c21.209-2.535,41.426-8.171,60.222-16.505C497.448,118.542,479.666,137.004,459.186,151.787z">
+                    </path>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <a href="https://github.com/TuringLang/Turing.jl">
+        <svg width="32px" height="32px" viewBox="-8.2 -8.2 36.40 36.40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <title>github [#142]</title>
+                <desc>Created with Sketch.</desc>
+                <defs></defs>
+                <g id="Page-1" stroke-width="0.0002" fill="none" fill-rule="evenodd">
+                    <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -7559.000000)" fill="#ffffff">
+                        <g id="icons" transform="translate(56.000000, 160.000000)">
+                            <path
+                                d="M94,7399 C99.523,7399 104,7403.59 104,7409.253 C104,7413.782 101.138,7417.624 97.167,7418.981 C96.66,7419.082 96.48,7418.762 96.48,7418.489 C96.48,7418.151 96.492,7417.047 96.492,7415.675 C96.492,7414.719 96.172,7414.095 95.813,7413.777 C98.04,7413.523 100.38,7412.656 100.38,7408.718 C100.38,7407.598 99.992,7406.684 99.35,7405.966 C99.454,7405.707 99.797,7404.664 99.252,7403.252 C99.252,7403.252 98.414,7402.977 96.505,7404.303 C95.706,7404.076 94.85,7403.962 94,7403.958 C93.15,7403.962 92.295,7404.076 91.497,7404.303 C89.586,7402.977 88.746,7403.252 88.746,7403.252 C88.203,7404.664 88.546,7405.707 88.649,7405.966 C88.01,7406.684 87.619,7407.598 87.619,7408.718 C87.619,7412.646 89.954,7413.526 92.175,7413.785 C91.889,7414.041 91.63,7414.493 91.54,7415.156 C90.97,7415.418 89.522,7415.871 88.63,7414.304 C88.63,7414.304 88.101,7413.319 87.097,7413.247 C87.097,7413.247 86.122,7413.234 87.029,7413.87 C87.029,7413.87 87.684,7414.185 88.139,7415.37 C88.139,7415.37 88.726,7417.2 91.508,7416.58 C91.513,7417.437 91.522,7418.245 91.522,7418.489 C91.522,7418.76 91.338,7419.077 90.839,7418.982 C86.865,7417.627 84,7413.783 84,7409.253 C84,7403.59 88.478,7399 94,7399"
+                                id="github-[#142]">
+                            </path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </a>
+    <span class="ext-menu-toggle">&#9776;</span>
+</nav>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuToggle = document.querySelector(".ext-menu-toggle");
+        const navLinks = document.querySelector(".ext-nav-links");
+        const nav = document.querySelector(".ext-navigation");
+        const navigationHandler = document.getElementById("library-handler");
+        const navigationItemsContainer =
+            document.getElementById("ext-dropdown-items");
+        let lastScrollY = window.scrollY;
+
+        function setAppropriateHeight() {
+            if (window.innerWidth <= 768) {
+                const viewportHeight = window.innerHeight;
+                const navHeight = nav.offsetHeight;
+                navLinks.style.maxHeight = `${viewportHeight - navHeight}px`;
+                navLinks.style.overflowY = "auto";
+            } else {
+                navLinks.style.maxHeight = "";
+                navLinks.style.overflowY = "";
+            }
+        }
+
+        // Toggle main menu for mobile
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("show");
+            if (navLinks.classList.contains("show")) {
+                setAppropriateHeight();
+                // Ensure the dropdown is hidden when menu is first opened
+                navigationItemsContainer.style.display = "none";
+                navigationItemsContainer.classList.remove("show");
+            }
+        });
+
+        // Close menus if clicked outside
+        document.addEventListener("click", (event) => {
+            if (
+                !navLinks.contains(event.target) &&
+                !menuToggle.contains(event.target)
+            ) {
+                navLinks.classList.remove("show");
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+            }
+        });
+
+        // Hide navigation bar on scroll down in mobile view
+        window.addEventListener("scroll", () => {
+            if (window.innerWidth <= 768) {
+                nav.classList.toggle("hide", window.scrollY > lastScrollY);
+                lastScrollY = window.scrollY;
+            }
+        });
+
+        // Library API script
+        navigationHandler.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default action of the link
+            if (navigationItemsContainer.classList.contains("show")) {
+                navigationItemsContainer.classList.remove("show");
+                navigationHandler.classList.remove("open");
+                setTimeout(() => {
+                    navigationItemsContainer.style.display = "none";
+                }, 500); // Match the timeout to the CSS transition duration
+            } else {
+                navigationItemsContainer.style.display = "grid";
+                navigationHandler.classList.add("open");
+                setTimeout(() => {
+                    navigationItemsContainer.classList.add("show");
+                }, 10); // Delay to ensure the display change takes effect before adding class
+            }
+            setAppropriateHeight(); // Recalculate height when dropdown changes
+        });
+
+        // Handle window resize
+        window.addEventListener("resize", setAppropriateHeight);
+
+        // Initial setup
+        setAppropriateHeight();
+    });
+</script>
+<!-- NAVBAR END -->
+
+<div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">JuliaBUGS.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Introduction</a></li><li class="is-active"><a class="tocitem" href>Example</a><ul class="internal"><li><a class="tocitem" href="#Modeling-Language"><span>Modeling Language</span></a></li><li><a class="tocitem" href="#Compilation"><span>Compilation</span></a></li><li><a class="tocitem" href="#Inference"><span>Inference</span></a></li><li><a class="tocitem" href="#Parallel-and-Distributed-Sampling-with-AbstractMCMC"><span>Parallel and Distributed Sampling with <code>AbstractMCMC</code></span></a></li><li><a class="tocitem" href="#More-Examples"><span>More Examples</span></a></li></ul></li><li><span class="tocitem">API</span><ul><li><a class="tocitem" href="../api/">General</a></li><li><a class="tocitem" href="../functions/">Functions</a></li><li><a class="tocitem" href="../distributions/">Distributions</a></li><li><a class="tocitem" href="../user_defined_functions/">User-defined Functions and Distributions</a></li></ul></li><li><a class="tocitem" href="../graph_plotting/">Plotting</a></li><li><a class="tocitem" href="../R_interface/">R Interface</a></li><li><a class="tocitem" href="../pitfalls/">Pitfalls</a></li><li><span class="tocitem">For Developers</span><ul><li><a class="tocitem" href="../parser/">Parser</a></li><li><a class="tocitem" href="../BUGS_notes/">Notes on BUGS Implementations</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Example</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Example</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/TuringLang/JuliaBUGS.jl/blob/master/docs/src/example.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Example:-Logistic-Regression-with-Random-Effects"><a class="docs-heading-anchor" href="#Example:-Logistic-Regression-with-Random-Effects">Example: Logistic Regression with Random Effects</a><a id="Example:-Logistic-Regression-with-Random-Effects-1"></a><a class="docs-heading-anchor-permalink" href="#Example:-Logistic-Regression-with-Random-Effects" title="Permalink"></a></h1><p>We will use the <a href="https://chjackson.github.io/openbugsdoc/Examples/Seeds.html">Seeds</a> model for demonstration.  This example concerns the proportion of seeds that germinated on each of 21 plates. Here, we transform the data into a <code>NamedTuple</code>:</p><pre><code class="language-julia hljs">data = (
+    r = [10, 23, 23, 26, 17, 5, 53, 55, 32, 46, 10, 8, 10, 8, 23, 0, 3, 22, 15, 32, 3],
+    n = [39, 62, 81, 51, 39, 6, 74, 72, 51, 79, 13, 16, 30, 28, 45, 4, 12, 41, 30, 51, 7],
+    x1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    x2 = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+    N = 21,
+)</code></pre><p>where <code>r[i]</code> is the number of germinated seeds and <code>n[i]</code> is the total number of the seeds on the <span>$i$</span>-th plate.  Let <span>$p_i$</span> be the probability of germination on the <span>$i$</span>-th plate. Then, the model is defined by:</p>$<p>\begin{aligned} b<em>i &amp;\sim \text{Normal}(0, \tau) \
+\text{logit}(p</em>i) &amp;= \alpha<em>0 + \alpha</em>1 x<em>{1 i} + \alpha</em>2 x<em>{2i} + \alpha</em>{12} x<em>{1i} x</em>{2i} + b<em>{i} \
+r</em>i &amp;\sim \text{Binomial}(p<em>i, n</em>i) \end{aligned} $</p><p>where <span>$x_{1i}$</span> and <span>$x_{2i}$</span> are the seed type and root extract of the <span>$i$</span>-th plate.   The original BUGS program for the model is:</p><pre><code class="language-R hljs">model
+{
+    for( i in 1 : N ) {
+        r[i] ~ dbin(p[i],n[i])
+        b[i] ~ dnorm(0.0,tau)
+        logit(p[i]) &lt;- alpha0 + alpha1 * x1[i] + alpha2 * x2[i] +
+        alpha12 * x1[i] * x2[i] + b[i]
+    }
+    alpha0 ~ dnorm(0.0, 1.0E-6)
+    alpha1 ~ dnorm(0.0, 1.0E-6)
+    alpha2 ~ dnorm(0.0, 1.0E-6)
+    alpha12 ~ dnorm(0.0, 1.0E-6)
+    tau ~ dgamma(0.001, 0.001)
+    sigma &lt;- 1 / sqrt(tau)
+}</code></pre><h2 id="Modeling-Language"><a class="docs-heading-anchor" href="#Modeling-Language">Modeling Language</a><a id="Modeling-Language-1"></a><a class="docs-heading-anchor-permalink" href="#Modeling-Language" title="Permalink"></a></h2><h3 id="Writing-a-Model-in-BUGS"><a class="docs-heading-anchor" href="#Writing-a-Model-in-BUGS">Writing a Model in BUGS</a><a id="Writing-a-Model-in-BUGS-1"></a><a class="docs-heading-anchor-permalink" href="#Writing-a-Model-in-BUGS" title="Permalink"></a></h3><p>BUGS language syntax: <a href="https://github.com/TuringLang/JuliaBUGS.jl/blob/master/archive/parser_attempts/BNF.txt">BNF definition</a></p><p>Language References:  </p><ul><li><a href="https://www.multibugs.org/documentation/latest/">MultiBUGS</a></li><li><a href="https://chjackson.github.io/openbugsdoc/Manuals/ModelSpecification.html">OpenBUGS</a></li></ul><p>Implementations in C++ and R:</p><ul><li><a href="https://sourceforge.net/p/mcmc-jags/code-0/ci/default/tree/">JAGS</a> and its <a href="https://people.stat.sc.edu/hansont/stat740/jags_user_manual.pdf">user manual</a></li><li><a href="https://r-nimble.org/">Nimble</a></li></ul><h3 id="Writing-a-Model-in-Julia"><a class="docs-heading-anchor" href="#Writing-a-Model-in-Julia">Writing a Model in Julia</a><a id="Writing-a-Model-in-Julia-1"></a><a class="docs-heading-anchor-permalink" href="#Writing-a-Model-in-Julia" title="Permalink"></a></h3><p>We provide a macro solution which allows users to write down model definitions using Julia:</p><pre><code class="language-julia hljs">model_def = @bugs begin
+    for i in 1:N
+        r[i] ~ dbin(p[i], n[i])
+        b[i] ~ dnorm(0.0, tau)
+        p[i] = logistic(alpha0 + alpha1 * x1[i] + alpha2 * x2[i] + alpha12 * x1[i] * x2[i] + b[i])
+    end
+    alpha0 ~ dnorm(0.0, 1.0E-6)
+    alpha1 ~ dnorm(0.0, 1.0E-6)
+    alpha2 ~ dnorm(0.0, 1.0E-6)
+    alpha12 ~ dnorm(0.0, 1.0E-6)
+    tau ~ dgamma(0.001, 0.001)
+    sigma = 1 / sqrt(tau)
+end</code></pre><p>BUGS syntax carries over almost one-to-one to Julia, with minor exceptions. In general, when basic Julia syntax and BUGS syntax conflict, it is necessary to use Julia syntax.  For example, curly braces are replaced with <code>begin ... end</code> blocks, and <code>for</code> loops do not require parentheses. In addition, Julia uses <code>f(x) = ...</code> as a shorthand for function definition, so BUGS&#39; link function syntax can be confusing and ambiguous.  Thus, instead of calling the link function, we call the inverse link function from the RHS.</p><h3 id="Support-for-Legacy-BUGS-Programs"><a class="docs-heading-anchor" href="#Support-for-Legacy-BUGS-Programs">Support for Legacy BUGS Programs</a><a id="Support-for-Legacy-BUGS-Programs-1"></a><a class="docs-heading-anchor-permalink" href="#Support-for-Legacy-BUGS-Programs" title="Permalink"></a></h3><p>The <code>@bugs</code> macro also works with original (R-like) BUGS syntax:</p><pre><code class="language-julia hljs">model_def = @bugs(&quot;&quot;&quot;
+model{
+    for( i in 1 : N ) {
+        r[i] ~ dbin(p[i],n[i])
+        b[i] ~ dnorm(0.0,tau)
+        logit(p[i]) &lt;- alpha0 + alpha1 * x1[i] + alpha2 * x2[i] +
+        alpha12 * x1[i] * x2[i] + b[i]
+    }
+    alpha0 ~ dnorm(0.0,1.0E-6)
+    alpha1 ~ dnorm(0.0,1.0E-6)
+    alpha2 ~ dnorm(0.0,1.0E-6)
+    alpha12 ~ dnorm(0.0,1.0E-6)
+    tau ~ dgamma(0.001,0.001)
+    sigma &lt;- 1 / sqrt(tau)
+}
+&quot;&quot;&quot;, true)</code></pre><p>By default, <code>@bugs</code> will translate R-style variable names like <code>a.b.c</code> to <code>a_b_c</code>, user can pass <code>false</code> as the second argument to disable this.  We still encourage users to write new programs using the Julia-native syntax, because of better debuggability and perks like syntax highlighting. </p><h2 id="Compilation"><a class="docs-heading-anchor" href="#Compilation">Compilation</a><a id="Compilation-1"></a><a class="docs-heading-anchor-permalink" href="#Compilation" title="Permalink"></a></h2><p>For now, the <code>compile</code> function will create a <code>BUGSModel</code>, which implements <a href="https://github.com/tpapp/LogDensityProblems.jl"><code>LogDensityProblems.jl</code></a> interface.</p><pre><code class="language-julia hljs">compile(model_def::Expr, data, initializations),</code></pre><p>The function <code>compile</code> takes three arguments: </p><ul><li>the output of <code>@bugs</code>, </li><li>the data, and</li><li>the initializations of parameters.</li></ul><pre><code class="language-julia hljs">initializations = Dict(:alpha =&gt; 1, :beta =&gt; 1)</code></pre><p>then we can compile the model with the data and initializations,</p><pre><code class="language-julia hljs">model = compile(model_def, data, initializations)</code></pre><p><code>LogDensityProblemsAD.jl</code> defined some extensions that support automatic differentiation packages. For example, with <code>ReverseDiff.jl</code></p><pre><code class="language-julia hljs">using LogDensityProblemsAD, ReverseDiff
+
+ad_model = ADgradient(:ReverseDiff, model; compile=Val(true))</code></pre><p>Here <code>ad_model</code> will also implement all the interfaces of <code>LogDensityProblems.jl</code>.  <code>LogDensityProblemsAD.jl</code> will automatically add the interface function <code>logdensity_and_gradient</code> to the model, which will return the log density and gradient of the model.   And <code>ad_model</code> can be used in the same way as <code>model</code> in the example below.</p><h2 id="Inference"><a class="docs-heading-anchor" href="#Inference">Inference</a><a id="Inference-1"></a><a class="docs-heading-anchor-permalink" href="#Inference" title="Permalink"></a></h2><p>For a differentiable model, we can use <a href="https://github.com/TuringLang/AdvancedHMC.jl"><code>AdvancedHMC.jl</code></a> to perform inference.  For instance,</p><pre><code class="language-julia hljs">using AdvancedHMC, AbstractMCMC, LogDensityProblems, MCMCChains
+
+n_samples, n_adapts = 2000, 1000
+
+D = LogDensityProblems.dimension(model); initial_θ = rand(D)
+
+samples_and_stats = AbstractMCMC.sample(
+                        ad_model,
+                        NUTS(0.8),
+                        n_samples;
+                        chain_type = Chains,
+                        n_adapts = n_adapts,
+                        init_params = initial_θ,
+                        discard_initial = n_adapts
+                    )</code></pre><p>This will return the MCMC Chain,</p><pre><code class="nohighlight hljs">Chains MCMC chain (2000×40×1 Array{Real, 3}):
+
+Iterations        = 1001:1:3000
+Number of chains  = 1
+Samples per chain = 2000
+parameters        = alpha0, alpha12, alpha1, alpha2, tau, b[16], b[12], b[10], b[14], b[13], b[7], b[6], b[20], b[1], b[4], b[5], b[2], b[18], b[8], b[3], b[9], b[21], b[17], b[15], b[11], b[19], sigma
+internals         = lp, n_steps, is_accept, acceptance_rate, log_density, hamiltonian_energy, hamiltonian_energy_error, max_hamiltonian_energy_error, tree_depth, numerical_error, step_size, nom_step_size, is_adapt
+
+Summary Statistics
+  parameters      mean       std      mcse    ess_bulk    ess_tail      rhat   ess_per_sec 
+      Symbol   Float64   Float64   Float64        Real     Float64   Float64       Missing 
+
+      alpha0   -0.5642    0.2320    0.0084    766.9305   1022.5211    1.0021       missing
+     alpha12   -0.8489    0.5247    0.0170    946.0418   1044.1109    1.0002       missing
+      alpha1    0.0587    0.3715    0.0119    966.4367   1233.2257    1.0007       missing
+      alpha2    1.3852    0.3410    0.0127    712.2978    974.1566    1.0002       missing
+         tau    1.8880    0.7705    0.0447    348.9331    338.3655    1.0030       missing
+       b[16]   -0.2445    0.4459    0.0132   1528.0578    843.8225    1.0003       missing
+       b[12]    0.2050    0.3602    0.0086   1868.6126   1202.1363    0.9996       missing
+       b[10]   -0.3500    0.2893    0.0090   1047.3119   1245.9358    1.0008       missing
+      ⋮           ⋮         ⋮         ⋮          ⋮           ⋮          ⋮           ⋮
+                                                                             19 rows omitted
+
+Quantiles
+  parameters      2.5%     25.0%     50.0%     75.0%     97.5% 
+      Symbol   Float64   Float64   Float64   Float64   Float64 
+
+      alpha0   -1.0143   -0.7143   -0.5590   -0.4100   -0.1185
+     alpha12   -1.9063   -1.1812   -0.8296   -0.5153    0.1521
+      alpha1   -0.6550   -0.1822    0.0512    0.2885    0.8180
+      alpha2    0.7214    1.1663    1.3782    1.5998    2.0986
+         tau    0.5461    1.3941    1.8353    2.3115    3.6225
+       b[16]   -1.2359   -0.4836   -0.1909    0.0345    0.5070
+       b[12]   -0.4493   -0.0370    0.1910    0.4375    0.9828
+       b[10]   -0.9570   -0.5264   -0.3331   -0.1514    0.1613
+      ⋮           ⋮         ⋮         ⋮         ⋮         ⋮
+                                                 19 rows omitted
+</code></pre><p>This is consistent with the result in the <a href="https://chjackson.github.io/openbugsdoc/Examples/Seeds.html">OpenBUGS seeds example</a>.</p><h2 id="Parallel-and-Distributed-Sampling-with-AbstractMCMC"><a class="docs-heading-anchor" href="#Parallel-and-Distributed-Sampling-with-AbstractMCMC">Parallel and Distributed Sampling with <code>AbstractMCMC</code></a><a id="Parallel-and-Distributed-Sampling-with-AbstractMCMC-1"></a><a class="docs-heading-anchor-permalink" href="#Parallel-and-Distributed-Sampling-with-AbstractMCMC" title="Permalink"></a></h2><p><code>AbstractMCMC</code> and <code>AdvancedHMC</code> support both parallel and distributed sampling.</p><h3 id="Parallel-Sampling"><a class="docs-heading-anchor" href="#Parallel-Sampling">Parallel Sampling</a><a id="Parallel-Sampling-1"></a><a class="docs-heading-anchor-permalink" href="#Parallel-Sampling" title="Permalink"></a></h3><p>To perform multi-threaded sampling of multiple chains, start the Julia session with the <code>-t &lt;n_threads&gt;</code> argument. The model compilation code remains the same, and we can sample multiple chains in parallel as follows:</p><pre><code class="language-julia hljs">n_chains = 4
+samples_and_stats = AbstractMCMC.sample(
+    ad_model,
+    AdvancedHMC.NUTS(0.65),
+    AbstractMCMC.MCMCThreads(),
+    n_samples,
+    n_chains;
+    chain_type = Chains,
+    n_adapts = n_adapts,
+    init_params = [initial_θ for _ = 1:n_chains],
+    discard_initial = n_adapts,
+)</code></pre><p>In this case, we pass two additional arguments to <code>AbstractMCMC.sample</code>:</p><ul><li><code>AbstractMCMC.MCMCThreads()</code>: the sampler type, and</li><li><code>n_chains</code>: the number of chains to sample.</li></ul><h3 id="Distributed-Sampling"><a class="docs-heading-anchor" href="#Distributed-Sampling">Distributed Sampling</a><a id="Distributed-Sampling-1"></a><a class="docs-heading-anchor-permalink" href="#Distributed-Sampling" title="Permalink"></a></h3><p>To perform distributed sampling of multiple chains, start the Julia session with the <code>-p &lt;n_processes&gt;</code> argument.</p><p>In distributed mode, ensure that all functions and modules are available on all processes. Use <code>@everywhere</code> to make the functions and modules available on all processes.</p><p>For example:</p><pre><code class="language-julia hljs">@everywhere begin
+    using JuliaBUGS, LogDensityProblems, LogDensityProblemsAD, AbstractMCMC, AdvancedHMC, MCMCChains, ReverseDiff # also other packages one may need
+
+    # Define the functions to use
+    # Use `@register_primitive` to register the functions to use in the model
+
+    # Distributed can handle data dependencies in some cases, for more detail, see https://docs.julialang.org/en/v1/manual/distributed-computing/
+
+end
+
+n_chains = nprocs() - 1 # use all the processes except the master process
+samples_and_stats = AbstractMCMC.sample(
+    ad_model,
+    AdvancedHMC.NUTS(0.65),
+    AbstractMCMC.MCMCDistributed(),
+    n_samples,
+    n_chains;
+    chain_type = Chains,
+    n_adapts = n_adapts,
+    init_params = [initial_θ for _ = 1:n_chains], # each chain has its own initial parameters
+    discard_initial = n_adapts,
+    progress = false, # Base.TTY creating problems in distributed setting
+)</code></pre><p>In this case, we pass two additional arguments to <code>AbstractMCMC.sample</code>:</p><ul><li><code>AbstractMCMC.MCMCDistributed()</code>: the sampler type, and</li><li><code>n_chains</code>: the number of chains to sample.</li></ul><p>Note that the <code>init_params</code> argument is now a vector of initial parameters for each chain.  Sometimes the progress logger can cause problems in distributed setting, so we can disable it by setting <code>progress = false</code>.</p><h2 id="More-Examples"><a class="docs-heading-anchor" href="#More-Examples">More Examples</a><a id="More-Examples-1"></a><a class="docs-heading-anchor-permalink" href="#More-Examples" title="Permalink"></a></h2><p>We have transcribed all the examples from the first volume of the BUGS Examples (<a href="https://www.multibugs.org/examples/latest/VolumeI.html">original</a> and <a href="https://github.com/TuringLang/JuliaBUGS.jl/tree/master/src/BUGSExamples/Volume_I">transcribed</a>). All programs and data are included, and can be compiled using the steps described in the tutorial above.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Introduction</a><a class="docs-footer-nextpage" href="../api/">General »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 15 March 2024 12:53">Friday 15 March 2024</span>. Using Julia version 1.10.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+
