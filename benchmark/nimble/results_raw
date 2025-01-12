@@ -1,0 +1,698 @@
+> benchmark_results
+$rats
+$rats$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 25.33156 25.58806 26.98859 26.10372 27.21162 35.38747   100
+
+$rats$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median     uq     max neval
+ cnll_compute$log_joint() 6.437 6.519 8.29922   6.56 6.6625 160.269   100
+
+$rats$nll
+Unit: microseconds
+                                     expr  min    lq     mean median      uq
+ cll_model$neg_logLikelihood(rand_params) 8.61 8.897 12.54682   9.43 10.8035
+     max neval
+ 248.009   100
+
+$rats$gr
+Unit: microseconds
+                                        expr    min     lq    mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 19.516 21.115 27.6012 21.525
+     uq     max neval
+ 21.853 614.098   100
+
+
+$pumps
+$pumps$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 2.203463 2.225747 2.252221 2.240076 2.263979 2.645361   100
+
+$pumps$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.551 4.674 6.31072  4.715 4.797 157.768   100
+
+$pumps$nll
+Unit: microseconds
+                                     expr   min    lq    mean median   uq
+ cll_model$neg_logLikelihood(rand_params) 5.125 5.207 7.08275  5.289 5.33
+     max neval
+ 179.908   100
+
+$pumps$gr
+Unit: microseconds
+                                        expr   min    lq    mean median     uq
+ cll_model$gr_neg_logLikelihood(rand_params) 7.257 7.913 15.6292  8.692 10.619
+     max neval
+ 591.343   100
+
+
+$seeds
+$seeds$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 5.007986 5.042262 5.158285 5.126373 5.240661 5.783665   100
+
+$seeds$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median     uq   max neval
+ cnll_compute$log_joint() 4.346 4.592 6.51859  4.674 5.0225 159.9   100
+
+$seeds$nll
+Unit: microseconds
+                                     expr   min    lq    mean median     uq
+ cll_model$neg_logLikelihood(rand_params) 6.396 6.601 8.99417  6.724 7.6465
+     max neval
+ 185.443   100
+
+$seeds$gr
+Unit: microseconds
+                                        expr    min     lq    mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 10.332 10.619 16.7485 10.742
+     uq     max neval
+ 10.865 591.548   100
+
+
+$surgical
+$surgical$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 2.729903 2.773343 2.837801 2.811657 2.882956 3.377375   100
+
+$surgical$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.346 4.428 6.18895   4.51 4.592 161.335   100
+
+$surgical$nll
+Unit: microseconds
+                                     expr   min    lq    mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 5.207 5.248 7.05528   5.33 5.371
+     max neval
+ 170.929   100
+
+$surgical$gr
+Unit: microseconds
+                                        expr   min    lq     mean median    uq
+ cll_model$gr_neg_logLikelihood(rand_params) 8.118 8.405 13.65833  8.446 8.569
+     max neval
+ 512.377   100
+
+
+$magnesium
+$magnesium$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 23.22699 23.40395 24.80524 23.90511 24.80849 36.37401   100
+
+$magnesium$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 6.191 6.314 9.12578  6.437 6.519 262.277   100
+
+$magnesium$nll
+Unit: microseconds
+                                     expr    min     lq     mean median      uq
+ cll_model$neg_logLikelihood(rand_params) 12.669 12.874 15.44429 12.956 13.1405
+     max neval
+ 220.334   100
+
+$magnesium$gr
+Unit: microseconds
+                                        expr   min    lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 22.14 23.37 33.86313 23.698
+      uq     max neval
+ 25.1945 825.658   100
+
+
+$salm
+$salm$non_compiled_log_joint
+Unit: milliseconds
+              expr      min     lq     mean   median       uq      max neval
+ model$calculate() 4.239154 4.3181 4.965599 4.394175 4.528122 47.95868   100
+
+$salm$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.264 4.346 5.91712  4.387 4.469 148.338   100
+
+$salm$nll
+Unit: microseconds
+                                     expr   min    lq    mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 6.396 6.519 8.49151   6.56 6.642
+     max neval
+ 187.698   100
+
+$salm$gr
+Unit: microseconds
+                                        expr   min     lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 9.963 10.291 16.25855 10.414
+      uq     max neval
+ 10.6805 569.654   100
+
+
+$dyes
+$dyes$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median      uq      max neval
+ model$calculate() 3.115139 3.150501 3.194065 3.176044 3.20663 3.677741   100
+
+$dyes$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.182 4.264 5.98682  4.305 4.387 165.148   100
+
+$dyes$nll
+Unit: microseconds
+                                     expr   min    lq    mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 4.715 4.797 6.90891  4.879 4.961
+     max neval
+ 191.962   100
+
+$dyes$gr
+Unit: microseconds
+                                        expr   min    lq    mean median    uq
+ cll_model$gr_neg_logLikelihood(rand_params) 8.036 8.282 13.2184 8.3845 8.487
+     max neval
+ 481.135   100
+
+
+$stacks
+$stacks$non_compiled_log_joint
+Unit: milliseconds
+              expr      min      lq     mean   median       uq      max neval
+ model$calculate() 11.23716 11.4495 12.11175 11.70548 12.08496 18.94864   100
+
+$stacks$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 5.904 5.945 8.13727  6.027 6.109 193.848   100
+
+$stacks$nll
+Unit: microseconds
+                                     expr  min    lq    mean median     uq
+ cll_model$neg_logLikelihood(rand_params) 4.92 5.002 7.09956  5.084 5.2685
+     max neval
+ 187.042   100
+
+$stacks$gr
+Unit: microseconds
+                                        expr    min     lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 10.537 10.906 16.50619 11.111
+     uq     max neval
+ 11.275 534.312   100
+
+
+$epil
+$epil$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 80.66799 83.24603 88.49834 84.90423 89.07904 145.4911   100
+
+$epil$compiled_log_joint
+Unit: microseconds
+                     expr    min     lq     mean median     uq     max neval
+ cnll_compute$log_joint() 13.079 13.202 15.26102 13.284 13.366 200.654   100
+
+$epil$nll
+Unit: microseconds
+                                     expr    min      lq     mean median     uq
+ cll_model$neg_logLikelihood(rand_params) 35.465 35.7725 38.23209 35.957 36.162
+     max neval
+ 233.577   100
+
+$epil$gr
+Unit: microseconds
+                                        expr    min    lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 64.903 66.01 79.32598 66.502
+     uq      max neval
+ 68.511 1176.536   100
+
+
+$blocker
+$blocker$non_compiled_log_joint
+Unit: milliseconds
+              expr     min       lq     mean   median       uq      max neval
+ model$calculate() 8.95932 9.163828 9.616475 9.306672 9.594472 14.43856   100
+
+$blocker$compiled_log_joint
+Unit: microseconds
+                     expr   min     lq   mean median    uq     max neval
+ cnll_compute$log_joint() 6.601 6.6625 8.4009  6.724 6.806 165.107   100
+
+$blocker$nll
+Unit: microseconds
+                                     expr   min     lq     mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 8.241 8.3845 10.54684  8.487 8.651
+     max neval
+ 202.499   100
+
+$blocker$gr
+Unit: microseconds
+                                        expr    min      lq     mean  median
+ cll_model$gr_neg_logLikelihood(rand_params) 14.514 14.9855 21.76321 15.1905
+     uq     max neval
+ 15.498 647.103   100
+
+
+$oxford
+$oxford$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 56.07554 56.80218 60.03456 57.98441 61.25693 77.12215   100
+
+$oxford$compiled_log_joint
+Unit: microseconds
+                     expr    min    lq     mean median     uq     max neval
+ cnll_compute$log_joint() 18.696 18.86 21.08384 18.942 19.065 209.223   100
+
+$oxford$nll
+Unit: microseconds
+                                     expr    min     lq     mean median     uq
+ cll_model$neg_logLikelihood(rand_params) 26.527 26.691 29.23177 26.814 26.978
+     max neval
+ 240.219   100
+
+$oxford$gr
+Unit: microseconds
+                                        expr    min      lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 49.692 52.2955 65.07069 53.013
+     uq      max neval
+ 53.628 1240.865   100
+
+
+$lsat
+$lsat$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 818.7098 850.0112 994.8446 903.3226 959.8973 3276.641   100
+
+$lsat$compiled_log_joint
+Unit: microseconds
+                     expr    min      lq     mean  median    uq     max neval
+ cnll_compute$log_joint() 79.048 79.2735 84.46943 79.5605 81.59 352.969   100
+
+$lsat$nll
+Unit: microseconds
+                                     expr     min      lq   mean  median
+ cll_model$neg_logLikelihood(rand_params) 188.067 188.641 195.47 189.051
+      uq     max neval
+ 190.814 571.294   100
+
+$lsat$gr
+Unit: microseconds
+                                        expr     min       lq     mean  median
+ cll_model$gr_neg_logLikelihood(rand_params) 468.794 485.1735 631.8621 490.524
+      uq      max neval
+ 497.576 14154.76   100
+
+
+$bones
+$bones$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 182.2038 183.6698 192.9445 189.0759 198.7761 264.1154   100
+
+$bones$compiled_log_joint
+Unit: microseconds
+                     expr    min      lq     mean median     uq    max neval
+ cnll_compute$log_joint() 40.467 40.9385 43.26197 41.123 41.369 215.25   100
+
+$bones$nll
+NULL
+
+$bones$gr
+NULL
+
+
+$mice
+$mice$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 21.42508 22.23418 23.62223 22.78684 24.27358 30.41917   100
+
+$mice$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq     mean median    uq     max neval
+ cnll_compute$log_joint() 8.733 8.856 11.93715  8.979 9.102 229.559   100
+
+$mice$nll
+Unit: microseconds
+                                     expr   min   lq     mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 8.487 8.61 10.80637  8.733 8.856
+     max neval
+ 208.444   100
+
+$mice$gr
+NULL
+
+
+$kidney
+$kidney$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean  median       uq      max neval
+ model$calculate() 25.48236 25.69193 27.23114 26.3271 27.61153 36.16766   100
+
+$kidney$compiled_log_joint
+Unit: microseconds
+                     expr   min     lq    mean median     uq     max neval
+ cnll_compute$log_joint() 6.847 6.9495 8.97777  7.011 7.1135 191.265   100
+
+$kidney$nll
+Unit: microseconds
+                                     expr    min     lq     mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 10.086 10.373 12.76125 10.496 10.66
+     max neval
+ 199.383   100
+
+$kidney$gr
+NULL
+
+
+$leuk
+$leuk$non_compiled_log_joint
+Unit: microseconds
+              expr     min       lq     mean   median       uq      max neval
+ model$calculate() 718.525 727.6885 747.3337 733.8795 745.6875 1076.209   100
+
+$leuk$compiled_log_joint
+Unit: microseconds
+                     expr   min  lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.018 4.1 5.84373  4.182 4.264 158.711   100
+
+$leuk$nll
+Unit: microseconds
+                                     expr   min    lq    mean median     uq
+ cll_model$neg_logLikelihood(rand_params) 4.264 4.305 6.14713  4.387 4.4485
+     max neval
+ 173.758   100
+
+$leuk$gr
+Unit: microseconds
+                                        expr   min    lq     mean median    uq
+ cll_model$gr_neg_logLikelihood(rand_params) 6.232 6.314 11.24425  6.396 6.478
+     max neval
+ 478.388   100
+
+
+$leukfr
+$leukfr$non_compiled_log_joint
+Unit: milliseconds
+              expr      min      lq     mean   median       uq     max neval
+ model$calculate() 2.270375 2.28985 2.321636 2.305369 2.327468 2.69821   100
+
+$leukfr$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.223 4.305 5.89662  4.346 4.428 150.552   100
+
+$leukfr$nll
+Unit: microseconds
+                                     expr   min   lq    mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 5.207 5.33 7.26438  5.371 5.453
+     max neval
+ 186.058   100
+
+$leukfr$gr
+Unit: microseconds
+                                        expr   min    lq     mean median    uq
+ cll_model$gr_neg_logLikelihood(rand_params) 7.995 8.118 13.11262    8.2 8.323
+     max neval
+ 482.488   100
+
+
+ > benchmark_results_vol2
+$dugongs
+$dugongs$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 4.197252 4.231139 4.276373 4.264574 4.298255 4.639519   100
+
+$dugongs$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.223 4.305 5.87735  4.346 4.387 152.274   100
+
+$dugongs$nll
+Unit: microseconds
+                                     expr   min    lq   mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 4.838 4.961 7.3144  5.002 5.125
+     max neval
+ 212.503   100
+
+$dugongs$gr
+Unit: microseconds
+                                        expr   min    lq     mean median     uq
+ cll_model$gr_neg_logLikelihood(rand_params) 9.799 9.963 15.55868 10.045 10.127
+     max neval
+ 548.293   100
+
+
+$orange
+$orange$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 7.816978 7.957321 8.305168 8.085549 8.499485 10.75213   100
+
+$orange$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 5.207 5.289 6.92244  5.371 5.412 154.037   100
+
+$orange$nll
+Unit: microseconds
+                                     expr  min    lq    mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 5.74 5.863 7.73383  5.945 6.027
+     max neval
+ 178.637   100
+
+$orange$gr
+Unit: microseconds
+                                        expr    min     lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 12.013 12.382 17.98834 12.546
+      uq     max neval
+ 12.8535 499.626   100
+
+
+$mvotree
+$mvotree$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 6.991812 7.044415 7.209342 7.131233 7.333547 7.791517   100
+
+$mvotree$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median   uq     max neval
+ cnll_compute$log_joint() 7.052 7.175 9.68133  7.257 7.38 240.383   100
+
+$mvotree$nll
+Unit: microseconds
+                                     expr   min    lq    mean median   uq
+ cll_model$neg_logLikelihood(rand_params) 6.273 6.396 8.73833  6.478 6.56
+     max neval
+ 210.166   100
+
+$mvotree$gr
+Unit: microseconds
+                                        expr    min     lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 13.448 13.817 20.75707 14.063
+     uq     max neval
+ 14.268 667.562   100
+
+
+$eyes
+$eyes$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 11.48845 11.77385 12.47954 12.00047 12.54694 19.27992   100
+
+$eyes$compiled_log_joint
+Unit: microseconds
+                     expr    min     lq     mean median       uq     max neval
+ cnll_compute$log_joint() 38.171 39.073 265.5332 87.371 176.2385 10173.9   100
+
+$eyes$nll
+NULL
+
+$eyes$gr
+NULL
+
+
+$air
+$air$non_compiled_log_joint
+Unit: microseconds
+              expr     min     lq     mean  median      uq      max neval
+ model$calculate() 940.253 954.89 979.4609 960.548 990.027 1257.511   100
+
+$air$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 3.936 4.059 5.68219  4.059 4.141 155.144   100
+
+$air$nll
+Unit: microseconds
+                                     expr   min    lq    mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 4.469 4.592 6.42511  4.633 4.715
+     max neval
+ 174.988   100
+
+$air$gr
+Unit: microseconds
+                                        expr   min    lq   mean median    uq
+ cll_model$gr_neg_logLikelihood(rand_params) 6.478 6.642 11.972  6.724 6.806
+     max neval
+ 518.076   100
+
+
+$cervix
+$cervix$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 867.5131 918.3822 1037.605 969.7115 1048.341 3831.804   100
+
+$cervix$compiled_log_joint
+Unit: milliseconds
+                     expr   min       lq     mean   median       uq      max
+ cnll_compute$log_joint() 9.389 15.55657 21.57693 18.29479 20.32895 82.25945
+ neval
+   100
+
+$cervix$nll
+NULL
+
+$cervix$gr
+NULL
+
+
+$birats
+$birats$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq     max neval
+ model$calculate() 23.52035 23.77078 25.29925 24.27901 26.09336 32.3308   100
+
+$birats$compiled_log_joint
+Unit: microseconds
+                     expr    min     lq    mean  median     uq    max neval
+ cnll_compute$log_joint() 10.496 10.619 12.6895 10.6805 10.783 198.44   100
+
+$birats$nll
+Unit: microseconds
+                                     expr   min    lq     mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 8.487 8.651 11.06877  8.733 8.856
+     max neval
+ 228.001   100
+
+$birats$gr
+Unit: microseconds
+                                        expr    min     lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 21.238 22.509 31.35475  22.96
+     uq     max neval
+ 24.272 765.962   100
+
+
+$schools
+$schools$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median       uq      max neval
+ model$calculate() 861.6192 903.3683 979.7282 939.5358 995.7112 3844.043   100
+
+$schools$compiled_log_joint
+Unit: microseconds
+                     expr    min      lq     mean median    uq     max neval
+ cnll_compute$log_joint() 77.654 78.9455 85.06557 79.581 82.82 399.422   100
+
+$schools$nll
+Unit: microseconds
+                                     expr    min     lq     mean median     uq
+ cll_model$neg_logLikelihood(rand_params) 71.422 71.914 78.34813 72.283 75.112
+     max neval
+ 388.106   100
+
+$schools$gr
+Unit: microseconds
+                                        expr     min       lq     mean   median
+ cll_model$gr_neg_logLikelihood(rand_params) 258.997 267.2585 308.7997 270.6615
+      uq      max neval
+ 278.841 3620.792   100
+
+
+$beetles
+$beetles$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean  median       uq      max neval
+ model$calculate() 1.798137 1.836247 1.925663 1.86097 1.904122 3.565975   100
+
+$beetles$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 4.141 4.182 5.83512  4.264 4.305 157.194   100
+
+$beetles$nll
+Unit: microseconds
+                                     expr   min    lq    mean median     uq
+ cll_model$neg_logLikelihood(rand_params) 4.715 4.879 7.94908  5.002 5.1045
+     max neval
+ 235.668   100
+
+$beetles$gr
+Unit: microseconds
+                                        expr   min     lq     mean median    uq
+ cll_model$gr_neg_logLikelihood(rand_params) 7.298 7.4825 12.78298  7.544 7.667
+     max neval
+ 519.511   100
+
+
+$alli
+$alli$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median     uq      max neval
+ model$calculate() 10.44897 10.91689 11.97817 11.16918 11.516 60.66434   100
+
+$alli$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median    uq     max neval
+ cnll_compute$log_joint() 6.765 6.888 8.65305  6.929 7.011 171.134   100
+
+$alli$nll
+Unit: microseconds
+                                     expr   min    lq     mean median   uq
+ cll_model$neg_logLikelihood(rand_params) 8.241 8.405 10.75471  8.487 8.61
+     max neval
+ 217.956   100
+
+$alli$gr
+Unit: microseconds
+                                        expr    min     lq     mean  median
+ cll_model$gr_neg_logLikelihood(rand_params) 13.694 14.309 20.58159 14.4115
+      uq    max neval
+ 14.5755 612.95   100
+
+
+$stagnant
+$stagnant$non_compiled_log_joint
+Unit: milliseconds
+              expr      min       lq     mean   median      uq      max neval
+ model$calculate() 6.828509 6.976047 7.236541 7.097223 7.26395 13.35817   100
+
+$stagnant$compiled_log_joint
+Unit: microseconds
+                     expr   min    lq    mean median     uq     max neval
+ cnll_compute$log_joint() 4.264 4.346 6.27874  4.387 4.4895 177.366   100
+
+$stagnant$nll
+Unit: microseconds
+                                     expr   min    lq    mean median    uq
+ cll_model$neg_logLikelihood(rand_params) 4.838 4.961 6.81502  5.043 5.125
+     max neval
+ 177.038   100
+
+$stagnant$gr
+Unit: microseconds
+                                        expr    min      lq     mean median
+ cll_model$gr_neg_logLikelihood(rand_params) 11.972 12.3205 18.59186 12.669
+     uq     max neval
+ 12.915 599.379   100

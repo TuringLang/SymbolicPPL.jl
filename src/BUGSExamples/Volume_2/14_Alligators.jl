@@ -100,7 +100,6 @@ model {
             for (k in 1 : K) { # loop around foods
                 X[i, j, k] ~ dpois(mu[i, j, k])
                 log(mu[i, j, k]) <- lambda[i, j] + alpha[k] + beta[i, k] + gamma[j, k]
-                cumulative.X[i, j, k] <- cdf.pois(X[i, j, k], mu[i, j, k])
             }
         }  
     }

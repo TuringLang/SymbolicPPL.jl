@@ -1,0 +1,34 @@
+model {
+    for (i in 1:I) {
+        cases[i] ~ dpois(mu[i])
+        log(mu[i]) <- log(pyr[i]) + alpha[age[i]] + beta[year[i]]
+    }
+    betamean[1] <- 2 * beta[2] - beta[3]
+    Nneighs[1] <- 1
+    betamean[2] <- (2 * beta[1] + 4 * beta[3] - beta[4]) / 5
+    Nneighs[2] <- 5
+    for (k in 3 : K - 2) {
+        betamean[k] <- (4 * beta[k - 1] + 4 * beta[k + 1] - beta[k - 2] - beta[k + 2]) / 6
+        Nneighs[k] <- 6
+    }
+    betamean[K - 1] <- (2 * beta[K] + 4 * beta[K - 2] - beta[K - 3]) / 5
+    Nneighs[K - 1] <- 5
+    betamean[K] <- 2 * beta[K - 1] - beta[K - 2]
+    Nneighs[K] <- 1
+    for (k in 1 : K) {
+        betaprec[k] <- Nneighs[k] * tau
+    }
+    for (k in 1 : K) {
+        beta[k] ~ dnorm(betamean[k], betaprec[k])
+        logRR[k] <- beta[k] - beta[5]
+        tau.like[k] <- Nneighs[k] * beta[k] * (beta[k] - betamean[k])
+    }
+    alpha[1] <- 0.0
+    for (j in 2 : Nage) {
+        alpha[j] ~ dnorm(0, 1.0E-6)
+    }
+    d <- 0.0001 + sum(tau.like[1:K]) / 2
+    r <- 0.0001 + K / 2
+    tau ~ dgamma(r, d)
+    sigma <- 1 / sqrt(tau)
+}

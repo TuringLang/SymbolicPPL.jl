@@ -1,0 +1,35 @@
+model {
+    # Standardise x's and coefficients
+    for (j in 1 : p) {
+        b[j] <- beta[j] / sd(x[ , j ])
+        for (i in 1 : N) {
+            z[i, j] <- (x[i, j] - mean(x[, j])) / sd(x[ , j])
+        }
+    }
+    b0 <- beta0 - b[1] * mean(x[, 1]) - b[2] * mean(x[, 2]) - b[3] * mean(x[, 3])
+
+    # Model
+    d <- 4; # degrees of freedom for t
+    for (i in 1 : N) {
+        Y[i] ~ dnorm(mu[i], tau)
+        # Y[i] ~ ddexp(mu[i], tau)
+        # Y[i] ~ dt(mu[i], tau, d)
+
+        mu[i] <- beta0 + beta[1] * z[i, 1] + beta[2] * z[i, 2] + beta[3] * z[i, 3]
+        stres[i] <- (Y[i] - mu[i]) / sigma
+        outlier[i] <- step(stres[i] - 2.5) + step(-(stres[i] + 2.5) )
+    }
+
+    # Priors
+    beta0 ~ dnorm(0, 0.00001)
+    for (j in 1 : p) {
+        beta[j] ~ dnorm(0, 0.00001)    # coeffs independent
+        # beta[j] ~ dnorm(0, phi) # coeffs exchangeable (ridge regression)
+    }
+    tau ~ dgamma(1.0E-3, 1.0E-3)
+    phi ~ dgamma(1.0E-2,1.0E-2)
+    # standard deviation of error distribution
+    sigma <- sqrt(1 / tau) # normal errors
+    # sigma <- sqrt(2) / tau # double exponential errors
+    # sigma <- sqrt(d / (tau * (d - 2))); # t errors on d degrees of freedom
+}

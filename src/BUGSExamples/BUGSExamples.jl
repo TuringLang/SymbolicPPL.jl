@@ -31,7 +31,7 @@ function load_example_volume(volume_num::Int)
         include("./Volume_1/13_Oxford.jl")
         include("./Volume_1/14_LSAT.jl")
         include("./Volume_1/15_Bones.jl")
-        #include("./Volume_1/16_Inhalers.jl")
+        #include("./Volume_1/16_Inhalers.jl") # chain graph contains cycle
         include("./Volume_1/17_Mice.jl")
         include("./Volume_1/18_Kidney.jl")
         include("./Volume_1/19_Leuk.jl")
@@ -73,12 +73,12 @@ function load_example_volume(volume_num::Int)
         include("Volume_2/09_Jaws.jl")
         include("Volume_2/10_BiRats.jl")
         include("Volume_2/11_Schools.jl")
-        include("Volume_2/12_Ice.jl")
+        # include("Volume_2/12_Ice.jl") # also contains cycles
         include("Volume_2/13_Beetles.jl")
         include("Volume_2/14_Alligators.jl")
         include("Volume_2/15_Endo.jl")
-        # include("Volume_2/16_Stagnant.jl")
-        # include("Volume_2/17_Asia.jl")
+        include("Volume_2/16_Stagnant.jl")
+        include("Volume_2/17_Asia.jl")
         # include("Volume_2/18_Pigs.jl")
         # include("Volume_2/19_Simulating_data.jl")
         vol_2 = (
@@ -93,12 +93,12 @@ function load_example_volume(volume_num::Int)
             jaws = jaws,
             birats = birats,
             schools = schools,
-            ice = ice,
+            # ice = ice,
             beetles = beetles,
             alligators = alligators,
             endo = endo,
-            # stagnant = stagnant,
-            # asia = asia,
+            stagnant = stagnant,
+            asia = asia,
             # pigs = pigs,
             # simulating_data = simulating_data
         )

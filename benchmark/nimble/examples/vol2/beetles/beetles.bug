@@ -1,0 +1,12 @@
+model {
+    for( i in 1 : N ) {
+        r[i] ~ dbin(p[i],n[i])
+        logit(p[i]) <- alpha.star + beta * (x[i] - mean(x[]))
+        # probit(p[i]) <- alpha.star + beta * (x[i] - mean(x[]))
+        # cexpexp(p[i]) <- alpha.star + beta * (x[i] - mean(x[]))
+        rhat[i] <- n[i] * p[i]
+    }
+    alpha <- alpha.star - beta * mean(x[])
+    beta ~ dnorm(0.0,0.001)
+    alpha.star ~ dnorm(0.0,0.001)
+}

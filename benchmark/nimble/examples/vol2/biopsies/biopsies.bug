@@ -1,0 +1,12 @@
+model
+{
+   for (i in 1 : ns){
+      nbiops[i] <- sum(biopsies[i, ])
+      true0[i] ~ dcat(p[])
+      biopsies[i, 1 : 4] ~ dmulti(error0[true0[i], ], nbiops[i])
+   }
+   error0[2,1 : 2] ~ ddirich(prior[1 : 2])
+   error0[3,1 : 3] ~ ddirich(prior[1 : 3])
+   error0[4,1 : 4] ~ ddirich(prior[1 : 4])
+   p[1 : 4] ~ ddirich(prior[]); # prior for p
+}

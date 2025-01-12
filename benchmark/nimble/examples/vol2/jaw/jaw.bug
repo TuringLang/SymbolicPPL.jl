@@ -1,0 +1,13 @@
+model
+{
+    beta0 ~ dnorm(0.0, 0.001)
+    beta1 ~ dnorm(0.0, 0.001)
+    for (i in 1:N) {
+        Y[i, 1:M] ~ dmnorm(mu[1:M], Omega[1:M, 1:M])
+    }
+    for(j in 1:M) {
+        mu[j] <- beta0 + beta1* age[j]
+    }
+    Omega[1:M, 1:M] ~ dwish(R[1:M, 1:M], 4)
+    Sigma[1:M, 1:M] <- inverse(Omega[1:M, 1:M])
+}

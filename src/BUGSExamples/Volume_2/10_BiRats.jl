@@ -16,6 +16,7 @@ model_def = @bugs begin
 end
 
 original = """
+model {
     for( i in 1 : N ) {
         beta[i , 1 : 2] ~ dmnorm(mu.beta[], R[ , ])
         for( j in 1 : T ) {
@@ -28,6 +29,7 @@ original = """
     R[1 : 2 , 1 : 2] ~ dwish(Omega[ , ], 2)
     tauC ~ dgamma(0.001, 0.001)
     sigma <- 1 / sqrt(tauC)
+}
 """
 
 data = (

@@ -1,0 +1,17 @@
+model
+{
+   for (i in 1 : N) {
+      y[i] ~ dbin(P[state1[i]], t[i])
+      state[i] ~ dbern(theta)
+      state1[i] <- state[i] + 1
+      t[i] <- x[i] + y[i]
+      prop[i] <- P[state1[i]]
+   }
+   P[1] <- p
+   P[2] <- 0
+   logit(p) <- alpha
+   alpha ~ dnorm(0,1.0E-4)
+   beta <- exp(alpha)
+   logit(theta) <- delta
+   delta ~ dnorm(0, 1.0E-4)
+}

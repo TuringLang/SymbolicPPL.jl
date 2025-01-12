@@ -65,7 +65,7 @@ model {
     for (j in 2 : Nage) {
         alpha[j] ~ dnorm(0, 1.0E-6)
     }
-    d <- 0.0001 + sum(tau.like[:]) / 2
+    d <- 0.0001 + sum(tau.like[]) / 2
     r <- 0.0001 + K / 2
     tau ~ dgamma(r, d)
     sigma <- 1 / sqrt(tau)

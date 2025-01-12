@@ -1,8 +1,0 @@
-source("../../R/Rcheck.R")
-d <- read.jagsdata("pump-data.R")
-inits <- read.jagsdata("pump-init.R")
-m <- jags.model("pump.bug", d, inits, n.chains=2)
-update(m,1000)
-x <- coda.samples(m, c("theta","alpha","beta"), n.iter=5000)
-source("bench-test1.R")
-check.fun()

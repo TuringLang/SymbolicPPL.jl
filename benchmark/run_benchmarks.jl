@@ -12,9 +12,12 @@ using OrderedCollections
 
 juliabugs_result = OrderedDict()
 for model_name in keys(JuliaBUGS.BUGSExamples.VOLUME_1)
+    @info "benchmarking volume 1 model" model_name
     (; model_def, data, inits) = JuliaBUGS.BUGSExamples.VOLUME_1[model_name]
     model = compile(model_def, data, inits)
     ad_model = ADgradient(AutoReverseDiff(true), model)
+
+    eval_time = Chairmarks.@be JuliaBUGS.evaluate!!(model)
 
     juliabugs_theta = rand(LogDensityProblems.dimension(model))
     density_time = Chairmarks.@be LogDensityProblems.logdensity($ad_model, $juliabugs_theta)
@@ -22,14 +25,53 @@ for model_name in keys(JuliaBUGS.BUGSExamples.VOLUME_1)
         $ad_model, $juliabugs_theta
     )
 
-    juliabugs_result[model_name] = (density_time, density_and_gradient_time)
+    juliabugs_result[model_name] = (eval_time, density_time, density_and_gradient_time)
+end
+
+for model_name in keys(JuliaBUGS.BUGSExamples.VOLUME_2)
+    @info "benchmarking volume 2 model" model_name
+    (; model_def, data, inits) = JuliaBUGS.BUGSExamples.VOLUME_2[model_name]
+    model = compile(model_def, data, inits)
+
+    eval_time = Chairmarks.@be JuliaBUGS.evaluate!!(model)
+
+    density_time = missing
+    density_and_gradient_time = missing
+    try
+        ad_model = ADgradient(AutoReverseDiff(true), model)
+        juliabugs_theta = rand(LogDensityProblems.dimension(model))
+        density_time = Chairmarks.@be LogDensityProblems.logdensity(
+            $ad_model, $juliabugs_theta
+        )
+        density_and_gradient_time = Chairmarks.@be LogDensityProblems.logdensity_and_gradient(
+            $ad_model, $juliabugs_theta
+        )
+    catch e
+        @warn "Model $model_name produces error: $e"
+    end
+
+    juliabugs_result[model_name] = (eval_time, density_time, density_and_gradient_time)
+end
+
+function print_juliabugs_result(juliabugs_result)
+    @info "JuliaBUGS results:"
+    for model_name in keys(juliabugs_result)
+        @info model_name
+        println("Evaluation time:")
+        Base.show(stdout, "text/plain", juliabugs_result[model_name][1])
+        println()
+        println("Density time:")
+        Base.show(stdout, "text/plain", juliabugs_result[model_name][2])
+        println()
+        println("Density+gradient time:")
+        Base.show(stdout, "text/plain", juliabugs_result[model_name][3])
+        println()
+    end
 end
 
 ## Stan
 
-const STAN_BUGS_EXAMPLES_FOLDER = joinpath(
-    dirname(@__FILE__), "stan/bugs_examples/"
-)
+const STAN_BUGS_EXAMPLES_FOLDER = joinpath(dirname(@__FILE__), "stan/bugs_examples/")
 
 const MODEL_VOL1_STAN = OrderedDict(
     :rats => (:rats, :rats),
@@ -51,6 +93,15 @@ const MODEL_VOL1_STAN = OrderedDict(
     :kidney => (:kidney, :kidney),
     :leuk => (:leuk, :leuk),
     :leukfr => (:leukfr, :leukfr),
+)
+
+MODEL_VOL2_STAN = OrderedDict(
+    :dugongs => (:dugongs, :dugongs),
+    :air => (:air, :air),
+    :birats => (:birats, :birats),
+    :schools => (:schools, :schools),
+    :beetles => (:beetles, :beetles_logit),
+    :alligators => (:alli, :alli2),
 )
 
 function create_stan_logdensityproblem(volume, folder_name, file_name_prefix)
@@ -79,11 +130,12 @@ function benchmark_stan_model(stan_logdensityproblem)
     density_and_gradient_time = Chairmarks.@be LogDensityProblems.logdensity_and_gradient(
         $stan_logdensityproblem, $stan_theta
     )
-    return (density_time, density_and_gradient_time)
+    return (stan_dim, density_time, density_and_gradient_time)
 end
 
 function run_stan_benchmark(volume, model_name, model_path_dict)
     folder_name, file_name_prefix = model_path_dict[model_name]
+    @info "model name" model_name
     stan_logdensityproblem = create_stan_logdensityproblem(
         volume, folder_name, file_name_prefix
     )
@@ -105,6 +157,39 @@ end
 stan_result = run_all_stan_benchmarks(1, MODEL_VOL1_STAN)
 stan_result = Dict(k => v for (k, v) in stan_result if !ismissing(v))
 
+stan_result_vol2 = run_all_stan_benchmarks(2, MODEL_VOL2_STAN)
+stan_result_vol2 = Dict(k => v for (k, v) in stan_result_vol2 if !ismissing(v))
+
+function print_stan_result(stan_result)
+    @info "Stan results:"
+    for model_name in keys(stan_result)
+        @info model_name
+        println("Dimension:")
+        Base.show(stdout, "text/plain", stan_result[model_name][1])
+        println()
+        println("Density time:")
+        Base.show(stdout, "text/plain", stan_result[model_name][2])
+        println()
+        println("Density+gradient time:")
+        Base.show(stdout, "text/plain", stan_result[model_name][3])
+        println()
+    end
+
+    @info "Stan volume 2 results:"
+    for model_name in keys(stan_result_vol2)
+        @info model_name
+        println("Dimension:")
+        Base.show(stdout, "text/plain", stan_result_vol2[model_name][1])
+        println()
+        println("Density time:")
+        Base.show(stdout, "text/plain", stan_result_vol2[model_name][2])
+        println()
+        println("Density+gradient time:")
+        Base.show(stdout, "text/plain", stan_result_vol2[model_name][3])
+        println()
+    end
+end
+
 ## create result table
 
 using DataFrames
@@ -119,7 +204,7 @@ function extract_median_time(result)
     )
 end
 
-stan_median_time_result = extract_median_time(stan_result)
+stan_median_time_result = extract_median_time(merge(stan_result, stan_result_vol2))
 juliabugs_median_time_result = extract_median_time(juliabugs_result)
 
 juliabugs_median_time_result_micro = OrderedDict(
@@ -134,6 +219,18 @@ model_parameters_count = OrderedDict()
 model_data_count = OrderedDict()
 for model_name in keys(JuliaBUGS.BUGSExamples.VOLUME_1)
     (; model_def, data, inits) = JuliaBUGS.BUGSExamples.VOLUME_1[model_name]
+    model = compile(model_def, data, inits)
+    model_parameters_count[model_name] = length(model.parameters)
+    data_count = 0
+    for l in labels(model.g)
+        if model.g[l].is_observed
+            data_count += 1
+        end
+    end
+    model_data_count[model_name] = data_count
+end
+for model_name in keys(JuliaBUGS.BUGSExamples.VOLUME_2)
+    (; model_def, data, inits) = JuliaBUGS.BUGSExamples.VOLUME_2[model_name]
     model = compile(model_def, data, inits)
     model_parameters_count[model_name] = length(model.parameters)
     data_count = 0

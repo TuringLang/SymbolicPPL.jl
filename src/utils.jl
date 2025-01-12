@@ -146,7 +146,7 @@ function extract_variable_names_and_numdims(expr::Expr, excluded::Tuple{Vararg{S
         end
         if @capture(sub_expr, f_(args__))
             for arg in args
-                if arg isa Symbol && arg ∉ (:nothing, :missing) && !(arg in excluded)
+                if arg isa Symbol && arg ∉ (:nothing, :missing, :Inf) && !(arg in excluded)
                     variables[arg] = 0
                 end
             end

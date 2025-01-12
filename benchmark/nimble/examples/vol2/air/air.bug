@@ -1,0 +1,11 @@
+model
+{
+   for(j in 1 : J) {
+      y[j] ~ dbin(p[j], n[j])
+      logit(p[j]) <- theta[1] + theta[2] * X[j]
+      X[j] ~ dnorm(mu[j], tau)
+      mu[j] <- alpha + beta * Z[j]
+   }
+   theta[1] ~ dnorm(0.0, 0.001)
+   theta[2] ~ dnorm(0.0, 0.001)
+}

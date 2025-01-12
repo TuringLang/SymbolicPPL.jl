@@ -1,0 +1,12 @@
+model {
+    for( i in 1 : N ) {
+        Y[i] ~ dnorm(mu[i], tau)
+        mu[i] <- alpha - beta * pow(gamma,x[i])   
+    }
+    alpha ~ dunif(0, 100)
+    beta ~ dunif(0, 100)
+    gamma ~ dunif(0.5, 1.0)
+    tau ~ dgamma(0.001, 0.001)
+    sigma <- 1 / sqrt(tau)
+    U3 <- logit(gamma)   
+}

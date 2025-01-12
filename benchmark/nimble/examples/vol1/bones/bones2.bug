@@ -1,0 +1,24 @@
+/* Bones example rewritten using the dordered.logit distribution
+   We need to rescale the break points gamma -> gamma.star
+*/
+data {
+   for (j in 1:nInd) {
+      nbreak[j] <- ncat[j] - 1
+   }
+}
+model {
+   for (j in 1:nInd) {
+      gamma.star[j,1:nbreak[j]] <- delta[j]*gamma[j,1:nbreak[j]]
+   }
+
+   for (i in 1:nChild) {
+      theta[i] ~ dnorm(0.0, 0.001);
+   }
+
+   for (i in 1:nChild) {
+      for (j in 1:nInd) {
+	 mu[i,j] <- delta[j]*theta[i]
+         grade[i,j] ~ dordered.logit(mu[i,j], gamma.star[j,1:nbreak[j]])
+      }
+   }
+}   

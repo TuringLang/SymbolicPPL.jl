@@ -1,0 +1,11 @@
+source("../../R/Rcheck.R")
+d <- read.jagsdata("inhaler-data.R")
+inits <- read.jagsdata("inhaler-inits.R")
+load.module("glm")
+m <- jags.model("inhaler1.bug", d, inits, n.chains=2)
+names(list.samplers(m))
+update(m, 1000)
+x <- coda.samples(m, c("a","beta","kappa","log.sigma","pi","sigma"),
+                  n.iter=20000, thin=10)
+source("bench-test1.R")
+check.fun()

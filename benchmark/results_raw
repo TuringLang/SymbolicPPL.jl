@@ -1,0 +1,1011 @@
+
+[ Info: rats
+Evaluation time:
+Benchmark: 1228 samples with 1 evaluation
+ min    58.625 μs (1612 allocs: 89.141 KiB)
+ median 62.375 μs (1612 allocs: 89.141 KiB)
+ mean   77.976 μs (1612 allocs: 89.141 KiB, 0.38% gc time)
+ max    10.420 ms (1612 allocs: 89.141 KiB, 99.01% gc time)
+Density time:
+Benchmark: 1565 samples with 1 evaluation
+ min    50.666 μs (1554 allocs: 60.281 KiB)
+ median 53.917 μs (1554 allocs: 60.281 KiB)
+ mean   60.916 μs (1554 allocs: 60.281 KiB, 0.19% gc time)
+ max    4.366 ms (1554 allocs: 60.281 KiB, 98.07% gc time)
+Density+gradient time:
+Benchmark: 413 samples with 1 evaluation
+ min    207.167 μs (3 allocs: 608 bytes)
+ median 233.583 μs (3 allocs: 608 bytes)
+ mean   229.999 μs (3 allocs: 608 bytes)
+ max    327.000 μs (3 allocs: 608 bytes)
+[ Info: pumps
+Evaluation time:
+Benchmark: 3242 samples with 3 evaluations
+ min    8.417 μs (180 allocs: 5.953 KiB)
+ median 8.944 μs (180 allocs: 5.953 KiB)
+ mean   9.838 μs (180 allocs: 5.953 KiB, 0.03% gc time)
+ max    2.381 ms (180 allocs: 5.953 KiB, 98.88% gc time)
+Density time:
+Benchmark: 3440 samples with 3 evaluations
+ min    7.986 μs (213 allocs: 6.469 KiB)
+ median 8.542 μs (213 allocs: 6.469 KiB)
+ mean   9.246 μs (213 allocs: 6.469 KiB, 0.03% gc time)
+ max    1.966 ms (213 allocs: 6.469 KiB, 98.93% gc time)
+Density+gradient time:
+Benchmark: 3183 samples with 2 evaluations
+ min    13.771 μs (3 allocs: 192 bytes)
+ median 14.500 μs (3 allocs: 192 bytes)
+ mean   14.766 μs (3 allocs: 192 bytes)
+ max    44.771 μs (3 allocs: 192 bytes)
+[ Info: dogs
+Evaluation time:
+Benchmark: 370 samples with 1 evaluation
+ min    182.167 μs (6747 allocs: 304.984 KiB)
+ median 193.730 μs (6747 allocs: 304.984 KiB)
+ mean   256.476 μs (6747 allocs: 304.984 KiB, 0.53% gc time)
+ max    16.122 ms (6747 allocs: 304.984 KiB, 98.30% gc time)
+Density time:
+Benchmark: 639 samples with 1 evaluation
+ min    129.417 μs (4594 allocs: 158.812 KiB)
+ median 141.041 μs (4594 allocs: 158.812 KiB)
+ mean   149.124 μs (4594 allocs: 158.812 KiB, 0.15% gc time)
+ max    4.663 ms (4594 allocs: 158.812 KiB, 96.00% gc time)
+Density+gradient time:
+Benchmark: 306 samples with 1 evaluation
+ min    279.750 μs (3 allocs: 112 bytes)
+ median 314.417 μs (3 allocs: 112 bytes)
+ mean   311.069 μs (3 allocs: 112 bytes)
+ max    387.334 μs (3 allocs: 112 bytes)
+[ Info: seeds
+Evaluation time:
+Benchmark: 4247 samples with 1 evaluation
+ min    17.958 μs (345 allocs: 16.500 KiB)
+ median 19.542 μs (345 allocs: 16.500 KiB)
+ mean   23.090 μs (345 allocs: 16.500 KiB, 0.05% gc time)
+ max    8.425 ms (345 allocs: 16.500 KiB, 99.32% gc time)
+Density time:
+Benchmark: 4423 samples with 1 evaluation
+ min    18.917 μs (442 allocs: 16.016 KiB)
+ median 19.792 μs (442 allocs: 16.016 KiB)
+ mean   21.394 μs (442 allocs: 16.016 KiB, 0.02% gc time)
+ max    5.263 ms (442 allocs: 16.016 KiB, 99.02% gc time)
+Density+gradient time:
+Benchmark: 1981 samples with 1 evaluation
+ min    42.958 μs (3 allocs: 304 bytes)
+ median 45.541 μs (3 allocs: 304 bytes)
+ mean   47.309 μs (3 allocs: 304 bytes)
+ max    94.042 μs (3 allocs: 304 bytes)
+[ Info: surgical_simple
+Evaluation time:
+Benchmark: 3107 samples with 3 evaluations
+ min    8.347 μs (197 allocs: 5.062 KiB)
+ median 8.861 μs (197 allocs: 5.062 KiB)
+ mean   10.222 μs (197 allocs: 5.062 KiB, 0.03% gc time)
+ max    3.790 ms (197 allocs: 5.062 KiB, 99.25% gc time)
+Density time:
+Benchmark: 3133 samples with 4 evaluations
+ min    6.354 μs (222 allocs: 6.016 KiB)
+ median 6.615 μs (222 allocs: 6.016 KiB)
+ mean   7.402 μs (222 allocs: 6.016 KiB, 0.03% gc time)
+ max    2.053 ms (222 allocs: 6.016 KiB, 99.17% gc time)
+Density+gradient time:
+Benchmark: 4596 samples with 1 evaluation
+ min    17.583 μs (3 allocs: 192 bytes)
+ median 20.250 μs (3 allocs: 192 bytes)
+ mean   20.237 μs (3 allocs: 192 bytes)
+ max    105.333 μs (3 allocs: 192 bytes)
+[ Info: surgical_realistic
+Evaluation time:
+Benchmark: 3342 samples with 2 evaluations
+ min    10.791 μs (205 allocs: 8.094 KiB)
+ median 11.396 μs (205 allocs: 8.094 KiB)
+ mean   14.288 μs (205 allocs: 8.094 KiB, 0.06% gc time)
+ max    5.967 ms (205 allocs: 8.094 KiB, 99.39% gc time)
+Density time:
+Benchmark: 3992 samples with 2 evaluations
+ min    10.396 μs (253 allocs: 8.312 KiB)
+ median 11.021 μs (253 allocs: 8.312 KiB)
+ mean   11.920 μs (253 allocs: 8.312 KiB, 0.02% gc time)
+ max    2.693 ms (253 allocs: 8.312 KiB, 98.93% gc time)
+Density+gradient time:
+Benchmark: 4086 samples with 1 evaluation
+ min    19.875 μs (3 allocs: 208 bytes)
+ median 22.459 μs (3 allocs: 208 bytes)
+ mean   22.887 μs (3 allocs: 208 bytes)
+ max    71.625 μs (3 allocs: 208 bytes)
+[ Info: magnesium
+Evaluation time:
+Benchmark: 722 samples with 1 evaluation
+ min    105.833 μs (1789 allocs: 115.359 KiB)
+ median 110.292 μs (1789 allocs: 115.359 KiB)
+ mean   133.090 μs (1789 allocs: 115.359 KiB, 0.27% gc time)
+ max    10.417 ms (1789 allocs: 115.359 KiB, 97.49% gc time)
+Density time:
+Benchmark: 925 samples with 1 evaluation
+ min    91.209 μs (1950 allocs: 88.609 KiB)
+ median 94.459 μs (1950 allocs: 88.609 KiB)
+ mean   102.972 μs (1950 allocs: 88.609 KiB, 0.21% gc time)
+ max    3.414 ms (1950 allocs: 88.609 KiB, 96.27% gc time)
+Density+gradient time:
+Benchmark: 516 samples with 1 evaluation
+ min    159.792 μs (3 allocs: 960 bytes)
+ median 179.208 μs (3 allocs: 960 bytes)
+ mean   184.285 μs (3 allocs: 960 bytes, 0.18% gc time)
+ max    3.636 ms (3 allocs: 960 bytes, 93.94% gc time)
+[ Info: salm
+Evaluation time:
+Benchmark: 4989 samples with 1 evaluation
+ min    15.250 μs (295 allocs: 12.328 KiB)
+ median 16.167 μs (295 allocs: 12.328 KiB)
+ mean   18.854 μs (295 allocs: 12.328 KiB, 0.02% gc time)
+ max    11.698 ms (295 allocs: 12.328 KiB, 99.36% gc time)
+Density time:
+Benchmark: 5416 samples with 1 evaluation
+ min    15.166 μs (375 allocs: 12.406 KiB)
+ median 15.917 μs (375 allocs: 12.406 KiB)
+ mean   17.341 μs (375 allocs: 12.406 KiB, 0.02% gc time)
+ max    6.213 ms (375 allocs: 12.406 KiB, 99.17% gc time)
+Density+gradient time:
+Benchmark: 2623 samples with 1 evaluation
+ min    31.667 μs (3 allocs: 272 bytes)
+ median 36.125 μs (3 allocs: 272 bytes)
+ mean   35.783 μs (3 allocs: 272 bytes)
+ max    121.958 μs (3 allocs: 272 bytes)
+[ Info: equiv
+Evaluation time:
+Benchmark: 3177 samples with 2 evaluations
+ min    11.917 μs (304 allocs: 17.391 KiB)
+ median 12.729 μs (304 allocs: 17.391 KiB)
+ mean   15.044 μs (304 allocs: 17.391 KiB, 0.06% gc time)
+ max    3.934 ms (304 allocs: 17.391 KiB, 99.24% gc time)
+Density time:
+Benchmark: 3093 samples with 2 evaluations
+ min    13.938 μs (334 allocs: 13.531 KiB)
+ median 14.355 μs (334 allocs: 13.531 KiB)
+ mean   15.531 μs (334 allocs: 13.531 KiB, 0.03% gc time)
+ max    2.819 ms (334 allocs: 13.531 KiB, 98.58% gc time)
+Density+gradient time:
+Benchmark: 1993 samples with 1 evaluation
+ min    39.333 μs (3 allocs: 208 bytes)
+ median 44.958 μs (3 allocs: 208 bytes)
+ mean   46.783 μs (3 allocs: 208 bytes, 0.05% gc time)
+ max    4.487 ms (3 allocs: 208 bytes, 98.16% gc time)
+[ Info: dyes
+Evaluation time:
+Benchmark: 4270 samples with 2 evaluations
+ min    8.792 μs (254 allocs: 8.188 KiB)
+ median 9.229 μs (254 allocs: 8.188 KiB)
+ mean   11.459 μs (254 allocs: 8.188 KiB, 0.05% gc time)
+ max    5.739 ms (254 allocs: 8.188 KiB, 99.34% gc time)
+Density time:
+Benchmark: 3230 samples with 3 evaluations
+ min    8.778 μs (247 allocs: 6.781 KiB)
+ median 9.070 μs (247 allocs: 6.781 KiB)
+ mean   9.910 μs (247 allocs: 6.781 KiB, 0.03% gc time)
+ max    2.047 ms (247 allocs: 6.781 KiB, 98.75% gc time)
+Density+gradient time:
+Benchmark: 2452 samples with 1 evaluation
+ min    33.333 μs (3 allocs: 160 bytes)
+ median 38.083 μs (3 allocs: 160 bytes)
+ mean   38.219 μs (3 allocs: 160 bytes)
+ max    98.875 μs (3 allocs: 160 bytes)
+[ Info: stacks
+Evaluation time:
+Benchmark: 4254 samples with 1 evaluation
+ min    17.500 μs (388 allocs: 30.766 KiB)
+ median 18.209 μs (388 allocs: 30.766 KiB)
+ mean   21.842 μs (388 allocs: 30.766 KiB, 0.09% gc time)
+ max    7.897 ms (388 allocs: 30.766 KiB, 99.39% gc time)
+Density time:
+Benchmark: 4849 samples with 1 evaluation
+ min    16.250 μs (314 allocs: 18.953 KiB)
+ median 17.000 μs (314 allocs: 18.953 KiB)
+ mean   19.517 μs (314 allocs: 18.953 KiB, 0.08% gc time)
+ max    4.054 ms (314 allocs: 18.953 KiB, 98.98% gc time)
+Density+gradient time:
+Benchmark: 2268 samples with 1 evaluation
+ min    35.708 μs (3 allocs: 144 bytes)
+ median 41.458 μs (3 allocs: 144 bytes)
+ mean   41.180 μs (3 allocs: 144 bytes)
+ max    87.917 μs (3 allocs: 144 bytes)
+[ Info: epil
+Evaluation time:
+Benchmark: 401 samples with 1 evaluation
+ min    170.792 μs (4036 allocs: 304.250 KiB)
+ median 177.041 μs (4036 allocs: 304.250 KiB)
+ mean   238.226 μs (4036 allocs: 304.250 KiB, 0.70% gc time)
+ max    15.912 ms (4036 allocs: 304.250 KiB, 97.99% gc time)
+Density time:
+Benchmark: 219 samples with 1 evaluation
+ min    188.791 μs (5147 allocs: 240.719 KiB)
+ median 197.875 μs (5147 allocs: 240.719 KiB)
+ mean   435.120 μs (5147 allocs: 240.719 KiB, 0.41% gc time)
+ max    16.940 ms (5147 allocs: 240.719 KiB, 89.93% gc time)
+Density+gradient time:
+Benchmark: 183 samples with 1 evaluation
+ min    474.041 μs (4 allocs: 2.469 KiB)
+ median 511.916 μs (4 allocs: 2.469 KiB)
+ mean   522.213 μs (4 allocs: 2.469 KiB)
+ max    701.417 μs (4 allocs: 2.469 KiB)
+[ Info: blockers
+Evaluation time:
+Benchmark: 2095 samples with 1 evaluation
+ min    39.834 μs (644 allocs: 30.531 KiB)
+ median 41.000 μs (644 allocs: 30.531 KiB)
+ mean   45.272 μs (644 allocs: 30.531 KiB, 0.05% gc time)
+ max    7.481 ms (644 allocs: 30.531 KiB, 98.84% gc time)
+Density time:
+Benchmark: 2110 samples with 1 evaluation
+ min    39.709 μs (796 allocs: 28.234 KiB)
+ median 41.417 μs (796 allocs: 28.234 KiB)
+ mean   45.015 μs (796 allocs: 28.234 KiB, 0.05% gc time)
+ max    5.655 ms (796 allocs: 28.234 KiB, 98.52% gc time)
+Density+gradient time:
+Benchmark: 1270 samples with 1 evaluation
+ min    66.625 μs (3 allocs: 464 bytes)
+ median 75.000 μs (3 allocs: 464 bytes)
+ mean   74.380 μs (3 allocs: 464 bytes)
+ max    172.250 μs (3 allocs: 464 bytes)
+[ Info: oxford
+Evaluation time:
+Benchmark: 290 samples with 1 evaluation
+ min    239.417 μs (3994 allocs: 230.109 KiB)
+ median 248.584 μs (3994 allocs: 230.109 KiB)
+ mean   329.278 μs (3994 allocs: 230.109 KiB, 0.67% gc time)
+ max    15.960 ms (3994 allocs: 230.109 KiB, 97.77% gc time)
+Density time:
+Benchmark: 382 samples with 1 evaluation
+ min    224.625 μs (4621 allocs: 183.844 KiB)
+ median 230.750 μs (4621 allocs: 183.844 KiB)
+ mean   249.635 μs (4621 allocs: 183.844 KiB, 0.25% gc time)
+ max    6.077 ms (4621 allocs: 183.844 KiB, 95.04% gc time)
+Density+gradient time:
+Benchmark: 219 samples with 1 evaluation
+ min    381.834 μs (3 allocs: 2.047 KiB)
+ median 438.875 μs (3 allocs: 2.047 KiB)
+ mean   436.919 μs (3 allocs: 2.047 KiB)
+ max    536.625 μs (3 allocs: 2.047 KiB)
+[ Info: lsat
+Evaluation time:
+Benchmark: 43 samples with 1 evaluation
+ min    1.598 ms (55592 allocs: 2.157 MiB)
+ median 1.671 ms (55592 allocs: 2.157 MiB)
+ mean   2.324 ms (55592 allocs: 2.157 MiB, 4.04% gc time)
+ max    19.093 ms (55592 allocs: 2.157 MiB, 90.02% gc time)
+Density time:
+Benchmark: 59 samples with 1 evaluation
+ min    1.243 ms (46623 allocs: 1.334 MiB)
+ median 1.302 ms (46623 allocs: 1.334 MiB)
+ mean   1.699 ms (46623 allocs: 1.334 MiB, 1.55% gc time)
+ max    23.859 ms (46623 allocs: 1.334 MiB, 91.37% gc time)
+Density+gradient time:
+Benchmark: 38 samples with 1 evaluation
+ min    2.490 ms (4 allocs: 7.969 KiB)
+ median 2.720 ms (4 allocs: 7.969 KiB)
+ mean   2.697 ms (4 allocs: 7.969 KiB)
+ max    2.911 ms (4 allocs: 7.969 KiB)
+[ Info: bones
+Evaluation time:
+Benchmark: 210 samples with 1 evaluation
+ min    305.542 μs (12235 allocs: 564.953 KiB)
+ median 314.541 μs (12235 allocs: 564.953 KiB)
+ mean   454.939 μs (12235 allocs: 564.953 KiB, 0.92% gc time)
+ max    20.217 ms (12235 allocs: 564.953 KiB, 97.59% gc time)
+Density time:
+Benchmark: 278 samples with 1 evaluation
+ min    285.208 μs (9971 allocs: 380.938 KiB)
+ median 292.354 μs (9971 allocs: 380.938 KiB)
+ mean   342.728 μs (9971 allocs: 380.938 KiB, 0.68% gc time)
+ max    7.598 ms (9971 allocs: 380.938 KiB, 95.38% gc time)
+Density+gradient time:
+Benchmark: 278 samples with 1 evaluation
+ min    321.375 μs (3 allocs: 352 bytes)
+ median 326.938 μs (3 allocs: 352 bytes)
+ mean   341.993 μs (3 allocs: 352 bytes)
+ max    493.458 μs (3 allocs: 352 bytes)
+[ Info: mice
+Evaluation time:
+Benchmark: 2896 samples with 1 evaluation
+ min    23.542 μs (968 allocs: 30.781 KiB)
+ median 24.709 μs (968 allocs: 30.781 KiB)
+ mean   34.567 μs (968 allocs: 30.781 KiB, 0.07% gc time)
+ max    17.224 ms (968 allocs: 30.781 KiB, 99.46% gc time)
+Density time:
+Benchmark: 4625 samples with 1 evaluation
+ min    18.667 μs (576 allocs: 16.984 KiB)
+ median 20.083 μs (576 allocs: 16.984 KiB)
+ mean   20.414 μs (576 allocs: 16.984 KiB)
+ max    87.292 μs (576 allocs: 16.984 KiB)
+Density+gradient time:
+Benchmark: 1119 samples with 1 evaluation
+ min    71.417 μs (3 allocs: 256 bytes)
+ median 73.708 μs (3 allocs: 256 bytes)
+ mean   77.305 μs (3 allocs: 256 bytes)
+ max    144.458 μs (3 allocs: 256 bytes)
+[ Info: kidney
+Evaluation time:
+Benchmark: 1391 samples with 1 evaluation
+ min    45.625 μs (1364 allocs: 65.828 KiB)
+ median 48.709 μs (1364 allocs: 65.828 KiB)
+ mean   68.538 μs (1364 allocs: 65.828 KiB, 0.14% gc time)
+ max    17.068 ms (1364 allocs: 65.828 KiB, 99.39% gc time)
+Density time:
+Benchmark: 1915 samples with 1 evaluation
+ min    43.917 μs (1219 allocs: 48.750 KiB)
+ median 45.500 μs (1219 allocs: 48.750 KiB)
+ mean   49.845 μs (1219 allocs: 48.750 KiB, 0.05% gc time)
+ max    6.821 ms (1219 allocs: 48.750 KiB, 98.65% gc time)
+Density+gradient time:
+Benchmark: 618 samples with 1 evaluation
+ min    146.958 μs (3 allocs: 608 bytes)
+ median 149.938 μs (3 allocs: 608 bytes)
+ mean   153.986 μs (3 allocs: 608 bytes)
+ max    240.000 μs (3 allocs: 608 bytes)
+[ Info: leuk
+Evaluation time:
+Benchmark: 351 samples with 1 evaluation
+ min    178.500 μs (7741 allocs: 458.422 KiB)
+ median 187.334 μs (7741 allocs: 458.422 KiB)
+ mean   271.104 μs (7741 allocs: 458.422 KiB, 1.30% gc time)
+ max    16.826 ms (7741 allocs: 458.422 KiB, 98.34% gc time)
+Density time:
+Benchmark: 600 samples with 1 evaluation
+ min    131.916 μs (5657 allocs: 221.672 KiB)
+ median 136.834 μs (5657 allocs: 221.672 KiB)
+ mean   157.788 μs (5657 allocs: 221.672 KiB, 0.63% gc time)
+ max    4.036 ms (5657 allocs: 221.672 KiB, 96.10% gc time)
+Density+gradient time:
+Benchmark: 227 samples with 1 evaluation
+ min    393.875 μs (3 allocs: 240 bytes)
+ median 403.584 μs (3 allocs: 240 bytes)
+ mean   418.967 μs (3 allocs: 240 bytes)
+ max    539.125 μs (3 allocs: 240 bytes)
+[ Info: leukfr
+Evaluation time:
+Benchmark: 325 samples with 1 evaluation
+ min    195.542 μs (7906 allocs: 536.844 KiB)
+ median 208.458 μs (7906 allocs: 536.844 KiB)
+ mean   292.714 μs (7906 allocs: 536.844 KiB, 1.61% gc time)
+ max    15.193 ms (7906 allocs: 536.844 KiB, 97.98% gc time)
+Density time:
+Benchmark: 531 samples with 1 evaluation
+ min    148.500 μs (5954 allocs: 258.016 KiB)
+ median 155.375 μs (5954 allocs: 258.016 KiB)
+ mean   182.736 μs (5954 allocs: 258.016 KiB, 0.86% gc time)
+ max    4.561 ms (5954 allocs: 258.016 KiB, 94.60% gc time)
+Density+gradient time:
+Benchmark: 181 samples with 1 evaluation
+ min    478.458 μs (3 allocs: 432 bytes)
+ median 535.916 μs (3 allocs: 432 bytes)
+ mean   529.025 μs (3 allocs: 432 bytes)
+ max    622.541 μs (3 allocs: 432 bytes)
+[ Info: dugongs
+Evaluation time:
+Benchmark: 3598 samples with 2 evaluations
+ min    10.542 μs (302 allocs: 13.609 KiB)
+ median 10.959 μs (302 allocs: 13.609 KiB)
+ mean   13.562 μs (302 allocs: 13.609 KiB, 0.06% gc time)
+ max    4.977 ms (302 allocs: 13.609 KiB, 99.17% gc time)
+Density time:
+Benchmark: 3271 samples with 3 evaluations
+ min    8.417 μs (237 allocs: 8.484 KiB)
+ median 8.861 μs (237 allocs: 8.484 KiB)
+ mean   9.761 μs (237 allocs: 8.484 KiB, 0.03% gc time)
+ max    2.245 ms (237 allocs: 8.484 KiB, 99.06% gc time)
+Density+gradient time:
+Benchmark: 2560 samples with 1 evaluation
+ min    31.292 μs (3 allocs: 128 bytes)
+ median 35.541 μs (3 allocs: 128 bytes)
+ mean   36.760 μs (3 allocs: 128 bytes)
+ max    154.625 μs (3 allocs: 128 bytes)
+[ Info: orange_trees
+Evaluation time:
+Benchmark: 3604 samples with 1 evaluation
+ min    19.833 μs (533 allocs: 26.547 KiB)
+ median 21.125 μs (533 allocs: 26.547 KiB)
+ mean   26.201 μs (533 allocs: 26.547 KiB, 0.08% gc time)
+ max    9.470 ms (533 allocs: 26.547 KiB, 99.36% gc time)
+Density time:
+Benchmark: 3720 samples with 1 evaluation
+ min    22.083 μs (539 allocs: 20.016 KiB)
+ median 23.125 μs (539 allocs: 20.016 KiB)
+ mean   25.442 μs (539 allocs: 20.016 KiB, 0.03% gc time)
+ max    5.950 ms (539 allocs: 20.016 KiB, 99.00% gc time)
+Density+gradient time:
+Benchmark: 1393 samples with 1 evaluation
+ min    62.125 μs (3 allocs: 272 bytes)
+ median 64.166 μs (3 allocs: 272 bytes)
+ mean   67.650 μs (3 allocs: 272 bytes)
+ max    108.958 μs (3 allocs: 272 bytes)
+[ Info: orange_trees_multivariate
+Evaluation time:
+Benchmark: 2234 samples with 1 evaluation
+ min    30.625 μs (663 allocs: 42.297 KiB)
+ median 32.584 μs (663 allocs: 42.297 KiB)
+ mean   42.677 μs (663 allocs: 42.297 KiB, 0.13% gc time)
+ max    10.800 ms (663 allocs: 42.297 KiB, 99.22% gc time)
+Density time:
+Benchmark: 2806 samples with 1 evaluation
+ min    29.084 μs (581 allocs: 31.375 KiB)
+ median 30.875 μs (581 allocs: 31.375 KiB)
+ mean   34.076 μs (581 allocs: 31.375 KiB, 0.04% gc time)
+ max    6.572 ms (581 allocs: 31.375 KiB, 98.65% gc time)
+Density+gradient time:
+Benchmark: 606 samples with 1 evaluation
+ min    143.333 μs (56 allocs: 3.438 KiB)
+ median 158.500 μs (56 allocs: 3.438 KiB)
+ mean   156.762 μs (56 allocs: 3.438 KiB)
+ max    254.167 μs (56 allocs: 3.438 KiB)
+[ Info: air
+Evaluation time:
+Benchmark: 2881 samples with 7 evaluations
+ min    3.887 μs (84 allocs: 3.578 KiB)
+ median 4.095 μs (84 allocs: 3.578 KiB)
+ mean   4.656 μs (84 allocs: 3.578 KiB, 0.03% gc time)
+ max    1.485 ms (84 allocs: 3.578 KiB, 99.36% gc time)
+Density time:
+Benchmark: 3433 samples with 6 evaluations
+ min    4.132 μs (106 allocs: 3.844 KiB)
+ median 4.361 μs (106 allocs: 3.844 KiB)
+ mean   4.491 μs (106 allocs: 3.844 KiB)
+ max    37.479 μs (106 allocs: 3.844 KiB)
+Density+gradient time:
+Benchmark: 3241 samples with 5 evaluations
+ min    5.242 μs (3 allocs: 128 bytes)
+ median 5.525 μs (3 allocs: 128 bytes)
+ mean   5.785 μs (3 allocs: 128 bytes)
+ max    10.867 μs (3 allocs: 128 bytes)
+[ Info: jaws
+Evaluation time:
+Benchmark: 1814 samples with 1 evaluation
+ min    34.834 μs (698 allocs: 53.203 KiB)
+ median 36.917 μs (698 allocs: 53.203 KiB)
+ mean   52.841 μs (698 allocs: 53.203 KiB, 0.11% gc time)
+ max    10.991 ms (698 allocs: 53.203 KiB, 99.27% gc time)
+Density time:
+Benchmark: 1894 samples with 1 evaluation
+ min    32.708 μs (623 allocs: 48.172 KiB)
+ median 34.750 μs (623 allocs: 48.172 KiB)
+ mean   50.479 μs (623 allocs: 48.172 KiB, 0.10% gc time)
+ max    8.105 ms (623 allocs: 48.172 KiB, 99.08% gc time)
+Density+gradient time:
+Benchmark: 140 samples with 1 evaluation
+ min    562.708 μs (46 allocs: 4.078 KiB)
+ median 602.875 μs (46 allocs: 4.078 KiB)
+ mean   680.323 μs (46 allocs: 4.078 KiB)
+ max    1.866 ms (46 allocs: 4.078 KiB)
+[ Info: birats
+Evaluation time:
+Benchmark: 702 samples with 1 evaluation
+ min    85.167 μs (2204 allocs: 114.219 KiB)
+ median 93.605 μs (2204 allocs: 114.219 KiB)
+ mean   133.372 μs (2204 allocs: 114.219 KiB, 0.28% gc time)
+ max    12.875 ms (2204 allocs: 114.219 KiB, 98.91% gc time)
+Density time:
+Benchmark: 1012 samples with 1 evaluation
+ min    76.125 μs (1942 allocs: 83.609 KiB)
+ median 80.333 μs (1942 allocs: 83.609 KiB)
+ mean   94.458 μs (1942 allocs: 83.609 KiB, 0.10% gc time)
+ max    10.211 ms (1942 allocs: 83.609 KiB, 98.64% gc time)
+Density+gradient time:
+Benchmark: 205 samples with 1 evaluation
+ min    405.459 μs (106 allocs: 5.156 KiB)
+ median 455.459 μs (106 allocs: 5.156 KiB)
+ mean   471.658 μs (106 allocs: 5.156 KiB)
+ max    867.416 μs (106 allocs: 5.156 KiB)
+[ Info: schools
+Evaluation time:
+Benchmark: 55 samples with 1 evaluation
+ min    1.236 ms (38603 allocs: 3.452 MiB)
+ median 1.349 ms (38603 allocs: 3.452 MiB)
+ mean   1.834 ms (38603 allocs: 3.452 MiB, 7.37% gc time)
+ max    8.826 ms (38603 allocs: 3.452 MiB, 79.82% gc time)
+Density time:
+Benchmark: 58 samples with 1 evaluation
+ min    1.078 ms (28964 allocs: 1.852 MiB)
+ median 1.136 ms (28964 allocs: 1.852 MiB)
+ mean   2.088 ms (28964 allocs: 1.852 MiB, 3.25% gc time)
+ max    38.742 ms (28964 allocs: 1.852 MiB, 96.52% gc time)
+Density+gradient time:
+Benchmark: 19 samples with 1 evaluation
+ min    4.947 ms (122 allocs: 6.859 KiB)
+ median 5.347 ms (122 allocs: 6.859 KiB)
+ mean   5.394 ms (122 allocs: 6.859 KiB)
+ max    6.750 ms (122 allocs: 6.859 KiB)
+[ Info: beetles
+Evaluation time:
+Benchmark: 1613 samples with 5 evaluations
+ min    5.242 μs (141 allocs: 7.047 KiB)
+ median 5.633 μs (141 allocs: 7.047 KiB)
+ mean   30.564 μs (141.02 allocs: 7.048 KiB, 0.06% gc time, <0.01% compile time)
+ max    39.722 ms (167.80 allocs: 8.225 KiB, 98.09% gc time, 1.86% compile time)
+Density time:
+Benchmark: 3165 samples with 6 evaluations
+ min    4.632 μs (123 allocs: 5.359 KiB)
+ median 4.903 μs (123 allocs: 5.359 KiB)
+ mean   5.063 μs (123 allocs: 5.359 KiB)
+ max    34.097 μs (123 allocs: 5.359 KiB)
+Density+gradient time:
+Benchmark: 5190 samples with 2 evaluations
+ min    7.458 μs (3 allocs: 112 bytes)
+ median 8.542 μs (3 allocs: 112 bytes)
+ mean   8.701 μs (3 allocs: 112 bytes)
+ max    50.334 μs (3 allocs: 112 bytes)
+[ Info: alligators
+Evaluation time:
+Benchmark: 2787 samples with 1 evaluation
+ min    22.584 μs (638 allocs: 30.406 KiB)
+ median 25.750 μs (638 allocs: 30.406 KiB)
+ mean   33.774 μs (638 allocs: 30.406 KiB, 0.04% gc time)
+ max    19.352 ms (638 allocs: 30.406 KiB, 99.60% gc time)
+Density time:
+Benchmark: 3397 samples with 1 evaluation
+ min    24.708 μs (667 allocs: 24.844 KiB)
+ median 26.125 μs (667 allocs: 24.844 KiB)
+ mean   30.131 μs (667 allocs: 24.844 KiB, 0.03% gc time)
+ max    11.770 ms (667 allocs: 24.844 KiB, 99.43% gc time)
+Density+gradient time:
+Benchmark: 1720 samples with 1 evaluation
+ min    50.417 μs (3 allocs: 320 bytes)
+ median 51.958 μs (3 allocs: 320 bytes)
+ mean   54.825 μs (3 allocs: 320 bytes)
+ max    145.542 μs (3 allocs: 320 bytes)
+[ Info: endo
+Evaluation time:
+Benchmark: 661 samples with 1 evaluation
+ min    99.542 μs (5010 allocs: 259.375 KiB)
+ median 106.083 μs (5010 allocs: 259.375 KiB)
+ mean   143.690 μs (5010 allocs: 259.375 KiB, 0.30% gc time)
+ max    14.883 ms (5010 allocs: 259.375 KiB, 98.93% gc time)
+Density time:
+Benchmark: 963 samples with 1 evaluation
+ min    82.292 μs (3553 allocs: 156.625 KiB)
+ median 85.625 μs (3553 allocs: 156.625 KiB)
+ mean   97.801 μs (3553 allocs: 156.625 KiB, 0.10% gc time)
+ max    9.878 ms (3553 allocs: 156.625 KiB, 98.73% gc time)
+Density+gradient time:
+Benchmark: 628 samples with 1 evaluation
+ min    134.084 μs (3 allocs: 96 bytes)
+ median 150.562 μs (3 allocs: 96 bytes)
+ mean   151.707 μs (3 allocs: 96 bytes)
+ max    275.125 μs (3 allocs: 96 bytes)
+[ Info: stagnant
+Evaluation time:
+Benchmark: 3004 samples with 2 evaluations
+ min    11.729 μs (408 allocs: 20.516 KiB)
+ median 12.459 μs (408 allocs: 20.516 KiB)
+ mean   15.857 μs (408 allocs: 20.516 KiB, 0.07% gc time)
+ max    5.675 ms (408 allocs: 20.516 KiB, 99.49% gc time)
+Density time:
+Benchmark: 3784 samples with 2 evaluations
+ min    10.938 μs (319 allocs: 12.625 KiB)
+ median 11.646 μs (319 allocs: 12.625 KiB)
+ mean   12.646 μs (319 allocs: 12.625 KiB, 0.03% gc time)
+ max    3.056 ms (319 allocs: 12.625 KiB, 98.82% gc time)
+Density+gradient time:
+Benchmark: 2653 samples with 1 evaluation
+ min    31.083 μs (3 allocs: 128 bytes)
+ median 35.292 μs (3 allocs: 128 bytes)
+ mean   35.350 μs (3 allocs: 128 bytes)
+ max    83.292 μs (3 allocs: 128 bytes)
+[ Info: asia
+Evaluation time:
+Benchmark: 3112 samples with 8 evaluations
+ min    3.203 μs (82 allocs: 4.125 KiB)
+ median 3.401 μs (82 allocs: 4.125 KiB)
+ mean   3.899 μs (82 allocs: 4.125 KiB, 0.03% gc time)
+ max    1.299 ms (82 allocs: 4.125 KiB, 99.22% gc time)
+Density time:
+missing
+Density+gradient time:
+missing
+[ Info: biopsies
+Evaluation time:
+Benchmark: 807 samples with 1 evaluation
+ min    86.208 μs (3380 allocs: 131.172 KiB)
+ median 94.542 μs (3380 allocs: 131.172 KiB)
+ mean   107.344 μs (3380 allocs: 131.172 KiB, 0.12% gc time)
+ max    8.303 ms (3380 allocs: 131.172 KiB, 98.32% gc time)
+Density time:
+missing
+Density+gradient time:
+missing
+[ Info: eyes
+Evaluation time:
+Benchmark: 2076 samples with 1 evaluation
+ min    37.125 μs (932 allocs: 38.594 KiB)
+ median 39.500 μs (932 allocs: 38.594 KiB)
+ mean   46.128 μs (932 allocs: 38.594 KiB, 0.05% gc time)
+ max    12.263 ms (932 allocs: 38.594 KiB, 99.28% gc time)
+Density time:
+missing
+Density+gradient time:
+missing
+[ Info: hearts
+Evaluation time:
+Benchmark: 4812 samples with 1 evaluation
+ min    14.875 μs (256 allocs: 13.484 KiB)
+ median 15.958 μs (256 allocs: 13.484 KiB)
+ mean   19.565 μs (256 allocs: 13.484 KiB, 0.04% gc time)
+ max    10.320 ms (256 allocs: 13.484 KiB, 99.26% gc time)
+Density time:
+missing
+Density+gradient time:
+missing
+[ Info: cervix
+Evaluation time:
+Benchmark: 29 samples with 1 evaluation
+ min    1.989 ms (50356 allocs: 2.153 MiB)
+ median 2.227 ms (50356 allocs: 2.153 MiB)
+ mean   3.451 ms (50356 allocs: 2.153 MiB, 5.84% gc time)
+ max    25.771 ms (50356 allocs: 2.153 MiB, 91.19% gc time)
+Density time:
+missing
+Density+gradient time:
+missing
+
+
+
+
+[ Info: Stan results:
+[ Info: leukfr
+Dimension:
+40
+Density time:
+Benchmark: 4280 samples with 1 evaluation
+ min    20.791 μs (1 allocs: 16 bytes)
+ median 21.500 μs (1 allocs: 16 bytes)
+ mean   21.710 μs (1 allocs: 16 bytes)
+ max    68.250 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3378 samples with 1 evaluation
+ min    26.666 μs (3 allocs: 416 bytes)
+ median 27.000 μs (3 allocs: 416 bytes)
+ mean   27.640 μs (3 allocs: 416 bytes)
+ max    44.792 μs (3 allocs: 416 bytes)
+[ Info: leuk
+Dimension:
+18
+Density time:
+Benchmark: 5518 samples with 1 evaluation
+ min    15.041 μs (1 allocs: 16 bytes)
+ median 16.333 μs (1 allocs: 16 bytes)
+ mean   16.758 μs (1 allocs: 16 bytes)
+ max    131.708 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 4309 samples with 1 evaluation
+ min    19.833 μs (3 allocs: 224 bytes)
+ median 21.125 μs (3 allocs: 224 bytes)
+ mean   21.573 μs (3 allocs: 224 bytes)
+ max    34.666 μs (3 allocs: 224 bytes)
+[ Info: pumps
+Dimension:
+12
+Density time:
+Benchmark: 3149 samples with 35 evaluations
+ min    804.771 ns (1 allocs: 16 bytes)
+ median 819.057 ns (1 allocs: 16 bytes)
+ mean   852.808 ns (1 allocs: 16 bytes)
+ max    4.002 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3240 samples with 22 evaluations
+ min    1.250 μs (3 allocs: 176 bytes)
+ median 1.288 μs (3 allocs: 176 bytes)
+ mean   1.315 μs (3 allocs: 176 bytes)
+ max    3.375 μs (3 allocs: 176 bytes)
+[ Info: lsat
+Dimension:
+1006
+Density time:
+Benchmark: 975 samples with 1 evaluation
+ min    92.791 μs (1 allocs: 16 bytes)
+ median 96.042 μs (1 allocs: 16 bytes)
+ mean   97.308 μs (1 allocs: 16 bytes)
+ max    255.750 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 706 samples with 1 evaluation
+ min    126.625 μs (4 allocs: 7.953 KiB)
+ median 130.917 μs (4 allocs: 7.953 KiB)
+ mean   133.985 μs (4 allocs: 7.953 KiB, 0.13% gc time)
+ max    1.666 ms (4 allocs: 7.953 KiB, 89.82% gc time)
+[ Info: stacks
+Dimension:
+6
+Density time:
+Benchmark: 3132 samples with 26 evaluations
+ min    1.093 μs (1 allocs: 16 bytes)
+ median 1.131 μs (1 allocs: 16 bytes)
+ mean   1.155 μs (1 allocs: 16 bytes)
+ max    4.143 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3201 samples with 17 evaluations
+ min    1.669 μs (3 allocs: 128 bytes)
+ median 1.708 μs (3 allocs: 128 bytes)
+ mean   1.726 μs (3 allocs: 128 bytes)
+ max    2.735 μs (3 allocs: 128 bytes)
+[ Info: epil
+Dimension:
+303
+Density time:
+Benchmark: 2361 samples with 1 evaluation
+ min    36.125 μs (1 allocs: 16 bytes)
+ median 39.084 μs (1 allocs: 16 bytes)
+ mean   39.836 μs (1 allocs: 16 bytes)
+ max    90.125 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 2177 samples with 1 evaluation
+ min    39.666 μs (4 allocs: 2.453 KiB)
+ median 42.625 μs (4 allocs: 2.453 KiB)
+ mean   43.184 μs (4 allocs: 2.453 KiB)
+ max    64.125 μs (4 allocs: 2.453 KiB)
+[ Info: salm
+Dimension:
+22
+Density time:
+Benchmark: 3248 samples with 8 evaluations
+ min    3.438 μs (1 allocs: 16 bytes)
+ median 3.542 μs (1 allocs: 16 bytes)
+ mean   3.610 μs (1 allocs: 16 bytes)
+ max    22.583 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3205 samples with 7 evaluations
+ min    4.000 μs (3 allocs: 256 bytes)
+ median 4.113 μs (3 allocs: 256 bytes)
+ mean   4.177 μs (3 allocs: 256 bytes)
+ max    7.298 μs (3 allocs: 256 bytes)
+[ Info: magnesium
+Dimension:
+108
+Density time:
+Benchmark: 4304 samples with 2 evaluations
+ min    10.166 μs (1 allocs: 16 bytes)
+ median 10.604 μs (1 allocs: 16 bytes)
+ mean   10.808 μs (1 allocs: 16 bytes)
+ max    43.917 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3899 samples with 2 evaluations
+ min    11.375 μs (3 allocs: 944 bytes)
+ median 11.792 μs (3 allocs: 944 bytes)
+ mean   11.959 μs (3 allocs: 944 bytes)
+ max    21.750 μs (3 allocs: 944 bytes)
+[ Info: blockers
+Dimension:
+47
+Density time:
+Benchmark: 3042 samples with 13 evaluations
+ min    2.212 μs (1 allocs: 16 bytes)
+ median 2.288 μs (1 allocs: 16 bytes)
+ mean   2.378 μs (1 allocs: 16 bytes)
+ max    13.888 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3107 samples with 10 evaluations
+ min    2.700 μs (3 allocs: 448 bytes)
+ median 2.796 μs (3 allocs: 448 bytes)
+ mean   3.021 μs (3 allocs: 448 bytes, 0.03% gc time)
+ max    412.292 μs (3 allocs: 448 bytes, 97.91% gc time)
+[ Info: dyes
+Dimension:
+9
+Density time:
+Benchmark: 2998 samples with 20 evaluations
+ min    1.477 μs (1 allocs: 16 bytes)
+ median 1.531 μs (1 allocs: 16 bytes)
+ mean   1.567 μs (1 allocs: 16 bytes)
+ max    8.525 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3153 samples with 15 evaluations
+ min    1.911 μs (3 allocs: 144 bytes)
+ median 1.961 μs (3 allocs: 144 bytes)
+ mean   1.986 μs (3 allocs: 144 bytes)
+ max    3.153 μs (3 allocs: 144 bytes)
+[ Info: seeds
+Dimension:
+26
+Density time:
+Benchmark: 3176 samples with 15 evaluations
+ min    1.881 μs (1 allocs: 16 bytes)
+ median 1.931 μs (1 allocs: 16 bytes)
+ mean   1.971 μs (1 allocs: 16 bytes)
+ max    4.589 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3295 samples with 11 evaluations
+ min    2.496 μs (3 allocs: 288 bytes)
+ median 2.545 μs (3 allocs: 288 bytes)
+ mean   2.590 μs (3 allocs: 288 bytes)
+ max    4.026 μs (3 allocs: 288 bytes)
+[ Info: oxford
+Dimension:
+244
+Density time:
+Benchmark: 4291 samples with 2 evaluations
+ min    10.292 μs (1 allocs: 16 bytes)
+ median 10.479 μs (1 allocs: 16 bytes)
+ mean   10.875 μs (1 allocs: 16 bytes)
+ max    48.688 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3595 samples with 2 evaluations
+ min    12.479 μs (3 allocs: 2.031 KiB)
+ median 12.771 μs (3 allocs: 2.031 KiB)
+ mean   12.975 μs (3 allocs: 2.031 KiB)
+ max    27.855 μs (3 allocs: 2.031 KiB)
+[ Info: surgical_realistic
+Dimension:
+14
+Density time:
+Benchmark: 3224 samples with 25 evaluations
+ min    1.112 μs (1 allocs: 16 bytes)
+ median 1.132 μs (1 allocs: 16 bytes)
+ mean   1.164 μs (1 allocs: 16 bytes)
+ max    4.160 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3142 samples with 19 evaluations
+ min    1.518 μs (3 allocs: 192 bytes)
+ median 1.550 μs (3 allocs: 192 bytes)
+ mean   1.576 μs (3 allocs: 192 bytes)
+ max    2.603 μs (3 allocs: 192 bytes)
+[ Info: mice
+Dimension:
+20
+Density time:
+Benchmark: 3571 samples with 4 evaluations
+ min    6.292 μs (1 allocs: 16 bytes)
+ median 6.334 μs (1 allocs: 16 bytes)
+ mean   6.546 μs (1 allocs: 16 bytes)
+ max    18.229 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3866 samples with 3 evaluations
+ min    7.764 μs (3 allocs: 240 bytes)
+ median 7.861 μs (3 allocs: 240 bytes)
+ mean   8.117 μs (3 allocs: 240 bytes)
+ max    32.320 μs (3 allocs: 240 bytes)
+[ Info: bones
+Dimension:
+13
+Density time:
+Benchmark: 1287 samples with 1 evaluation
+ min    69.209 μs (1 allocs: 16 bytes)
+ median 70.292 μs (1 allocs: 16 bytes)
+ mean   73.292 μs (1 allocs: 16 bytes)
+ max    229.000 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 1162 samples with 1 evaluation
+ min    78.875 μs (3 allocs: 176 bytes)
+ median 79.667 μs (3 allocs: 176 bytes)
+ mean   80.997 μs (3 allocs: 176 bytes)
+ max    117.125 μs (3 allocs: 176 bytes)
+[ Info: kidney
+Dimension:
+46
+Density time:
+Benchmark: 3623 samples with 3 evaluations
+ min    8.222 μs (1 allocs: 16 bytes)
+ median 8.306 μs (1 allocs: 16 bytes)
+ mean   8.584 μs (1 allocs: 16 bytes)
+ max    50.778 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 4085 samples with 2 evaluations
+ min    11.021 μs (3 allocs: 448 bytes)
+ median 11.167 μs (3 allocs: 448 bytes)
+ mean   11.394 μs (3 allocs: 448 bytes)
+ max    20.250 μs (3 allocs: 448 bytes)
+[ Info: rats
+Dimension:
+65
+Density time:
+Benchmark: 3765 samples with 5 evaluations
+ min    4.758 μs (1 allocs: 16 bytes)
+ median 4.850 μs (1 allocs: 16 bytes)
+ mean   4.954 μs (1 allocs: 16 bytes)
+ max    11.892 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 2642 samples with 4 evaluations
+ min    6.896 μs (3 allocs: 592 bytes)
+ median 6.979 μs (3 allocs: 592 bytes)
+ mean   8.906 μs (3 allocs: 592 bytes, 0.04% gc time)
+ max    4.810 ms (3 allocs: 592 bytes, 99.57% gc time)
+[ Info: equiv
+Dimension:
+15
+Density time:
+Benchmark: 3193 samples with 9 evaluations
+ min    3.120 μs (1 allocs: 16 bytes)
+ median 3.181 μs (1 allocs: 16 bytes)
+ mean   3.264 μs (1 allocs: 16 bytes)
+ max    10.824 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3151 samples with 7 evaluations
+ min    3.899 μs (3 allocs: 192 bytes)
+ median 4.071 μs (3 allocs: 192 bytes)
+ mean   4.256 μs (3 allocs: 192 bytes, 0.03% gc time)
+ max    425.321 μs (3 allocs: 192 bytes, 97.83% gc time)
+[ Info: Stan volume 2 results:
+[ Info: dugongs
+Dimension:
+4
+Density time:
+Benchmark: 3172 samples with 24 evaluations
+ min    1.165 μs (1 allocs: 16 bytes)
+ median 1.212 μs (1 allocs: 16 bytes)
+ mean   1.234 μs (1 allocs: 16 bytes)
+ max    3.330 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3100 samples with 16 evaluations
+ min    1.760 μs (3 allocs: 112 bytes)
+ median 1.865 μs (3 allocs: 112 bytes)
+ mean   1.888 μs (3 allocs: 112 bytes)
+ max    2.984 μs (3 allocs: 112 bytes)
+[ Info: beetles
+Dimension:
+2
+Density time:
+Benchmark: 3097 samples with 38 evaluations
+ min    762.053 ns (1 allocs: 16 bytes)
+ median 784.000 ns (1 allocs: 16 bytes)
+ mean   798.337 ns (1 allocs: 16 bytes)
+ max    2.104 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3156 samples with 25 evaluations
+ min    1.137 μs (3 allocs: 96 bytes)
+ median 1.178 μs (3 allocs: 96 bytes)
+ mean   1.191 μs (3 allocs: 96 bytes)
+ max    2.367 μs (3 allocs: 96 bytes)
+[ Info: schools
+Dimension:
+133
+Density time:
+Benchmark: 418 samples with 1 evaluation
+ min    215.417 μs (1 allocs: 16 bytes)
+ median 223.209 μs (1 allocs: 16 bytes)
+ mean   226.993 μs (1 allocs: 16 bytes)
+ max    320.417 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 279 samples with 1 evaluation
+ min    324.417 μs (3 allocs: 1.109 KiB)
+ median 337.000 μs (3 allocs: 1.109 KiB)
+ mean   340.742 μs (3 allocs: 1.109 KiB)
+ max    450.667 μs (3 allocs: 1.109 KiB)
+[ Info: air
+Dimension:
+5
+Density time:
+Benchmark: 3054 samples with 38 evaluations
+ min    769.737 ns (1 allocs: 16 bytes)
+ median 797.158 ns (1 allocs: 16 bytes)
+ mean   808.823 ns (1 allocs: 16 bytes)
+ max    1.930 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3088 samples with 25 evaluations
+ min    1.162 μs (3 allocs: 112 bytes)
+ median 1.203 μs (3 allocs: 112 bytes)
+ mean   1.216 μs (3 allocs: 112 bytes)
+ max    1.927 μs (3 allocs: 112 bytes)
+[ Info: birats
+Dimension:
+66
+Density time:
+Benchmark: 3786 samples with 1 evaluation
+ min    23.333 μs (1 allocs: 16 bytes)
+ median 24.333 μs (1 allocs: 16 bytes)
+ mean   24.743 μs (1 allocs: 16 bytes)
+ max    96.958 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 2991 samples with 1 evaluation
+ min    26.167 μs (3 allocs: 624 bytes)
+ median 27.292 μs (3 allocs: 624 bytes)
+ mean   31.353 μs (3 allocs: 624 bytes, 0.03% gc time)
+ max    10.717 ms (3 allocs: 624 bytes, 98.89% gc time)
+[ Info: alligators
+Dimension:
+28
+Density time:
+Benchmark: 3446 samples with 6 evaluations
+ min    4.306 μs (1 allocs: 16 bytes)
+ median 4.431 μs (1 allocs: 16 bytes)
+ mean   4.515 μs (1 allocs: 16 bytes)
+ max    16.229 μs (1 allocs: 16 bytes)
+Density+gradient time:
+Benchmark: 3581 samples with 5 evaluations
+ min    5.033 μs (3 allocs: 304 bytes)
+ median 5.150 μs (3 allocs: 304 bytes)
+ mean   5.223 μs (3 allocs: 304 bytes)
+ max    8.367 μs (3 allocs: 304 bytes)
