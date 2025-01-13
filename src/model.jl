@@ -597,3 +597,55 @@ function _tempered_evaluate!!(
         tempered_logjoint=logprior + temperature * loglikelihood,
     )
 end
+
+# "incoherent" means that the values of deterministic variables may not be consistent with
+# the values, because node functions are not evaluated. This function initializes only the
+# stochastic unobserved variables without updating deterministic nodes.
+function _incoherent_initialize!(model::BUGSModel, flattened_values::AbstractVector)
+    # Get appropriate variable lengths based on transformed state
+    var_lengths =
+        model.transformed ? model.transformed_var_lengths : model.untransformed_var_lengths
+
+    # Create copy of evaluation environment to avoid modifying original
+    evaluation_env = deepcopy(model.evaluation_env)
+    current_idx = 1
+    summed_logjac = 0.0
+
+    # Iterate through nodes in topological order
+    for (i, vn) in enumerate(model.flattened_graph_node_data.sorted_nodes)
+        is_stochastic = model.flattened_graph_node_data.is_stochastic_vals[i]
+        is_observed = model.flattened_graph_node_data.is_observed_vals[i]
+
+        # Skip deterministic and observed nodes
+        if !is_stochastic || is_observed
+            continue
+        end
+
+        # Get distribution and variable length
+        node_function = model.flattened_graph_node_data.node_function_vals[i]
+        loop_vars = model.flattened_graph_node_data.loop_vars_vals[i]
+        dist = node_function(evaluation_env, loop_vars)
+        l = var_lengths[vn]
+
+        if model.transformed
+            b = Bijectors.bijector(dist)
+            b_inv = Bijectors.inverse(b)
+            # Get values from flattened vector and reconstruct
+            reconstructed_value = reconstruct(
+                b_inv, dist, view(flattened_values, current_idx:(current_idx + l - 1))
+            )
+            value, logjac = Bijectors.with_logabsdet_jacobian(b_inv, reconstructed_value)
+            summed_logjac += logjac # logjac is correct, but logpdf(dist, value) is not
+        else
+            value = reconstruct(
+                dist, view(flattened_values, current_idx:(current_idx + l - 1))
+            )
+        end
+
+        # Update index and environment
+        current_idx += l
+        evaluation_env = BangBang.setindex!!(evaluation_env, value, vn)
+    end
+
+    return BangBang.setproperty!!(model, :evaluation_env, evaluation_env), summed_logjac
+end
