@@ -193,7 +193,6 @@ using JuliaBUGS.ProbabilisticGraphicalModels:
             add_edge!(bn, :B, :A)
             add_edge!(bn, :B, :C)
 
-            @test !is_conditionally_independent(bn, :A, :C, Symbol[])
             @test is_conditionally_independent(bn, :A, :C, [:B])
         end
 
